@@ -128,4 +128,4 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Jan/30/2014**: Added defl2pipe command to enforce dimensionarity to 2D spectra.<br />
 **Jun/26/2015**: Fixed invalid header of NMRView and UCSF spectra file.<br />
 **Nov/16/2015**: pipe2xyza allows inline transposing if filename is not specified.<br />
-**Feb/03/2017**: Code refactoring and released @ GitHub, Inc.
+**Feb/03/2017**: Code refactoring, Apache License V2 and released @ GitHub, Inc.

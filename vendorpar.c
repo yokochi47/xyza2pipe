@@ -59,6 +59,8 @@ int get_varian_parsize(unsigned int dim, char pardir[], char parname[])
 		}
 	}
 
+	free_arg(0);
+
 	fclose(fp);
 
 	return ret;
@@ -99,6 +101,8 @@ int get_varian_parameter(unsigned int dim, char pardir[], char parname[], unsign
 			break;
 		}
 	}
+
+	free_arg(0);
 
 	fclose(fp);
 
@@ -186,6 +190,8 @@ int guess_varian_dimension_from_file(char pardir[])
 		if (atoi(long_buffer) > 1)
 			dim++;
 	}
+
+	free_arg(0);
 
 	return dim;
 }
@@ -343,6 +349,8 @@ int get_bruker_parameter(unsigned int dim, char filename[], char parname[], unsi
 			break;
 		}
 	}
+
+	free_arg(0);
 
 	fclose(fp);
 

@@ -164,6 +164,8 @@ int checkxeasy(char filename[])
 			checklabel(axisname[j]);
 	}
 
+	free_arg(0);
+
 	fclose(par);
 
 	/* Reshuffle parameters according to permutation - added by A.E. */

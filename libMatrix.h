@@ -27,12 +27,6 @@ limitations under the License.
 #include <time.h>
 #include <assert.h>
 
-#ifdef __OLIVIA_IRIX__
-
-#include <alloca.h>
-
-#endif
-
 float *fmalloc1d(const size_t size1);
 float **fmalloc2d(const size_t size1, const size_t size2);
 float ***fmalloc3d(const size_t size1, const size_t size2, const size_t size3);

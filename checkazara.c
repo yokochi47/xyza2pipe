@@ -431,6 +431,8 @@ int checkazara(char filename[])
 
 	}
 
+	free_arg(0);
+
 	fclose(par);
 
 	switch (dimension) {

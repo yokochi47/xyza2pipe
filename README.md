@@ -118,7 +118,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Pascal Mercier**, University of Alberta, for alternative spectral regulation method relying on the origin frequency.<br />
 **Naohiro Kobayashi**, Osaka University, for reporting NMRView spectra conversion issue.
 
-## Release note
+## Release notes
 
 **Oct 31, 2011**: ucsf2pipe and nv2pipe commands detect incorrect header information and fix them automatically.<br />
 **Feb 14, 2012**: Fixed vnmr2pipe problems (distorted 2D spectra and shifted 3D spectra) and added support for varian 3D/4D complex spectra.<br />
@@ -129,3 +129,390 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Jun 26, 2015**: Fixed invalid header of NMRView and UCSF spectra file.<br />
 **Nov 16, 2015**: pipe2xyza allows inline transposing if filename is not specified.<br />
 **Feb 03, 2017**: Code refactoring, Apache License V2 and released @ GitHub, Inc.
+
+## Executable files
+
+### add2pipe: Two NMRPipe spectra &rarr; Combination &rarr; stdout stream
+~~~
+ add2pipe -i/--in1 inTemplate1(2D/3D/4D) -j/--in2 inTemplate2(2D/3D/4D)
+  -a/--add inTemplate1 + inTemplate2 (default)
+  -s/--sub inTemplate1 - inTemplate2
+  -m/--mul inTemplate1 * inTemplate2
+  -d/--div inTemplate1 / inTemplate2
+  --c1   Scale factor for inTemplate1 (default=1.0)
+  --c2   Scale factor for inTemplate2 (default=1.0)
+  --xLAB X-Axis Label
+  --yLAB Y-Axis Label
+  --zLAB Z-Axis Label
+  --aLAB A-Axis Label
+  --xCAR X-Axis Center [ppm]
+  --yCAR Y-Axis Center [ppm]
+  --zCAR Z-Axis Center [ppm]
+  --aCAR A-Axis Center [ppm]
+~~~
+
+### addazara2pipe: Two Azara spectra &rarr; Combination &rarr; stdout stream
+~~~
+ addazara2pipe -i/--in1 inTemplate1(2D/3D/4D) -j/--in2 inTemplate2(2D/3D/4D)
+  -a/--add inTemplate1 + inTemplate2 (default)
+  -s/--sub inTemplate1 - inTemplate2
+  -m/--mul inTemplate1 * inTemplate2
+  -d/--div inTemplate1 / inTemplate2
+  --c1   Scale factor for inTemplate1 (default=1.0)
+  --c2   Scale factor for inTemplate2 (default=1.0)
+  --xLAB X-Axis Label
+  --yLAB Y-Axis Label
+  --zLAB Z-Axis Label
+  --aLAB A-Axis Label
+  --xCAR X-Axis Center [ppm]
+  --yCAR Y-Axis Center [ppm]
+  --zCAR Z-Axis Center [ppm]
+  --aCAR A-Axis Center [ppm]
+~~~
+
+### addnv2pipe: Two NMRView spectra &rarr; Combination &rarr; stdout stream
+~~~
+ addnv2pipe -i/--in1 inTemplate1(2D/3D/4D) -j/--in2 inTemplate2(2D/3D/4D)
+  -a/--add inTemplate1 + inTemplate2 (default)
+  -s/--sub inTemplate1 - inTemplate2
+  -m/--mul inTemplate1 * inTemplate2
+  -d/--div inTemplate1 / inTemplate2
+  --c1   Scale factor for inTemplate1 (default=1.0)
+  --c2   Scale factor for inTemplate2 (default=1.0)
+  --xLAB X-Axis Label
+  --yLAB Y-Axis Label
+  --zLAB Z-Axis Label
+  --aLAB A-Axis Label
+  --xCAR X-Axis Center [ppm]
+  --yCAR Y-Axis Center [ppm]
+  --zCAR Z-Axis Center [ppm]
+  --aCAR A-Axis Center [ppm]
+~~~
+
+### adducsf2pipe: Two UCSF spectra &rarr; Combination &rarr; stdout stream
+~~~
+ adducsf2pipe -i/--in1 inTemplate1(2D/3D/4D) -j/--in2 inTemplate2(2D/3D/4D)
+  -a/--add inTemplate1 + inTemplate2 (default)
+  -s/--sub inTemplate1 - inTemplate2
+  -m/--mul inTemplate1 * inTemplate2
+  -d/--div inTemplate1 / inTemplate2
+  --c1   Scale factor for inTemplate1 (default=1.0)
+  --c2   Scale factor for inTemplate2 (default=1.0)
+  --xLAB X-Axis Label
+  --yLAB Y-Axis Label
+  --zLAB Z-Axis Label
+  --aLAB A-Axis Label
+  --xCAR X-Axis Center [ppm]
+  --yCAR Y-Axis Center [ppm]
+  --zCAR Z-Axis Center [ppm]
+  --aCAR A-Axis Center [ppm]
+~~~
+
+### adducsf2pipe: Two VNMR spectra &rarr; Combination &rarr; stdout stream
+~~~
+ addvnmr2pipe -i/--in1 inTemplate1(2D/3D/4D) -j/--in2 inTemplate2(2D/3D/4D)
+  -p/--pdir1   A directory that includes VNMR procpar file1. (default=".")
+  -q/--pdir2   A directory that includes VNMR procpar file2. (default=".")
+  -a/--add inTemplate1 + inTemplate2 (default)
+  -s/--sub inTemplate1 - inTemplate2
+  -m/--mul inTemplate1 * inTemplate2
+  -d/--div inTemplate1 / inTemplate2
+  --c1   Scale factor for inTemplate1 (default=1.0)
+  --c2   Scale factor for inTemplate2 (default=1.0)
+  --xLAB X-Axis Label
+  --yLAB Y-Axis Label
+  --zLAB Z-Axis Label
+  --aLAB A-Axis Label
+  --xCAR X-Axis Center [ppm]
+  --yCAR Y-Axis Center [ppm]
+  --zCAR Z-Axis Center [ppm]
+  --aCAR A-Axis Center [ppm]
+~~~
+
+### addxeasy2pipe: Two XEASY spectra &rarr; Combination &rarr; stdout stream
+~~~
+ addxeasy2pipe -i/--in1 inTemplate1(2D/3D/4D) -j/--in2 inTemplate2(2D/3D/4D)
+  -a/--add inTemplate1 + inTemplate2 (default)
+  -s/--sub inTemplate1 - inTemplate2
+  -m/--mul inTemplate1 * inTemplate2
+  -d/--div inTemplate1 / inTemplate2
+  --c1   Scale factor for inTemplate1 (default=1.0)
+  --c2   Scale factor for inTemplate2 (default=1.0)
+  --xLAB X-Axis Label
+  --yLAB Y-Axis Label
+  --zLAB Z-Axis Label
+  --aLAB A-Axis Label
+  --xCAR X-Axis Center [ppm]
+  --yCAR Y-Axis Center [ppm]
+  --zCAR Z-Axis Center [ppm]
+  --aCAR A-Axis Center [ppm]
+~~~
+
+### addxwnmr2pipe: Two XWinNMR spectra &rarr; Combination &rarr; stdout stream
+~~~
+ addxwnmr2pipe -i/--in1 inTemplate1(2D/3D/4D) -j/--in2 inTemplate2(2D/3D/4D)
+  -a/--add inTemplate1 + inTemplate2 (default)
+  -s/--sub inTemplate1 - inTemplate2
+  -m/--mul inTemplate1 * inTemplate2
+  -d/--div inTemplate1 / inTemplate2
+  --c1   Scale factor for inTemplate1 (default=1.0)
+  --c2   Scale factor for inTemplate2 (default=1.0)
+  --xLAB X-Axis Label
+  --yLAB Y-Axis Label
+  --zLAB Z-Axis Label
+  --aLAB A-Axis Label
+  --xCAR X-Axis Center [ppm]
+  --yCAR Y-Axis Center [ppm]
+  --zCAR Z-Axis Center [ppm]
+  --aCAR A-Axis Center [ppm]
+~~~
+
+### azara2pipe: Azara spectra &rarr; stdout stream
+~~~
+ azara2pipe -i/--in inTemplate(2D/3D/4D)
+  -x  Output X-Vector first
+  -y  Output Y-Vector first
+  -z  Output Z-Vector first
+  -a  Output A-Vector first
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+~~~
+
+### defl2pipe: Deflates dimensionarity into 2D spectra &rarr; stdout stream
+~~~
+ defl2pipe -i/--in inTemplate(2D/3D/4D)
+  -x  Output X-Vector first
+  -y  Output Y-Vector first
+  -z  Output Z-Vector first
+  -a  Output A-Vector first
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+~~~
+
+### nv2pipe: NMRView spectra &rarr; stdout stream
+~~~
+ nv2pipe -i/--in inTemplate(2D/3D/4D)
+  -x  Output X-Vector first
+  -y  Output Y-Vector first
+  -z  Output Z-Vector first
+  -a  Output A-Vector first
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+  --ndim  dimCount
+~~~
+
+### pipe2azara: stdin stream &rarr; Azara spectra
+~~~
+ pipe2azara -o/--out outTemplate(2D/3D/4D)
+  -s/--swap  Byteswap data
+  -l/--left  Left shift observable carrier frequency by sw/2
+  -g/--orig  Rely on the origin frequency for spectral regulation
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+~~~
+
+### pipe2nv: stdin stream &rarr; NMRView spectra
+~~~
+ pipe2nv -o/--out outTemplate(2D/3D/4D)
+  -s/--swap  Byteswap data
+  -p/--pswap Byteswap parameter
+  -l/--left  Left shift observable carrier frequency by sw/2
+  -g/--orig  Rely on the origin frequency for spectral regulation
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+~~~
+
+### pipe2proj: stdin stream &rarr; Integration &rarr; NMRPipe spectra (with --out option) `or` stdout stream (without --out option)
+~~~
+ pipe2proj -o/--out outTemplate
+  -s/--swap  Byteswap data
+  -r/--right Right shift observable carrier frequency by sw/2
+  -a/--abs   Absolute mode
+  --xLAB X-Axis Label
+  --yLAB Y-Axis Label
+  --zLAB Z-Axis Label
+  --aLAB A-Axis Label
+  --xCAR X-Axis Center [ppm]
+  --yCAR Y-Axis Center [ppm]
+  --zCAR Z-Axis Center [ppm]
+  --aCAR A-Axis Center [ppm]
+~~~
+
+### pipe2ucsf: stdin stream &rarr; UCSF spectra
+~~~
+ pipe2ucsf -o/--out outTemplate(2D/3D/4D)
+  -s/--swap  Byteswap data
+  -p/--pswap Byteswap parameter
+  -l/--left  Left shift observable carrier frequency by sw/2
+  -g/--orig  Rely on the origin frequency for spectral regulation
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+~~~
+
+### pipe2xeasy: stdin stream &rarr; XEASY spectra
+~~~
+ pipe2xeasy -o/--out outTemplate(2D/3D/4D)
+  -s/--swap  Byteswap data
+  -l/--left  Left shift observable carrier frequency by sw/2
+  -g/--orig  Rely on the origin frequency for spectral regulation
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+~~~
+
+### pipe2xyza: stdin stream &rarr; NMRPipe spectra (with --out option) `or` stdout stream (without --out option)
+~~~
+ pipe2xyza -o/--out outTemplate(2D/3D/4D)
+  -x  Output X-Vector first
+  -y  Output Y-Vector first
+  -z  Output Z-Vector first
+  -a  Output A-Vector first
+  -s/--swap  Byteswap data
+  -r/--right Right shift observable carrier frequency by sw/2
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+~~~
+
+### ucsf2pipe: UCSF spectra &rarr; stdout stream
+~~~
+ ucsf2pipe -i/--in inTemplate(2D/3D/4D)
+  -x  Output X-Vector first
+  -y  Output Y-Vector first
+  -z  Output Z-Vector first
+  -a  Output A-Vector first
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+  --ndim  dimCount
+~~~
+
+### vnmr2pipe: VNMR (Agilent, formerly Varian) binary spectra &rarr; stdout stream
+~~~
+ vnmr2pipe -i/--in inTemplate(2D/3D/4D)
+  -p/--pdir    A directory that includes VNMR procpar file. (default=".")
+  -e/--extLeft Extract left hand of X-Axis.
+  -c/--adjCAR  Adjust indirect carrier frequencies according to 1H calibration.
+  -h/--adjH2O  Adjust all carrier frequencies assuming transmitter is set to H2O solvent.
+  -x  Output X-Vector first
+  -y  Output Y-Vector first
+  -z  Output Z-Vector first
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+  --ndim  dimCount
+  NOTE: User's phase correction is effective only in hyper-complex 2D spectra.
+  --rp  0th Order X-Phase [deg]
+  --lp  1st Order X-Phase [deg]
+  --rp1 0th Order Y-Phase [deg]
+  --lp1 1st Order Y-Phase [deg]
+~~~
+
+### xeasy2pipe: XEASY spectra &rarr; stdout stream
+~~~
+ xeasy2pipe -i/--in inTemplate(2D/3D/4D)
+  -x  Output X-Vector first
+  -y  Output Y-Vector first
+  -z  Output Z-Vector first
+  -a  Output A-Vector first
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+~~~
+
+### xwnmr2pipe: XWinNMR (Bruker) binary spectra &rarr; stdout stream
+~~~
+ xwnmr2pipe -i/--in inTemplate(2D/3D/4D)
+  -e/--extLeft Extract left hand of X-Axis.
+  -x  Output X-Vector first
+  -y  Output Y-Vector first
+  -z  Output Z-Vector first
+  -a  Output A-Vector first
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+  --ndim  dimCount
+~~~
+
+### xyza2pipe: NMRPipe spectra &rarr; stdout stream
+~~~
+ xyza2pipe -i/--in inTemplate(2D/3D/4D)
+  -x  Output X-Vector first
+  -y  Output Y-Vector first
+  -z  Output Z-Vector first
+  -a  Output A-Vector first
+  --xLAB  X-Axis Label
+  --yLAB  Y-Axis Label
+  --zLAB  Z-Axis Label
+  --aLAB  A-Axis Label
+  --xCAR  X-Axis Center [ppm]
+  --yCAR  Y-Axis Center [ppm]
+  --zCAR  Z-Axis Center [ppm]
+  --aCAR  A-Axis Center [ppm]
+~~~

@@ -120,12 +120,12 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 
 ## Release note
 
-**Oct/31/2011**: ucsf2pipe and nv2pipe commands detect incorrect header information and fix them automatically.<br />
-**Feb/14/2012**: Fixed vnmr2pipe problems (distorted 2D spectra and shifted 3D spectra) and added support for varian 3D/4D complex spectra.<br />
-**Feb/22/2012**: Fixed Makefile.<br />
-**Mar/16/2012**: Added alternative spectral regulation method relying on the origin frequency. (--orig option)<br />
-**Oct/01/2012**: Fixed auto repairing routine to support pseudo-zerofill of ucsf and nv file.<br />
-**Jan/30/2014**: Added defl2pipe command to enforce dimensionarity to 2D spectra.<br />
-**Jun/26/2015**: Fixed invalid header of NMRView and UCSF spectra file.<br />
-**Nov/16/2015**: pipe2xyza allows inline transposing if filename is not specified.<br />
-**Feb/03/2017**: Code refactoring, Apache License V2 and released @ GitHub, Inc.
+**Oct 31, 2011**: ucsf2pipe and nv2pipe commands detect incorrect header information and fix them automatically.<br />
+**Feb 14, 2012**: Fixed vnmr2pipe problems (distorted 2D spectra and shifted 3D spectra) and added support for varian 3D/4D complex spectra.<br />
+**Feb 22, 2012**: Fixed Makefile.<br />
+**Mar 16, 2012**: Added alternative spectral regulation method relying on the origin frequency. (--orig option)<br />
+**Oct 01, 2012**: Fixed auto repairing routine to support pseudo-zerofill of ucsf and nv file.<br />
+**Jan 30, 2014**: Added defl2pipe command to enforce dimensionarity to 2D spectra.<br />
+**Jun 26, 2015**: Fixed invalid header of NMRView and UCSF spectra file.<br />
+**Nov 16, 2015**: pipe2xyza allows inline transposing if filename is not specified.<br />
+**Feb 03, 2017**: Code refactoring, Apache License V2 and released @ GitHub, Inc.

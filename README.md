@@ -12,7 +12,7 @@ The xyza2pipe provides a cross conversion environment of higher dimensional NMR 
 
 Importer: File (reading) &rarr; Stream (stdout) | Exporter: Stream (stdin) &rarr; File (writing)
 ----------------------------------------------- | ----------------------------------------------
-`xyza2pipe --in filename.ft` (2D)<br />`xyza2pipe --in filename%03d.ft` (3D)<br />`xyza2pipe --in filename%02d%03d.ft` (4D)<br />`ucsf2pipe --in filename.ucsf`<br />`nv2pipe --in filename.nv`<br>`xeasy2pipe --in filename.16`<br />`azara2pipe --in filename.spc`<br />`vnmr2pipe --in filename` (2D)<br>`vnmr2pipe --in filename%d or filename` (3D/4D)<br />`xwnmr2pipe --in 2rr/3rrr/4rrrr` | `pipe2xyza --out filename.ft` (2D)<br />`pipe2xyza --out filename%03d.ft` (3D)<br />`pipe2xyza --out filename%02d%03d.ft` (4D)<br />`pipe2ucsf --out filename.ucsf`<br />`pipe2nv --out filename.nv`<br />`pipe2xeasy --out filename.16`<br />`pipe2azara --out filename.spc`
+`xyza2pipe --in filename.ft` (2D)<br />`xyza2pipe --in filename%03d.ft` (3D)<br />`xyza2pipe --in filename%02d%03d.ft` (4D)<br />`ucsf2pipe --in filename.ucsf`<br />`nv2pipe --in filename.nv`<br>`xeasy2pipe --in filename.16`<br />`azara2pipe --in filename.spc`<br />`vnmr2pipe --in filename` (2D)<br>`vnmr2pipe --in filename%d` or `filename` (3D/4D)<br />`xwnmr2pipe --in 2rr/3rrr/4rrrr` | `pipe2xyza --out filename.ft` (2D)<br />`pipe2xyza --out filename%03d.ft` (3D)<br />`pipe2xyza --out filename%02d%03d.ft` (4D)<br />`pipe2ucsf --out filename.ucsf`<br />`pipe2nv --out filename.nv`<br />`pipe2xeasy --out filename.16`<br />`pipe2azara --out filename.spc`
 
 - Combination:<br />
 
@@ -24,7 +24,7 @@ Importer: File (reading) &rarr; Stream (stdout) | Exporter: Stream (stdin) &rarr
 
 Importer: File (reading) &rarr; Stream (stdout) | Exporter: Stream (stdin) &rarr; File (writing)
 ----------------------------------------------- | ----------------------------------------------
-`xyza2pipe --in filename%03d.ft` (3D)<br />`xyza2pipe --in filename%02d%03d.ft` (4D)<br />`ucsf2pipe --in filename.ucsf`<br />`nv2pipe --in filename.nv`<br />`xeasy2pipe --in filename.16`<br />`azara2pipe --in filename.spc`<br />`vnmr2pipe --in filename%d or filename` (3D/4D)<br />`xwnmr2pipe --in 3rrr/4rrrr` | `pipe2proj --out proj.ft`<br />`pipe2proj | pipe2ucsf --out proj.ucsf`<br />`pipe2proj | pipe2nv --out proj.nv`<br />`pipe2proj | pipe2xeasy --out proj.16`<br />`pipe2proj | pipe2azara --out proj.spc`
+`xyza2pipe --in filename%03d.ft` (3D)<br />`xyza2pipe --in filename%02d%03d.ft` (4D)<br />`ucsf2pipe --in filename.ucsf`<br />`nv2pipe --in filename.nv`<br />`xeasy2pipe --in filename.16`<br />`azara2pipe --in filename.spc`<br />`vnmr2pipe --in filename%d` or `filename` (3D/4D)<br />`xwnmr2pipe --in 3rrr/4rrrr` | `pipe2proj --out proj.ft`<br />`pipe2proj | pipe2ucsf --out proj.ucsf`<br />`pipe2proj | pipe2nv --out proj.nv`<br />`pipe2proj | pipe2xeasy --out proj.16`<br />`pipe2proj | pipe2azara --out proj.spc`
 
 - Effective pipeline combinations (conversion and transposing):<br />
  - To transpose NMRPipe formatted spectra, Type `xyza2pipe | pipe2xyza`.

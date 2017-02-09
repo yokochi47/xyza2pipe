@@ -352,7 +352,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   --aCAR  A-Axis Center [ppm]
 ~~~
 
-### pipe2proj: stdin stream &rarr; Integration &rarr; NMRPipe spectra (with --out option) `or` stdout stream (without --out option)
+### pipe2proj: stdin stream &rarr; Integration &rarr; NMRPipe spectra (with --out option) or stdout stream (without --out option)
 ~~~
  pipe2proj -o/--out outTemplate
   -s/--swap  Byteswap data
@@ -401,7 +401,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   --aCAR  A-Axis Center [ppm]
 ~~~
 
-### pipe2xyza: stdin stream &rarr; NMRPipe spectra (with --out option) `or` stdout stream (without --out option)
+### pipe2xyza: stdin stream &rarr; NMRPipe spectra (with --out option) or stdout stream (without --out option)
 ~~~
  pipe2xyza -o/--out outTemplate(2D/3D/4D)
   -x  Output X-Vector first

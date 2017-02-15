@@ -138,7 +138,6 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   -a/--add inTemplate1 + inTemplate2 (default)
   -s/--sub inTemplate1 - inTemplate2
   -m/--mul inTemplate1 * inTemplate2
-  -d/--div inTemplate1 / inTemplate2
   --c1   Scale factor for inTemplate1 (default=1.0)
   --c2   Scale factor for inTemplate2 (default=1.0)
   --xLAB X-Axis Label
@@ -157,7 +156,6 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   -a/--add inTemplate1 + inTemplate2 (default)
   -s/--sub inTemplate1 - inTemplate2
   -m/--mul inTemplate1 * inTemplate2
-  -d/--div inTemplate1 / inTemplate2
   --c1   Scale factor for inTemplate1 (default=1.0)
   --c2   Scale factor for inTemplate2 (default=1.0)
   --xLAB X-Axis Label
@@ -176,7 +174,6 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   -a/--add inTemplate1 + inTemplate2 (default)
   -s/--sub inTemplate1 - inTemplate2
   -m/--mul inTemplate1 * inTemplate2
-  -d/--div inTemplate1 / inTemplate2
   --c1   Scale factor for inTemplate1 (default=1.0)
   --c2   Scale factor for inTemplate2 (default=1.0)
   --xLAB X-Axis Label
@@ -195,7 +192,6 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   -a/--add inTemplate1 + inTemplate2 (default)
   -s/--sub inTemplate1 - inTemplate2
   -m/--mul inTemplate1 * inTemplate2
-  -d/--div inTemplate1 / inTemplate2
   --c1   Scale factor for inTemplate1 (default=1.0)
   --c2   Scale factor for inTemplate2 (default=1.0)
   --xLAB X-Axis Label
@@ -216,7 +212,6 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   -a/--add inTemplate1 + inTemplate2 (default)
   -s/--sub inTemplate1 - inTemplate2
   -m/--mul inTemplate1 * inTemplate2
-  -d/--div inTemplate1 / inTemplate2
   --c1   Scale factor for inTemplate1 (default=1.0)
   --c2   Scale factor for inTemplate2 (default=1.0)
   --xLAB X-Axis Label
@@ -235,7 +230,6 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   -a/--add inTemplate1 + inTemplate2 (default)
   -s/--sub inTemplate1 - inTemplate2
   -m/--mul inTemplate1 * inTemplate2
-  -d/--div inTemplate1 / inTemplate2
   --c1   Scale factor for inTemplate1 (default=1.0)
   --c2   Scale factor for inTemplate2 (default=1.0)
   --xLAB X-Axis Label
@@ -254,7 +248,6 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   -a/--add inTemplate1 + inTemplate2 (default)
   -s/--sub inTemplate1 - inTemplate2
   -m/--mul inTemplate1 * inTemplate2
-  -d/--div inTemplate1 / inTemplate2
   --c1   Scale factor for inTemplate1 (default=1.0)
   --c2   Scale factor for inTemplate2 (default=1.0)
   --xLAB X-Axis Label

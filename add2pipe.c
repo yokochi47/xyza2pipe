@@ -1,9 +1,9 @@
 /*
-   xyza2pipe - a cross conversion environment of NMR spectra
-   Copyright 2017 Masashi Yokochi
+    xyza2pipe - a cross conversion environment of NMR spectra
+    Copyright 2017 Masashi Yokochi
 
-   https://github.com/yokochi47/xyza2pipe
-    forked from http://fermi.pharm.hokudai.ac.jp/olivia/
+    https://github.com/yokochi47/xyza2pipe
+     forked from http://fermi.pharm.hokudai.ac.jp/olivia/
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ limitations under the License.
 static const char *usage[] = {
 		"add2pipe -i/--in1 inTemplate1(2D/3D/4D) -j/--in2 inTemplate2(2D/3D/4D) > stdout\n", "Optional Arguments:\n",
 		" -a/--add inTemplate1 + inTemplate2 (default)\n", " -s/--sub inTemplate1 - inTemplate2\n",
-		" -m/--mul inTemplate1 * inTemplate2\n", " -d/--div inTemplate1 / inTemplate2\n",
+		" -m/--mul inTemplate1 * inTemplate2\n",
 		" --c1   Scale factor for inTemplate1 (default=1.0)\n", " --c2   Scale factor for inTemplate2 (default=1.0)\n",
 		" --xLAB X-Axis Label\n", " --yLAB Y-Axis Label\n", " --zLAB Z-Axis Label\n", " --aLAB A-Axis Label\n",
 		" --xCAR X-Axis Center [ppm]\n", " --yCAR Y-Axis Center [ppm]\n", " --zCAR Z-Axis Center [ppm]\n",
@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
 			{"add", no_argument, 0, 'a'},
 			{"sub", no_argument, 0, 's'},
 			{"mul", no_argument, 0, 'm'},
-			{"div", no_argument, 0, 'd'},
 			{"xLAB", required_argument, 0, 6},
 			{"yLAB", required_argument, 0, 7},
 			{"zLAB", required_argument, 0, 8},
@@ -90,9 +89,6 @@ int main(int argc, char *argv[])
 			break;
 		case 'm':
 			opr_code = COMBINE_MUL;
-			break;
-		case 'd':
-			opr_code = COMBINE_DIV;
 			break;
 		case 3:
 			c1 = atof(optarg);

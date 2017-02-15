@@ -1,9 +1,9 @@
 /*
-   xyza2pipe - a cross conversion environment of NMR spectra
-   Copyright 2017 Masashi Yokochi
+    xyza2pipe - a cross conversion environment of NMR spectra
+    Copyright 2017 Masashi Yokochi
 
-   https://github.com/yokochi47/xyza2pipe
-    forked from http://fermi.pharm.hokudai.ac.jp/olivia/
+    https://github.com/yokochi47/xyza2pipe
+     forked from http://fermi.pharm.hokudai.ac.jp/olivia/
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ typedef enum { NO_APODIZATION /* NA */ ,
 
 /* COMBINE OPERATOR */
 
-typedef enum { COMBINE_ADD, COMBINE_SUB, COMBINE_MUL, COMBINE_DIV } enum_combine_opr;
+typedef enum { COMBINE_ADD, COMBINE_SUB, COMBINE_MUL } enum_combine_opr;
 
 extern char header[PIPE_HEADERSIZE];
 

@@ -1,9 +1,9 @@
 /*
-   xyza2pipe - a cross conversion environment of NMR spectra
-   Copyright 2017 Masashi Yokochi
+    xyza2pipe - a cross conversion environment of NMR spectra
+    Copyright 2017 Masashi Yokochi
 
-   https://github.com/yokochi47/xyza2pipe
-    forked from http://fermi.pharm.hokudai.ac.jp/olivia/
+    https://github.com/yokochi47/xyza2pipe
+     forked from http://fermi.pharm.hokudai.ac.jp/olivia/
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -68,15 +68,6 @@ int pushadd2d(char spectra2d1[], char spectra2d2[], const float c1, const float 
 		for (j = 0; j < datasize[1]; j++) {
 			for (i = 0; i < datasize[0]; i++) {
 				matrix2d_[j][i] *= c2 * matrix2d[j][i];
-			}
-		}
-
-		break;
-
-	case COMBINE_DIV:
-		for (j = 0; j < datasize[1]; j++) {
-			for (i = 0; i < datasize[0]; i++) {
-				matrix2d_[j][i] /= c2 * matrix2d[j][i];
 			}
 		}
 
@@ -152,15 +143,6 @@ int pushadd3d(char spectra3d1[], char spectra3d2[], const float c1, const float 
 			}
 
 			break;
-
-		case COMBINE_DIV:
-			for (j = 0; j < datasize[1]; j++) {
-				for (i = 0; i < datasize[0]; i++) {
-					matrix2d_[j][i] /= c2 * matrix2d[j][i];
-				}
-			}
-
-			break;
 		}
 
 		fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
@@ -231,15 +213,6 @@ int pushadd4d(char spectra4d1[], char spectra4d2[], const float c1, const float 
 				for (j = 0; j < datasize[1]; j++) {
 					for (i = 0; i < datasize[0]; i++) {
 						matrix2d_[j][i] *= c2 * matrix2d[j][i];
-					}
-				}
-
-				break;
-
-			case COMBINE_DIV:
-				for (j = 0; j < datasize[1]; j++) {
-					for (i = 0; i < datasize[0]; i++) {
-						matrix2d_[j][i] /= c2 * matrix2d[j][i];
 					}
 				}
 

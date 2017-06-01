@@ -1,6 +1,6 @@
 # xyza2pipe
 
-The xyza2pipe provides a cross conversion environment of higher dimensional NMR spectra (2D/3D/4D) among the following systems: NMRPipe, UCSF/Sparky, NMRView, XEASY (16bit)/CARA and Azara/ANSIG. It is possible to read VNMR (Agilent, formerly Varian) or XWinNMR (Bruker) binary spectra. This is open-source version branched from [**Olivia**](http://fermi.pharm.hokudai.ac.jp/olivia/) project.
+The xyza2pipe provides a cross conversion environment of higher dimensional NMR spectra (2D/3D/4D) between the following systems: NMRPipe, UCSF/Sparky, NMRView, XEASY (16bit)/CARA and Azara/ANSIG. It is possible to read VNMR (Agilent, formerly Varian) or XWinNMR (Bruker) binary spectra. This is open-source version branched from [**Olivia**](http://fermi.pharm.hokudai.ac.jp/olivia/) project.
 
 ## Conversion, Transposing, Combination and 2D Projection
 

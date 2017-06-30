@@ -151,7 +151,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   --xCAR X-Axis Center [ppm]
   --yCAR Y-Axis Center [ppm]
   --zCAR Z-Axis Center [ppm]
-  --aCAR A-Axis Center [ppm1
+  --aCAR A-Axis Center [ppm]
 ~~~
 
 ### addazara2pipe: Two Azara spectra &rarr; Combination &rarr; stdout stream

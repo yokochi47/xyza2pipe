@@ -22,9 +22,9 @@ Importer: File (reading) &rarr; Stream (stdout) | Exporter: Stream (stdin) &rarr
 
 - 2D Projection:<br />
 
-Importer: File (reading) &rarr; Stream (stdout) | Exporter: Stream (stdin) &rarr; File (writing)
------------------------------------------------ | ----------------------------------------------
-`xyza2pipe --in filename%03d.ft` (3D)<br />`xyza2pipe --in filename%02d%03d.ft` (4D)<br />`ucsf2pipe --in filename.ucsf`<br />`nv2pipe --in filename.nv`<br />`xeasy2pipe --in filename.16`<br />`azara2pipe --in filename.spc`<br />`vnmr2pipe --in filename%d` or `filename` (3D/4D)<br />`xwnmr2pipe --in 3rrr/4rrrr` | `pipe2proj --out proj.ft`<br />`pipe2proj | pipe2ucsf --out proj.ucsf`<br />`pipe2proj | pipe2nv --out proj.nv`<br />`pipe2proj | pipe2xeasy --out proj.16`<br />`pipe2proj | pipe2azara --out proj.spc`
+Importer: File (reading) &rarr; Stream (stdout) | Projection | Exporter: Stream (stdin) &rarr; File (writing)
+----------------------------------------------- | ---------- | ----------------------------------------------
+`xyza2pipe --in filename%03d.ft` (3D)<br />`xyza2pipe --in filename%02d%03d.ft` (4D)<br />`ucsf2pipe --in filename.ucsf`<br />`nv2pipe --in filename.nv`<br />`xeasy2pipe --in filename.16`<br />`azara2pipe --in filename.spc`<br />`vnmr2pipe --in filename%d` or `filename` (3D/4D)<br />`xwnmr2pipe --in 3rrr/4rrrr` | `pipe2proj`<br />`pipe2proj --out proj.ft;` | `pipe2ucsf --out proj.ucsf`<br />`pipe2nv --out proj.nv`<br />`pipe2xeasy --out proj.16`<br />`pipe2azara --out proj.spc`
 
 - Effective pipeline combinations (conversion and transposing):<br />
  - To transpose NMRPipe formatted spectra, Type `xyza2pipe | pipe2xyza`.
@@ -98,7 +98,7 @@ Several format conversions, such as NMRView&rarr;NMRPipe, UCSF&rarr;NMRPipe, VNM
 
 ## Resolving endianness
 
-In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianness) issue, program will try to detect proper endianess of file for CPU you used currently. However azara format is definitely endian dependent. If you fail in spectra conversion using **pipe2azara**, **pipe2nv**, **pipe2xeasy** or **pipe2xyza**, Try to use '--swap' option which reverses byte order of data region.
+In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianness) issue, program will try to detect proper endianess of file for CPU you used currently. However azara format is definitely endian dependent. If you fail in spectra conversion using **pipe2azara**, **pipe2nv**, **pipe2ucsf**, **pipe2xeasy** or **pipe2xyza**, Try to use '--swap' option which reverses byte order of data region.
 
 **NOTE**: Improper endianness leads to **crash viewer applications**, to **generate unrecognized file format** or to **generate radial spectra**.
 

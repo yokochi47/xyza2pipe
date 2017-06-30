@@ -32,12 +32,8 @@ int pullucsf2d(char spectra2d[])
 	short swapped = 0;
 	float **matrix2d;
 
-	if ((is_big_endian() && is_little_endian_float(header + sizeof(float) * 2, PIPE_HEADER[2])) || (is_little_endian()
-			&& is_big_endian_float(header + sizeof(float) * 2, PIPE_HEADER[2])))
-		swapped = 1;
-
-	swappar += swapped;
-	swapdata += swapped;
+	swappar = is_little_endian();
+	swapdata = is_little_endian_float(header + sizeof(float) * 2, PIPE_HEADER[2]);
 
 	make_dir(spectra2d);
 
@@ -163,12 +159,8 @@ int pullucsf3d(char spectra3d[])
 	short swapped = 0;
 	float **matrix2d;
 
-	if ((is_big_endian() && is_little_endian_float(header + sizeof(float) * 2, PIPE_HEADER[2])) || (is_little_endian()
-			&& is_big_endian_float(header + sizeof(float) * 2, PIPE_HEADER[2])))
-		swapped = 1;
-
-	swappar += swapped;
-	swapdata += swapped;
+	swappar = is_little_endian();
+	swapdata = is_little_endian_float(header + sizeof(float) * 2, PIPE_HEADER[2]);
 
 	make_dir(spectra3d);
 
@@ -302,12 +294,8 @@ int pullucsf4d(char spectra4d[])
 	short swapped = 0;
 	float **matrix2d;
 
-	if ((is_big_endian() && is_little_endian_float(header + sizeof(float) * 2, PIPE_HEADER[2])) || (is_little_endian()
-			&& is_big_endian_float(header + sizeof(float) * 2, PIPE_HEADER[2])))
-		swapped = 1;
-
-	swappar += swapped;
-	swapdata += swapped;
+	swappar = is_little_endian();
+	swapdata = is_little_endian_float(header + sizeof(float) * 2, PIPE_HEADER[2]);
 
 	make_dir(spectra4d);
 

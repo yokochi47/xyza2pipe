@@ -98,7 +98,7 @@ Several format conversions, such as NMRView&rarr;NMRPipe, UCSF&rarr;NMRPipe, VNM
 
 ## Resolving endianness
 
-In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianness) issue, program will try to detect proper endianess of file for CPU you used currently. However azara format is definitely endian dependent. If you fail in spectra conversion using **pipe2azara**, **pipe2nv**, **pipe2ucsf**, **pipe2xeasy** or **pipe2xyza**, Try to use '--swap' option which reverses byte order of data region.
+In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianness) issue, program will try to detect proper endianess of file for CPU you used currently. However azara format is definitely endian dependent. If you fail in spectra conversion using **pipe2azara**, **pipe2nv**, **pipe2xeasy** or **pipe2xyza**, Try to use '--swap' option which reverses byte order of data region.
 
 **NOTE**: Improper endianness leads to **crash viewer applications**, to **generate unrecognized file format** or to **generate radial spectra**.
 
@@ -130,7 +130,9 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Jun 26, 2015**: Fixed invalid header of NMRView and UCSF spectra file.<br />
 **Nov 16, 2015**: pipe2xyza allows inline transposing if filename is not specified.<br />
 **Feb 07, 2017**: Released v1.0.0 @ GitHub, Inc. under Apache License V2.<br />
-**Jun 30, 2017**: Released v1.0.1, fixed invalid header of UCSF spectra file.
+**Jun 30, 2017**: Released v1.0.1, Fixed invalid header of UCSF spectra file.<br />
+**Jun 30, 2017**: Released v1.0.2, Set big endian default for UCSF spectra.
+
 
 ## Executable files
 
@@ -149,7 +151,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   --xCAR X-Axis Center [ppm]
   --yCAR Y-Axis Center [ppm]
   --zCAR Z-Axis Center [ppm]
-  --aCAR A-Axis Center [ppm]
+  --aCAR A-Axis Center [ppm1
 ~~~
 
 ### addazara2pipe: Two Azara spectra &rarr; Combination &rarr; stdout stream
@@ -366,8 +368,6 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 ### pipe2ucsf: stdin stream &rarr; UCSF spectra
 ~~~
  pipe2ucsf -o/--out outTemplate(2D/3D/4D)
-  -s/--swap  Byteswap data
-  -p/--pswap Byteswap parameter
   -l/--left  Left shift observable carrier frequency by sw/2
   -g/--orig  Rely on the origin frequency for spectral regulation
   --xLAB  X-Axis Label

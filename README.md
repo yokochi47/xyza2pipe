@@ -116,7 +116,8 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Alexander Eletsky**, University at Buffalo, for contribution to support XEASY format with code supply.<br />
 **Tomohide Saio**, Rutgers University, for contribution to develop auto-repair mechanism against partially broken file.<br />
 **Pascal Mercier**, University of Alberta, for alternative spectral regulation method relying on the origin frequency.<br />
-**Naohiro Kobayashi**, Osaka University, for reporting NMRView spectra conversion issue.
+**Naohiro Kobayashi**, Osaka University, for reporting NMRView spectra conversion issue.<br />
+**Nicholas Fitzkee**, Mississippi State University, for reporting invalid Sparky spectra issue. 
 
 ## Release notes
 
@@ -128,7 +129,8 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Jan 30, 2014**: Added defl2pipe command to enforce dimensionarity to 2D spectra.<br />
 **Jun 26, 2015**: Fixed invalid header of NMRView and UCSF spectra file.<br />
 **Nov 16, 2015**: pipe2xyza allows inline transposing if filename is not specified.<br />
-**Feb 07, 2017**: Released v1.0.0 @ GitHub, Inc. under Apache License V2.
+**Feb 07, 2017**: Released v1.0.0 @ GitHub, Inc. under Apache License V2.<br />
+**Jun 30, 2017**: Released v1.0.1, fixed invalid header of UCSF spectra file.
 
 ## Executable files
 

@@ -52,7 +52,8 @@ int pullucsf2d(char spectra2d[])
 
 	memset(&(header[0]), 0, headersize * sizeof(char));
 
-	sprintf(header, "UCSF NMR%c%c", dimension, 1);
+	sprintf(header, "UCSF NMR");
+	sprintf(header + 10, "%c%c", dimension, 1);
 
 	j = 12;
 	swrite2mem_swap(header + j, 2, swappar);
@@ -182,7 +183,8 @@ int pullucsf3d(char spectra3d[])
 
 	memset(&(header[0]), 0, headersize * sizeof(char));
 
-	sprintf(header, "UCSF NMR%c%c", dimension, 1);
+	sprintf(header, "UCSF NMR");
+	sprintf(header + 10, "%c%c", dimension, 1);
 
 	j = 12;
 	swrite2mem_swap(header + j, 2, swappar);
@@ -320,7 +322,8 @@ int pullucsf4d(char spectra4d[])
 
 	memset(&(header[0]), 0, headersize * sizeof(char));
 
-	sprintf(header, "UCSF NMR%c%c", dimension, 1);
+	sprintf(header, "UCSF NMR");
+	sprintf(header + 10, "%c%c", dimension, 1);
 
 	j = 12;
 	swrite2mem_swap(header + j, 2, swappar);

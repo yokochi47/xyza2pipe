@@ -21,7 +21,7 @@ limitations under the License.
 #include "xyza2pipe.h"
 
 static const char *usage[] = {
-		"pipe2ucsf -o/--out outTemplate(2D/3D/4D) < stdin\n", "Optional Arguments:\n",
+		"pipe2ucsf -o/--out outTemplate(2D/3D/4D) < stdin\n", "Optional Arguments:\n", " -s/--swap  Byteswap data\n",
 		" -l/--left  Left shift observable carrier frequency by sw/2\n",
 		" -g/--orig  Rely on the origin frequency for spectral regulation\n", " --xLAB X-Axis Label\n",
 		" --yLAB Y-Axis Label\n", " --zLAB Z-Axis Label\n", " --aLAB A-Axis Label\n", " --xCAR X-Axis Center [ppm]\n",
@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
 
 	static struct option options[] = {
 			{"out", required_argument, 0, 'o'},
+			{"swap", no_argument, 0, 's'},
 			{"left", no_argument, 0, 'l'},
 			{"orig", no_argument, 0, 'g'},
 			{"xLAB", required_argument, 0, 6},
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
 	};
 
 	while (1) {
-		l = getopt_long(argc, argv, "o:lg", options, &opt_idx);
+		l = getopt_long(argc, argv, "o:slg", options, &opt_idx);
 
 		if (l == -1)
 			break;
@@ -67,6 +68,9 @@ int main(int argc, char *argv[])
 		case 'o':
 			if (optarg)
 				strncpy(filename, optarg, MAXLONGNAME);
+			break;
+		case 's':
+			swapdata = 1;
 			break;
 		case 'l':
 			leftcar = 1;

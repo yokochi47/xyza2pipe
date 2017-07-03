@@ -24,7 +24,7 @@ Importer: File (reading) &rarr; Stream (stdout) | Exporter: Stream (stdin) &rarr
 
 Importer: File (reading) &rarr; Stream (stdout) | Projection | Exporter: Stream (stdin) &rarr; File (writing)
 ----------------------------------------------- | ---------- | ----------------------------------------------
-`xyza2pipe --in filename%03d.ft` (3D)<br />`xyza2pipe --in filename%02d%03d.ft` (4D)<br />`ucsf2pipe --in filename.ucsf`<br />`nv2pipe --in filename.nv`<br />`xeasy2pipe --in filename.16`<br />`azara2pipe --in filename.spc`<br />`vnmr2pipe --in filename%d` or `filename` (3D/4D)<br />`xwnmr2pipe --in 3rrr/4rrrr` | `pipe2proj`<br />`pipe2proj --out proj.ft;` | `pipe2ucsf --out proj.ucsf`<br />`pipe2nv --out proj.nv`<br />`pipe2xeasy --out proj.16`<br />`pipe2azara --out proj.spc`
+`xyza2pipe --in filename%03d.ft` (3D)<br />`xyza2pipe --in filename%02d%03d.ft` (4D)<br />`ucsf2pipe --in filename.ucsf`<br />`nv2pipe --in filename.nv`<br />`xeasy2pipe --in filename.16`<br />`azara2pipe --in filename.spc`<br />`vnmr2pipe --in filename%d` or `filename` (3D/4D)<br />`xwnmr2pipe --in 3rrr/4rrrr` | `pipe2proj`<br />or</br />`pipe2proj --out proj.ft;` | `pipe2ucsf --out proj.ucsf`<br />`pipe2nv --out proj.nv`<br />`pipe2xeasy --out proj.16`<br />`pipe2azara --out proj.spc`
 
 - Effective pipeline combinations (conversion and transposing):<br />
  - To transpose NMRPipe formatted spectra, Type `xyza2pipe | pipe2xyza`.
@@ -368,6 +368,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 ### pipe2ucsf: stdin stream &rarr; UCSF spectra
 ~~~
  pipe2ucsf -o/--out outTemplate(2D/3D/4D)
+  -s/--swap  Byteswap data
   -l/--left  Left shift observable carrier frequency by sw/2
   -g/--orig  Rely on the origin frequency for spectral regulation
   --xLAB  X-Axis Label

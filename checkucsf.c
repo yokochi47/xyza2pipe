@@ -304,7 +304,7 @@ int checkucsf(char filename[])
 		/* CHECK FILE SIZE */
 		if (size != sizeof(float) * datasize[0] * datasize[1] + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float) * datasize[0] * datasize[1] + headersize));
+					(int) (sizeof(float)) * datasize[0] * datasize[1] + headersize);
 
 			fprintf(stderr, "Try to fix data points from file size...\n");
 
@@ -498,7 +498,7 @@ int checkucsf(char filename[])
 		/* CHECK FILE SIZE */
 		if (size != sizeof(float) * datasize[0] * datasize[1] * datasize[2] + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float) * datasize[0] * datasize[1] * datasize[2] + headersize));
+					(int) (sizeof(float)) * datasize[0] * datasize[1] * datasize[2] + headersize);
 
 			fprintf(stderr, "Try to fix data points from file size...\n");
 
@@ -703,7 +703,7 @@ int checkucsf(char filename[])
 		/* CHECK FILE SIZE */
 		if (size != sizeof(float) * datasize[0] * datasize[1] * datasize[2] * datasize[3] + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float) * datasize[0] * datasize[1] * datasize[2] * datasize[3] + headersize));
+					(int) (sizeof(float)) * datasize[0] * datasize[1] * datasize[2] * datasize[3] + headersize);
 
 			fprintf(stderr, "Try to fix data points from file size...\n");
 

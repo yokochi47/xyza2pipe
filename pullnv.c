@@ -26,7 +26,7 @@ static char clean_string[MAXCHAR] =
 int pullnv2d(char spectra2d[])
 {
 	FILE *fp;
-	int i, j, l, count = 0;
+	int i, j, k, l, count = 0;
 	int block_size, block_i, block_j, block_id;
 	int offset_i, offset_j, offset;
 	short swapped = 0;
@@ -68,8 +68,19 @@ int pullnv2d(char spectra2d[])
 		blocksize[i] = datasize[i];
 
 	while ((block_size = blocksize[0] * blocksize[1]) > NV_MAXBLOCKSIZE) {
-		for (i = 0; i < dimension; i++)
-			blocksize[i] /= 2;
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(sqrt(NV_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
 	}
 
 	block_size = blocksize[0] * blocksize[1];
@@ -223,8 +234,19 @@ int pullnv3d(char spectra3d[])
 		blocksize[i] = datasize[i];
 
 	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) > NV_MAXBLOCKSIZE) {
-		for (i = 0; i < dimension; i++)
-			blocksize[i] /= 2;
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(sqrt(NV_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
 	}
 
 	for (i = 0; i < dimension; i++)
@@ -381,8 +403,19 @@ int pullnv4d(char spectra4d[])
 		blocksize[i] = datasize[i];
 
 	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) > NV_MAXBLOCKSIZE) {
-		for (i = 0; i < dimension; i++)
-			blocksize[i] /= 2;
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(sqrt(NV_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
 	}
 
 	for (i = 0; i < dimension; i++)

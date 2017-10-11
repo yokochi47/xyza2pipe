@@ -50,6 +50,7 @@ limitations under the License.
 
 #define UCSF_MAXBLOCKSIZE	8192	/* Max Block Size: 32KB */
 #define NV_MAXBLOCKSIZE		8192	/* Max Block Size: 32KB */
+#define AZARA_MAXBLOCKSIZE	8192	/* Max Block Size: 32KB */
 #define XEASY_MAXBLOCKSIZE	8192	/* Max Block Size: 16KB */
 
 #define NULLPPM			-100.0

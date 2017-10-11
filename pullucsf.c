@@ -26,7 +26,7 @@ static char clean_string[MAXCHAR] =
 int pullucsf2d(char spectra2d[])
 {
 	FILE *fp;
-	int i, j, count = 0;
+	int i, j, k, count = 0;
 	int block_size, block_i, block_j, block_id;
 	int offset_i, offset_j, offset;
 	short swapped = 0;
@@ -65,8 +65,19 @@ int pullucsf2d(char spectra2d[])
 		blocksize[i] = datasize[i];
 
 	while ((block_size = blocksize[0] * blocksize[1]) > UCSF_MAXBLOCKSIZE) {
-		for (i = 0; i < dimension; i++)
-			blocksize[i] /= 2;
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(sqrt(UCSF_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
 	}
 
 	for (i = 0; i < dimension; i++)
@@ -150,6 +161,7 @@ int pullucsf2d(char spectra2d[])
 	return 1;
 }
 
+
 int pullucsf3d(char spectra3d[])
 {
 	FILE *fp;
@@ -195,12 +207,20 @@ int pullucsf3d(char spectra3d[])
 		blocksize[i] = datasize[i];
 
 	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) > UCSF_MAXBLOCKSIZE) {
-		for (i = 0; i < dimension; i++)
-			blocksize[i] /= 2;
-	}
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
 
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(sqrt(UCSF_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
+	}
 
 	j = 198;
 	for (i = 0; i < dimension; i++)
@@ -333,8 +353,19 @@ int pullucsf4d(char spectra4d[])
 		blocksize[i] = datasize[i];
 
 	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) > UCSF_MAXBLOCKSIZE) {
-		for (i = 0; i < dimension; i++)
-			blocksize[i] /= 2;
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(sqrt(UCSF_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
 	}
 
 	for (i = 0; i < dimension; i++)

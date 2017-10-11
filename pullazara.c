@@ -27,7 +27,7 @@ int pullazara2d(char spectra2d[])
 {
 	FILE *fp;
 	char parfile[MAXLONGNAME];
-	int i, j, count = 0;
+	int i, j, k, count = 0;
 	int block_size, block_i, block_j, block_id;
 	int offset_i, offset_j, offset;
 	short swapped = 0;
@@ -55,13 +55,32 @@ int pullazara2d(char spectra2d[])
 	fprintf(fp, "ndim 2\n");
 	fprintf(fp, "file %s\n", spectra2d);
 
+	for (i = 0; i < dimension; i++)
+		blocksize[i] = datasize[i];
+
+	while ((block_size = blocksize[0] * blocksize[1]) > AZARA_MAXBLOCKSIZE) {
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(sqrt(AZARA_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
+	}
+
+	for (i = 0; i < dimension; i++)
+		unitsize[i] = datasize[i] / blocksize[i];
+
+
 	for (j = 0; j < dimension; j++) {
 		fprintf(fp, "\ndim %d\n", j + 1);
 		fprintf(fp, "npts %d\n", datasize[j]);
-		if (j == 0)
-			blocksize[j] = 64;
-		else
-			blocksize[j] = 8;
 		fprintf(fp, "block %d\n", blocksize[j]);
 		fprintf(fp, "sw %f\n", spwidth[j]);
 		fprintf(fp, "sf %f\n", obsfreq[j]);
@@ -72,9 +91,6 @@ int pullazara2d(char spectra2d[])
 	}
 
 	fclose(fp);
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
 
 	if ((fp = fopen(spectra2d, "w")) == NULL) {
 		fprintf(stderr, "Permission denied to write %s.\n", spectra2d);
@@ -91,8 +107,6 @@ int pullazara2d(char spectra2d[])
 
 	if (openpipe2d(matrix2d) != 0)
 		goto escape;
-
-	block_size = blocksize[0] * blocksize[1];
 
 	for (j = 0; j < datasize[1]; j++) {
 		block_j = (int) (j / blocksize[1]);
@@ -159,13 +173,32 @@ int pullazara3d(char spectra3d[])
 	fprintf(fp, "ndim 3\n");
 	fprintf(fp, "file %s\n", spectra3d);
 
+	for (i = 0; i < dimension; i++)
+		blocksize[i] = datasize[i];
+
+	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) > AZARA_MAXBLOCKSIZE) {
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(sqrt(AZARA_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
+	}
+
+	for (i = 0; i < dimension; i++)
+		unitsize[i] = datasize[i] / blocksize[i];
+
+
 	for (j = 0; j < dimension; j++) {
 		fprintf(fp, "\ndim %d\n", j + 1);
 		fprintf(fp, "npts %d\n", datasize[j]);
-		if (j == 0)
-			blocksize[j] = 64;
-		else
-			blocksize[j] = 8;
 		fprintf(fp, "block %d\n", blocksize[j]);
 		fprintf(fp, "sw %f\n", spwidth[j]);
 		fprintf(fp, "sf %f\n", obsfreq[j]);
@@ -177,9 +210,6 @@ int pullazara3d(char spectra3d[])
 
 	fclose(fp);
 
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
-
 	if ((fp = fopen(spectra3d, "w")) == NULL) {
 		fprintf(stderr, "Permission denied to write %s.\n", spectra3d);
 		exit(EXIT_FAILURE);
@@ -189,8 +219,6 @@ int pullazara3d(char spectra3d[])
 	fprintf(stderr, "Writing %s <- pipe2azara ...\r", spectra3d);
 
 	matrix2d = fmalloc2d(datasize[1], datasize[0]);
-
-	block_size = blocksize[0] * blocksize[1] * blocksize[2];
 
 	for (k = 0; k < datasize[2]; k++) {
 		fprintf(stderr, "%s", clean_string);
@@ -268,13 +296,32 @@ int pullazara4d(char spectra4d[])
 	fprintf(fp, "ndim 4\n");
 	fprintf(fp, "file %s\n", spectra4d);
 
+	for (i = 0; i < dimension; i++)
+		blocksize[i] = datasize[i];
+
+	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) > AZARA_MAXBLOCKSIZE) {
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(sqrt(AZARA_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
+	}
+
+	for (i = 0; i < dimension; i++)
+		unitsize[i] = datasize[i] / blocksize[i];
+
+
 	for (j = 0; j < dimension; j++) {
 		fprintf(fp, "\ndim %d\n", j + 1);
 		fprintf(fp, "npts %d\n", datasize[j]);
-		if (j == 0)
-			blocksize[j] = 64;
-		else
-			blocksize[j] = 8;
 		fprintf(fp, "block %d\n", blocksize[j]);
 		fprintf(fp, "sw %f\n", spwidth[j]);
 		fprintf(fp, "sf %f\n", obsfreq[j]);
@@ -286,9 +333,6 @@ int pullazara4d(char spectra4d[])
 
 	fclose(fp);
 
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
-
 	if ((fp = fopen(spectra4d, "w")) == NULL) {
 		fprintf(stderr, "Permission denied to write %s.\n", spectra4d);
 		exit(EXIT_FAILURE);
@@ -298,8 +342,6 @@ int pullazara4d(char spectra4d[])
 	fprintf(stderr, "Writing %s <- pipe2azara ...\r", spectra4d);
 
 	matrix2d = fmalloc2d(datasize[1], datasize[0]);
-
-	block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3];
 
 	for (l = 0; l < datasize[3]; l++) {
 		block_l = (int) (l / blocksize[3]);

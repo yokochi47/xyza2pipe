@@ -30,7 +30,7 @@ int pullxeasy2d(char spectra2d[])
 	FILE *fp;
 	char parfile[MAXLONGNAME];
 	unsigned char x16[2];
-	int i, j, count = 0;
+	int i, j, k, count = 0;
 	int block_size, block_i, block_j, block_id;
 	int offset_i, offset_j, offset;
 	float **matrix2d;
@@ -53,8 +53,18 @@ int pullxeasy2d(char spectra2d[])
 		blocksize[i] = datasize[i];
 
 	while ((block_size = blocksize[0] * blocksize[1]) > XEASY_MAXBLOCKSIZE) {
-		for (i = 0; i < dimension; i++)
-			blocksize[i] /= 2;
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(sqrt(XEASY_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
 	}
 
 	for (i = 0; i < dimension; i++)
@@ -165,8 +175,18 @@ int pullxeasy3d(char spectra3d[])
 		blocksize[i] = datasize[i];
 
 	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) > XEASY_MAXBLOCKSIZE) {
-		for (i = 0; i < dimension; i++)
-			blocksize[i] /= 2;
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(sqrt(XEASY_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
 	}
 
 	for (i = 0; i < dimension; i++)
@@ -282,8 +302,18 @@ int pullxeasy4d(char spectra4d[])
 		blocksize[i] = datasize[i];
 
 	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) > XEASY_MAXBLOCKSIZE) {
-		for (i = 0; i < dimension; i++)
-			blocksize[i] /= 2;
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+					break;
+				}
+			}
+			if (j == datasize[i] / 8)
+				k++;
+		}
+		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(sqrt(XEASY_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+			break;
 	}
 
 	for (i = 0; i < dimension; i++)

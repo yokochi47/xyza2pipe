@@ -72,11 +72,15 @@ int pullucsf2d(char spectra2d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1]) <= UCSF_MAXBLOCKSIZE)
+				break;
 		}
 
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(sqrt(UCSF_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(UCSF_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 
@@ -214,13 +218,20 @@ int pullucsf3d(char spectra3d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= UCSF_MAXBLOCKSIZE)
+				break;
 		}
 
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(sqrt(UCSF_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(UCSF_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
+
+	for (i = 0; i < dimension; i++)
+		unitsize[i] = datasize[i] / blocksize[i];
 
 	j = 198;
 	for (i = 0; i < dimension; i++)
@@ -360,11 +371,15 @@ int pullucsf4d(char spectra4d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= UCSF_MAXBLOCKSIZE)
+				break;
 		}
 
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(sqrt(UCSF_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(UCSF_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 

@@ -75,15 +75,17 @@ int pullnv2d(char spectra2d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1]) <= NV_MAXBLOCKSIZE)
+				break;
 		}
 
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(sqrt(NV_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(NV_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
-
-	block_size = blocksize[0] * blocksize[1];
 
 	for (i = 0; i < dimension; i++)
 		unitsize[i] = datasize[i] / blocksize[i];
@@ -241,11 +243,15 @@ int pullnv3d(char spectra3d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= NV_MAXBLOCKSIZE)
+				break;
 		}
 
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(sqrt(NV_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(NV_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 
@@ -410,11 +416,15 @@ int pullnv4d(char spectra4d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= NV_MAXBLOCKSIZE)
+				break;
 		}
 
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(sqrt(NV_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(NV_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 

@@ -60,10 +60,15 @@ int pullxeasy2d(char spectra2d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1]) <= XEASY_MAXBLOCKSIZE)
+				break;
 		}
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(sqrt(XEASY_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(XEASY_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 
@@ -182,10 +187,15 @@ int pullxeasy3d(char spectra3d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= XEASY_MAXBLOCKSIZE)
+				break;
 		}
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(sqrt(XEASY_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(XEASY_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 
@@ -309,10 +319,15 @@ int pullxeasy4d(char spectra4d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= XEASY_MAXBLOCKSIZE)
+				break;
 		}
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(sqrt(XEASY_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(XEASY_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 

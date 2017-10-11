@@ -66,17 +66,20 @@ int pullazara2d(char spectra2d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1]) <= AZARA_MAXBLOCKSIZE)
+				break;
 		}
 
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(sqrt(AZARA_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(AZARA_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 
 	for (i = 0; i < dimension; i++)
 		unitsize[i] = datasize[i] / blocksize[i];
-
 
 	for (j = 0; j < dimension; j++) {
 		fprintf(fp, "\ndim %d\n", j + 1);
@@ -184,17 +187,20 @@ int pullazara3d(char spectra3d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= AZARA_MAXBLOCKSIZE)
+				break;
 		}
 
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(sqrt(AZARA_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(AZARA_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 
 	for (i = 0; i < dimension; i++)
 		unitsize[i] = datasize[i] / blocksize[i];
-
 
 	for (j = 0; j < dimension; j++) {
 		fprintf(fp, "\ndim %d\n", j + 1);
@@ -307,17 +313,20 @@ int pullazara4d(char spectra4d[])
 					break;
 				}
 			}
+
 			if (j == datasize[i] / 8)
 				k++;
+
+			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= AZARA_MAXBLOCKSIZE)
+				break;
 		}
 
-		if (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(sqrt(AZARA_MAXBLOCKSIZE), dimension * dimension / (dimension - k)))
+		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(AZARA_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
 			break;
 	}
 
 	for (i = 0; i < dimension; i++)
 		unitsize[i] = datasize[i] / blocksize[i];
-
 
 	for (j = 0; j < dimension; j++) {
 		fprintf(fp, "\ndim %d\n", j + 1);

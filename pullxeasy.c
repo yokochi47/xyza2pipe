@@ -20,9 +20,6 @@ limitations under the License.
 
 #include "xyza2pipe.h"
 
-static char clean_string[MAXCHAR] =
-{ "\r                                                                               \r" };
-
 extern void float2xeasy(float x, unsigned char *lo16);
 
 int pullxeasy2d(char spectra2d[])
@@ -30,8 +27,8 @@ int pullxeasy2d(char spectra2d[])
 	FILE *fp;
 	char parfile[MAXLONGNAME];
 	unsigned char x16[2];
-	int i, j, k, count = 0;
-	int block_size, block_i, block_j, block_id;
+	int i, j, count = 0;
+	int block_volume, block_i, block_j, block_id;
 	int offset_i, offset_j, offset;
 	float **matrix2d;
 
@@ -49,31 +46,7 @@ int pullxeasy2d(char spectra2d[])
 		exit(EXIT_FAILURE);
 	}
 
-	for (i = 0; i < dimension; i++)
-		blocksize[i] = datasize[i];
-
-	while ((block_size = blocksize[0] * blocksize[1]) > XEASY_MAXBLOCKSIZE) {
-		for (i = k = 0; i < dimension; i++) {
-			for (j = 2; j < datasize[i] / 8; j++) {
-				if (blocksize[i] % j == 0) {
-					blocksize[i] /= j;
-					break;
-				}
-			}
-
-			if (j == datasize[i] / 8)
-				k++;
-
-			else if ((block_size = blocksize[0] * blocksize[1]) <= XEASY_MAXBLOCKSIZE)
-				break;
-		}
-
-		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(XEASY_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
-			break;
-	}
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+	block_volume = set_block_volume();
 
 	fprintf(fp, "Version ....................... 1\n");
 	fprintf(fp, "Number of dimensions .......... 2\n");
@@ -129,7 +102,7 @@ int pullxeasy2d(char spectra2d[])
 
 			offset = offset_i + offset_j * blocksize[0];
 
-			fseek(fp, (long) ((offset + block_id * block_size) * sizeof(short)), SEEK_SET);
+			fseek(fp, (long) ((offset + block_id * block_volume) * sizeof(short)), SEEK_SET);
 
 			float2xeasy(matrix2d[j][i], x16);
 
@@ -158,7 +131,7 @@ int pullxeasy3d(char spectra3d[])
 	char parfile[MAXLONGNAME];
 	unsigned char x16[2];
 	int i, j, k, count = 0;
-	int block_size, block_i, block_j, block_k, block_id;
+	int block_volume, block_i, block_j, block_k, block_id;
 	int offset_i, offset_j, offset_k, offset;
 	float **matrix2d;
 
@@ -176,31 +149,7 @@ int pullxeasy3d(char spectra3d[])
 		exit(EXIT_FAILURE);
 	}
 
-	for (i = 0; i < dimension; i++)
-		blocksize[i] = datasize[i];
-
-	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) > XEASY_MAXBLOCKSIZE) {
-		for (i = k = 0; i < dimension; i++) {
-			for (j = 2; j < datasize[i] / 8; j++) {
-				if (blocksize[i] % j == 0) {
-					blocksize[i] /= j;
-					break;
-				}
-			}
-
-			if (j == datasize[i] / 8)
-				k++;
-
-			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= XEASY_MAXBLOCKSIZE)
-				break;
-		}
-
-		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(XEASY_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
-			break;
-	}
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+	block_volume = set_block_volume();
 
 	fprintf(fp, "Version ....................... 1\n");
 	fprintf(fp, "Number of dimensions .......... 3\n");
@@ -260,7 +209,7 @@ int pullxeasy3d(char spectra3d[])
 
 				offset = offset_i + (offset_j + offset_k * blocksize[1]) * blocksize[0];
 
-				fseek(fp, (long) ((offset + block_id * block_size) * sizeof(short)), SEEK_SET);
+				fseek(fp, (long) ((offset + block_id * block_volume) * sizeof(short)), SEEK_SET);
 
 				float2xeasy(matrix2d[j][i], x16);
 
@@ -290,7 +239,7 @@ int pullxeasy4d(char spectra4d[])
 	char parfile[MAXLONGNAME];
 	unsigned char x16[2];
 	int i, j, k, l, count = 0;
-	int block_size, block_i, block_j, block_k, block_l, block_id;
+	int block_volume, block_i, block_j, block_k, block_l, block_id;
 	int offset_i, offset_j, offset_k, offset_l, offset;
 	float **matrix2d;
 
@@ -308,31 +257,7 @@ int pullxeasy4d(char spectra4d[])
 		exit(EXIT_FAILURE);
 	}
 
-	for (i = 0; i < dimension; i++)
-		blocksize[i] = datasize[i];
-
-	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) > XEASY_MAXBLOCKSIZE) {
-		for (i = k = 0; i < dimension; i++) {
-			for (j = 2; j < datasize[i] / 8; j++) {
-				if (blocksize[i] % j == 0) {
-					blocksize[i] /= j;
-					break;
-				}
-			}
-
-			if (j == datasize[i] / 8)
-				k++;
-
-			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= XEASY_MAXBLOCKSIZE)
-				break;
-		}
-
-		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(XEASY_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
-			break;
-	}
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+	block_volume = set_block_volume();
 
 	fprintf(fp, "Version ....................... 1\n");
 	fprintf(fp, "Number of dimensions .......... 4\n");
@@ -396,7 +321,7 @@ int pullxeasy4d(char spectra4d[])
 
 					offset = offset_i + (offset_j + (offset_k + offset_l * blocksize[2]) * blocksize[1]) * blocksize[0];
 
-					fseek(fp, (long) ((offset + block_id * block_size) * sizeof(short)), SEEK_SET);
+					fseek(fp, (long) ((offset + block_id * block_volume) * sizeof(short)), SEEK_SET);
 
 					float2xeasy(matrix2d[j][i], x16);
 

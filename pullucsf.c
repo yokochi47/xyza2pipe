@@ -20,14 +20,11 @@ limitations under the License.
 
 #include "xyza2pipe.h"
 
-static char clean_string[MAXCHAR] =
-{ "\r                                                                               \r" };
-
 int pullucsf2d(char spectra2d[])
 {
 	FILE *fp;
-	int i, j, k, count = 0;
-	int block_size, block_i, block_j, block_id;
+	int i, j, count = 0;
+	int block_volume, block_i, block_j, block_id;
 	int offset_i, offset_j, offset;
 	short swapped = 0;
 	float **matrix2d;
@@ -61,31 +58,7 @@ int pullucsf2d(char spectra2d[])
 	for (i = 0; i < dimension; i++)
 		memcpy(header + j + 128 * i, axisname[i], MAXASSNAME);
 
-	for (i = 0; i < dimension; i++)
-		blocksize[i] = datasize[i];
-
-	while ((block_size = blocksize[0] * blocksize[1]) > UCSF_MAXBLOCKSIZE) {
-		for (i = k = 0; i < dimension; i++) {
-			for (j = 2; j < datasize[i] / 8; j++) {
-				if (blocksize[i] % j == 0) {
-					blocksize[i] /= j;
-					break;
-				}
-			}
-
-			if (j == datasize[i] / 8)
-				k++;
-
-			else if ((block_size = blocksize[0] * blocksize[1]) <= UCSF_MAXBLOCKSIZE)
-				break;
-		}
-
-		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(UCSF_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
-			break;
-	}
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+	block_volume = set_block_volume();
 
 	j = 198;
 	for (i = 0; i < dimension; i++)
@@ -144,7 +117,7 @@ int pullucsf2d(char spectra2d[])
 
 			offset = offset_j + offset_i * blocksize[1];
 
-			fseek(fp, (long) (headersize + (offset + block_id * block_size) * sizeof(float)), SEEK_SET);
+			fseek(fp, (long) (headersize + (offset + block_id * block_volume) * sizeof(float)), SEEK_SET);
 
 			fpwrite2bin_swap(fp, &(matrix2d[j][i]), 1, swapdata);
 		}
@@ -170,7 +143,7 @@ int pullucsf3d(char spectra3d[])
 {
 	FILE *fp;
 	int i, j, k, count = 0;
-	int block_size, block_i, block_j, block_k, block_id;
+	int block_volume, block_i, block_j, block_k, block_id;
 	int offset_i, offset_j, offset_k, offset;
 	short swapped = 0;
 	float **matrix2d;
@@ -207,31 +180,7 @@ int pullucsf3d(char spectra3d[])
 	for (i = 0; i < dimension; i++)
 		memcpy(header + j + 128 * i, axisname[i], MAXASSNAME);
 
-	for (i = 0; i < dimension; i++)
-		blocksize[i] = datasize[i];
-
-	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) > UCSF_MAXBLOCKSIZE) {
-		for (i = k = 0; i < dimension; i++) {
-			for (j = 2; j < datasize[i] / 8; j++) {
-				if (blocksize[i] % j == 0) {
-					blocksize[i] /= j;
-					break;
-				}
-			}
-
-			if (j == datasize[i] / 8)
-				k++;
-
-			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= UCSF_MAXBLOCKSIZE)
-				break;
-		}
-
-		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(UCSF_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
-			break;
-	}
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+	block_volume = set_block_volume();
 
 	j = 198;
 	for (i = 0; i < dimension; i++)
@@ -294,7 +243,7 @@ int pullucsf3d(char spectra3d[])
 
 				offset = offset_k + (offset_j + offset_i * blocksize[1]) * blocksize[2];
 
-				fseek(fp, (long) (headersize + (offset + block_id * block_size) * sizeof(float)), SEEK_SET);
+				fseek(fp, (long) (headersize + (offset + block_id * block_volume) * sizeof(float)), SEEK_SET);
 
 				fpwrite2bin_swap(fp, &(matrix2d[j][i]), 1, swapdata);
 			}
@@ -320,7 +269,7 @@ int pullucsf4d(char spectra4d[])
 {
 	FILE *fp;
 	int i, j, k, l, count = 0;
-	int block_size, block_i, block_j, block_k, block_l, block_id;
+	int block_volume, block_i, block_j, block_k, block_l, block_id;
 	int offset_i, offset_j, offset_k, offset_l, offset;
 	short swapped = 0;
 	float **matrix2d;
@@ -360,31 +309,7 @@ int pullucsf4d(char spectra4d[])
 	for (i = 0; i < dimension; i++)
 		memcpy(header + j + 128 * i, axisname[i], MAXASSNAME);
 
-	for (i = 0; i < dimension; i++)
-		blocksize[i] = datasize[i];
-
-	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) > UCSF_MAXBLOCKSIZE) {
-		for (i = k = 0; i < dimension; i++) {
-			for (j = 2; j < datasize[i] / 8; j++) {
-				if (blocksize[i] % j == 0) {
-					blocksize[i] /= j;
-					break;
-				}
-			}
-
-			if (j == datasize[i] / 8)
-				k++;
-
-			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= UCSF_MAXBLOCKSIZE)
-				break;
-		}
-
-		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(UCSF_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
-			break;
-	}
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+	block_volume = set_block_volume();
 
 	j = 198;
 	for (i = 0; i < dimension; i++)
@@ -451,7 +376,7 @@ int pullucsf4d(char spectra4d[])
 
 					offset = offset_l + (offset_k + (offset_j + offset_i * blocksize[1]) * blocksize[2]) * blocksize[3];
 
-					fseek(fp, (long) (headersize + (offset + block_id * block_size) * sizeof(float)), SEEK_SET);
+					fseek(fp, (long) (headersize + (offset + block_id * block_volume) * sizeof(float)), SEEK_SET);
 
 					fpwrite2bin_swap(fp, &(matrix2d[j][i]), 1, swapdata);
 				}

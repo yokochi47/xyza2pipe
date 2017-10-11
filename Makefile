@@ -56,19 +56,19 @@ OBJECTS_DBP	= checkxwnmr.o vendorpar.o openxwnmr.o pushaddxwnmr.o
 
 OBJECTS_DFL	= checkdefl.o openxyza.o pushxyza.o
 
-BIN		= ./bin
+BIN		= ./bin/
 
 ADD2PIPE_ALIAS	= addxyza2pipe
 
 all: $(TARGETS)
 	mkdir -p $(BIN)
-	cp -f $(TARGETS) $(BIN) 
-	@if [ ! -f $(BIN)/$(ADD2PIPE_ALIAS) ]; then (cd $(BIN); ln -s add2pipe $(ADD2PIPE_ALIAS)); fi	
+	cp -f $(TARGETS) $(BIN)
+	@if [ ! -f $(BIN)$(ADD2PIPE_ALIAS) ]; then (cd $(BIN); ln -s add2pipe $(ADD2PIPE_ALIAS)); fi
 
 clean:
 	rm -f *.o
 	rm -f $(TARGETS) $(ADD2PIPE_ALIAS)
-	rm -rf $(BIN)
+	rm -f $(addprefix $(BIN), $(TARGETS) addxyza2pipe)
 
 $(OBJECTS_MATH):
 	$(CC) $*.c -c -o $@ $(CFLAGS)

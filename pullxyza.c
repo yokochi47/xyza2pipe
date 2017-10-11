@@ -20,9 +20,6 @@ limitations under the License.
 
 #include "xyza2pipe.h"
 
-static char clean_string[MAXCHAR] =
-{ "\r                                                                               \r" };
-
 int pullxyza2d(char spectra2d[], const char axis_option)
 {
 	FILE *fp = (spectra2d[0] == 0 ? stdout : NULL);

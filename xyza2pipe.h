@@ -48,10 +48,7 @@ limitations under the License.
 #define PIPE_HEADERSIZE		2048
 #define NV_HEADERSIZE		2048
 
-#define UCSF_MAXBLOCKSIZE	8192	/* Max Block Size: 32KB */
-#define NV_MAXBLOCKSIZE		8192	/* Max Block Size: 32KB */
-#define AZARA_MAXBLOCKSIZE	8192	/* Max Block Size: 32KB */
-#define XEASY_MAXBLOCKSIZE	8192	/* Max Block Size: 16KB */
+#define MAXBLOCKSIZE		8192	/* Max Block Size: 32KB (default), 16KB(XEASY) */
 
 #define NULLPPM			-100.0
 
@@ -103,7 +100,11 @@ void cnvhdr(const char axis_option, const char fb);
 
 int checkpipe();
 void make_dir(char filename[]);
+
+extern char clean_string[MAXCHAR];
 void set_clean_string(char clean_string[]);
+int get_block_volume();
+int set_block_volume();
 
 int openpipe2d(float **mat2d);
 

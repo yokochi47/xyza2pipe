@@ -31,7 +31,7 @@ int openvnmr2d(char monofile[], char pardir[], float **mat2d)
 	FILE *fp;
 	char string[MAXCHAR];
 	int i, j, _i, blk_inc;
-	int block_size, block_i, block_j, block_id;
+	int block_volume, block_i, block_j, block_id;
 	int offset_i, offset_j, offset, position;
 	long size = 0;
 	complex mix, ret;
@@ -91,7 +91,7 @@ int openvnmr2d(char monofile[], char pardir[], float **mat2d)
 
 #endif
 
-	block_size = fheader.ntraces * fheader.np;
+	block_volume = fheader.ntraces * fheader.np;
 
 	if (data_type == HYPERCOMPLEX_DATA) {
 		phi.x.r = phi.y.r = 0.0;
@@ -117,7 +117,7 @@ int openvnmr2d(char monofile[], char pardir[], float **mat2d)
 
 				offset = offset_i + offset_j * blocksize[0];
 
-				position = offset + block_id * block_size;
+				position = offset + block_id * block_volume;
 
 				fseek(fp, (long) (position * sizeof(float) + sizeof(datafilehead)), SEEK_SET);
 
@@ -154,7 +154,7 @@ int openvnmr2d(char monofile[], char pardir[], float **mat2d)
 
 				offset = offset_i + offset_j * blocksize[0];
 
-				position = offset + block_id * block_size;
+				position = offset + block_id * block_volume;
 
 				fseek(fp, (long) (position * sizeof(float) + sizeof(datafilehead)), SEEK_SET);
 
@@ -177,7 +177,7 @@ int openvnmr2d(char monofile[], char pardir[], float **mat2d)
 
 				offset = offset_i + offset_j * blocksize[0];
 
-				position = offset + block_id * block_size;
+				position = offset + block_id * block_volume;
 
 				fseek(fp, (long) (position * sizeof(float) + sizeof(datafilehead)), SEEK_SET);
 
@@ -200,7 +200,7 @@ int openvnmr3d(char monofile[], char pardir[], float ***mat3d)
 	struct stat _stat;
 	FILE *fp;
 	int i, j, k, _i, blk_inc;
-	int block_size, block_i, block_j, block_k, block_id;
+	int block_volume, block_i, block_j, block_k, block_id;
 	int offset_i, offset_j, offset_k, offset, position;
 	long size = 0;
 	enum_data_type data_type = HYPERCOMPLEX_DATA;
@@ -270,7 +270,7 @@ int openvnmr3d(char monofile[], char pardir[], float ***mat3d)
 
 #endif
 
-	block_size = fheader.ntraces * fheader.np;
+	block_volume = fheader.ntraces * fheader.np;
 
 	if (data_type == COMPLEX_DATA) {
 		blk_inc =
@@ -293,7 +293,7 @@ int openvnmr3d(char monofile[], char pardir[], float ***mat3d)
 
 					offset = offset_i + (offset_j + offset_k * blocksize[1]) * blocksize[0];
 
-					position = offset + block_id * block_size;
+					position = offset + block_id * block_volume;
 
 					fseek(fp, (long) (position * sizeof(float) + sizeof(datafilehead)), SEEK_SET);
 
@@ -321,7 +321,7 @@ int openvnmr3d(char monofile[], char pardir[], float ***mat3d)
 
 					offset = offset_i + (offset_j + offset_k * blocksize[1]) * blocksize[0];
 
-					position = offset + block_id * block_size;
+					position = offset + block_id * block_volume;
 
 					fseek(fp, (long) (position * sizeof(float) + sizeof(datafilehead)), SEEK_SET);
 
@@ -345,7 +345,7 @@ int openvnmr4d(char monofile[], char pardir[], float ****mat4d)
 	struct stat _stat;
 	FILE *fp;
 	int i, j, k, l, _i, blk_inc;
-	int block_size, block_i, block_j, block_k, block_l, block_id;
+	int block_volume, block_i, block_j, block_k, block_l, block_id;
 	int offset_i, offset_j, offset_k, offset_l, offset, position;
 	long size = 0;
 	enum_data_type data_type = HYPERCOMPLEX_DATA;
@@ -423,7 +423,7 @@ int openvnmr4d(char monofile[], char pardir[], float ****mat4d)
 
 #endif
 
-	block_size = fheader.ntraces * fheader.np;
+	block_volume = fheader.ntraces * fheader.np;
 
 	if (data_type == COMPLEX_DATA) {
 		blk_inc =
@@ -451,7 +451,7 @@ int openvnmr4d(char monofile[], char pardir[], float ****mat4d)
 
 						offset = offset_i + (offset_j + (offset_k + offset_l * blocksize[2]) * blocksize[1]) * blocksize[0];
 
-						position = offset + block_id * block_size;
+						position = offset + block_id * block_volume;
 
 						fseek(fp, (long) (position * sizeof(float) + sizeof(datafilehead)), SEEK_SET);
 
@@ -484,7 +484,7 @@ int openvnmr4d(char monofile[], char pardir[], float ****mat4d)
 
 						offset = offset_i + (offset_j + (offset_k + offset_l * blocksize[2]) * blocksize[1]) * blocksize[0];
 
-						position = offset + block_id * block_size;
+						position = offset + block_id * block_volume;
 
 						fseek(fp, (long) (position * sizeof(float) + sizeof(datafilehead)), SEEK_SET);
 

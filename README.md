@@ -105,7 +105,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 - Example (how to settle the endianness issue in the case of conversion from Azara to NMRPipe):<br />
  If the following pipeline command leads to generate radial spectra in some configuration.<br />
  `azara2pipe --in ./hsqc.spc | pipe2xyza --out ./hsqc.ft`
- 
+
  In our experience, '--swap' option is helpful, where the option changes the byte order of data region of the NMRPipe file.<br />
  `azara2pipe --in ./hsqc.spc | pipe2xyza --swap --out ./hsqc.ft`
 

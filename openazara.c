@@ -25,7 +25,7 @@ int openazara2d(char spectra2d[], float **mat2d)
 	struct stat _stat;
 	FILE *fp;
 	int i, j;
-	int block_size, block_i, block_j, block_id;
+	int block_volume = get_block_volume(), block_i, block_j, block_id;
 	int offset_i, offset_j, offset;
 	int datasize_2d = datasize[0] * datasize[1];
 	long size = 0;
@@ -45,8 +45,6 @@ int openazara2d(char spectra2d[], float **mat2d)
 		goto escape;
 	}
 
-	block_size = blocksize[0] * blocksize[1];
-
 	for (j = 0; j < datasize[1]; j++) {
 		block_j = (int) (j / blocksize[1]);
 		offset_j = j - block_j * blocksize[1];
@@ -59,7 +57,7 @@ int openazara2d(char spectra2d[], float **mat2d)
 
 			offset = offset_i + offset_j * blocksize[0];
 
-			fseek(fp, (long) ((offset + block_id * block_size) * sizeof(float)), SEEK_SET);
+			fseek(fp, (long) ((offset + block_id * block_volume) * sizeof(float)), SEEK_SET);
 
 			fread(&(mat2d[j][i]), sizeof(char), sizeof(float), fp);
 		}
@@ -82,7 +80,7 @@ int openazara3d(char spectra3d[], float ***mat3d)
 	struct stat _stat;
 	FILE *fp;
 	int i, j, k;
-	int block_size, block_i, block_j, block_k, block_id;
+	int block_volume = get_block_volume(), block_i, block_j, block_k, block_id;
 	int offset_i, offset_j, offset_k, offset;
 	int datasize_3d = datasize[0] * datasize[1] * datasize[2];
 	long size = 0;
@@ -102,8 +100,6 @@ int openazara3d(char spectra3d[], float ***mat3d)
 		goto escape;
 	}
 
-	block_size = blocksize[0] * blocksize[1] * blocksize[2];
-
 	for (k = 0; k < datasize[2]; k++) {
 		block_k = (int) (k / blocksize[2]);
 		offset_k = k - block_k * blocksize[2];
@@ -120,7 +116,7 @@ int openazara3d(char spectra3d[], float ***mat3d)
 
 				offset = offset_i + (offset_j + offset_k * blocksize[1]) * blocksize[0];
 
-				fseek(fp, (long) ((offset + block_id * block_size) * sizeof(float)), SEEK_SET);
+				fseek(fp, (long) ((offset + block_id * block_volume) * sizeof(float)), SEEK_SET);
 
 				fread(&(mat3d[k][j][i]), sizeof(char), sizeof(float), fp);
 			}
@@ -144,7 +140,7 @@ int openazara4d(char spectra4d[], float ****mat4d)
 	struct stat _stat;
 	FILE *fp;
 	int i, j, k, l;
-	int block_size, block_i, block_j, block_k, block_l, block_id;
+	int block_volume = get_block_volume(), block_i, block_j, block_k, block_l, block_id;
 	int offset_i, offset_j, offset_k, offset_l, offset;
 	int datasize_4d = datasize[0] * datasize[1] * datasize[2] * datasize[3];
 	long size = 0;
@@ -163,8 +159,6 @@ int openazara4d(char spectra4d[], float ****mat4d)
 				(int) (sizeof(float)) * datasize_4d);
 		goto escape;
 	}
-
-	block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3];
 
 	for (l = 0; l < datasize[3]; l++) {
 		block_l = (int) (l / blocksize[3]);
@@ -186,7 +180,7 @@ int openazara4d(char spectra4d[], float ****mat4d)
 
 					offset = offset_i + (offset_j + (offset_k + offset_l * blocksize[2]) * blocksize[1]) * blocksize[0];
 
-					fseek(fp, (long) ((offset + block_id * block_size) * sizeof(float)), SEEK_SET);
+					fseek(fp, (long) ((offset + block_id * block_volume) * sizeof(float)), SEEK_SET);
 
 					fread(&(mat4d[l][k][j][i]), sizeof(char), sizeof(float), fp);
 				}

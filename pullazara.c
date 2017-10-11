@@ -20,15 +20,12 @@ limitations under the License.
 
 #include "xyza2pipe.h"
 
-static char clean_string[MAXCHAR] =
-{ "\r                                                                               \r" };
-
 int pullazara2d(char spectra2d[])
 {
 	FILE *fp;
 	char parfile[MAXLONGNAME];
-	int i, j, k, count = 0;
-	int block_size, block_i, block_j, block_id;
+	int i, j, count = 0;
+	int block_volume, block_i, block_j, block_id;
 	int offset_i, offset_j, offset;
 	short swapped = 0;
 	float **matrix2d;
@@ -55,31 +52,7 @@ int pullazara2d(char spectra2d[])
 	fprintf(fp, "ndim 2\n");
 	fprintf(fp, "file %s\n", spectra2d);
 
-	for (i = 0; i < dimension; i++)
-		blocksize[i] = datasize[i];
-
-	while ((block_size = blocksize[0] * blocksize[1]) > AZARA_MAXBLOCKSIZE) {
-		for (i = k = 0; i < dimension; i++) {
-			for (j = 2; j < datasize[i] / 8; j++) {
-				if (blocksize[i] % j == 0) {
-					blocksize[i] /= j;
-					break;
-				}
-			}
-
-			if (j == datasize[i] / 8)
-				k++;
-
-			else if ((block_size = blocksize[0] * blocksize[1]) <= AZARA_MAXBLOCKSIZE)
-				break;
-		}
-
-		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1]) <= pow(AZARA_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
-			break;
-	}
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+	block_volume = set_block_volume();
 
 	for (j = 0; j < dimension; j++) {
 		fprintf(fp, "\ndim %d\n", j + 1);
@@ -123,7 +96,7 @@ int pullazara2d(char spectra2d[])
 
 			offset = offset_i + offset_j * blocksize[0];
 
-			fseek(fp, (long) (headersize + (offset + block_id * block_size) * sizeof(float)), SEEK_SET);
+			fseek(fp, (long) (headersize + (offset + block_id * block_volume) * sizeof(float)), SEEK_SET);
 
 			fpwrite2bin_swap(fp, &(matrix2d[j][i]), 1, swapdata);
 		}
@@ -149,7 +122,7 @@ int pullazara3d(char spectra3d[])
 	FILE *fp;
 	char parfile[MAXLONGNAME];
 	int i, j, k, count = 0;
-	int block_size, block_i, block_j, block_k, block_id;
+	int block_volume, block_i, block_j, block_k, block_id;
 	int offset_i, offset_j, offset_k, offset;
 	short swapped = 0;
 	float **matrix2d;
@@ -176,31 +149,7 @@ int pullazara3d(char spectra3d[])
 	fprintf(fp, "ndim 3\n");
 	fprintf(fp, "file %s\n", spectra3d);
 
-	for (i = 0; i < dimension; i++)
-		blocksize[i] = datasize[i];
-
-	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) > AZARA_MAXBLOCKSIZE) {
-		for (i = k = 0; i < dimension; i++) {
-			for (j = 2; j < datasize[i] / 8; j++) {
-				if (blocksize[i] % j == 0) {
-					blocksize[i] /= j;
-					break;
-				}
-			}
-
-			if (j == datasize[i] / 8)
-				k++;
-
-			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= AZARA_MAXBLOCKSIZE)
-				break;
-		}
-
-		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2]) <= pow(AZARA_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
-			break;
-	}
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+	block_volume = set_block_volume();
 
 	for (j = 0; j < dimension; j++) {
 		fprintf(fp, "\ndim %d\n", j + 1);
@@ -248,7 +197,7 @@ int pullazara3d(char spectra3d[])
 
 				offset = offset_i + (offset_j + offset_k * blocksize[1]) * blocksize[0];
 
-				fseek(fp, (long) (headersize + (offset + block_id * block_size) * sizeof(float)), SEEK_SET);
+				fseek(fp, (long) (headersize + (offset + block_id * block_volume) * sizeof(float)), SEEK_SET);
 
 				fpwrite2bin_swap(fp, &(matrix2d[j][i]), 1, swapdata);
 			}
@@ -275,7 +224,7 @@ int pullazara4d(char spectra4d[])
 	FILE *fp;
 	char parfile[MAXLONGNAME];
 	int i, j, k, l, count = 0;
-	int block_size, block_i, block_j, block_k, block_l, block_id;
+	int block_volume, block_i, block_j, block_k, block_l, block_id;
 	int offset_i, offset_j, offset_k, offset_l, offset;
 	short swapped = 0;
 	float **matrix2d;
@@ -302,31 +251,7 @@ int pullazara4d(char spectra4d[])
 	fprintf(fp, "ndim 4\n");
 	fprintf(fp, "file %s\n", spectra4d);
 
-	for (i = 0; i < dimension; i++)
-		blocksize[i] = datasize[i];
-
-	while ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) > AZARA_MAXBLOCKSIZE) {
-		for (i = k = 0; i < dimension; i++) {
-			for (j = 2; j < datasize[i] / 8; j++) {
-				if (blocksize[i] % j == 0) {
-					blocksize[i] /= j;
-					break;
-				}
-			}
-
-			if (j == datasize[i] / 8)
-				k++;
-
-			else if ((block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= AZARA_MAXBLOCKSIZE)
-				break;
-		}
-
-		if (i < dimension || (k > 0 && (block_size = blocksize[0] * blocksize[1] * blocksize[2] * blocksize[3]) <= pow(AZARA_MAXBLOCKSIZE, (float) dimension / (dimension - k))))
-			break;
-	}
-
-	for (i = 0; i < dimension; i++)
-		unitsize[i] = datasize[i] / blocksize[i];
+	block_volume = set_block_volume();
 
 	for (j = 0; j < dimension; j++) {
 		fprintf(fp, "\ndim %d\n", j + 1);
@@ -378,7 +303,7 @@ int pullazara4d(char spectra4d[])
 
 					offset = offset_i + (offset_j + (offset_k + offset_l * blocksize[2]) * blocksize[1]) * blocksize[0];
 
-					fseek(fp, (long) (headersize + (offset + block_id * block_size) * sizeof(float)), SEEK_SET);
+					fseek(fp, (long) (headersize + (offset + block_id * block_volume) * sizeof(float)), SEEK_SET);
 
 					fpwrite2bin_swap(fp, &(matrix2d[j][i]), 1, swapdata);
 				}

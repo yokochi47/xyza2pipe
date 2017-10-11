@@ -46,3 +46,61 @@ float usrcenter[4] = { NULLPPM };
 float phase[4][2];
 
 const float PIPE_HEADER[3] = { PIPE_HEADER_0, PIPE_HEADER_1, PIPE_HEADER_2 };
+
+char clean_string[MAXCHAR] =
+{ "\r                                                                               \r" };
+
+int get_block_volume()
+{
+	int block_volume = 1;
+
+	switch (dimension) {
+	case 4:
+		block_volume *= blocksize[3];
+		/* no break */
+
+	case 3:
+		block_volume *= blocksize[2];
+		/* no break */
+
+	case 2:
+		block_volume *= blocksize[1] * blocksize[0];
+	}
+
+	return block_volume;
+}
+
+int set_block_volume()
+{
+	int i, j, k;
+
+	for (i = 0; i < dimension; i++)
+		blocksize[i] = datasize[i];
+
+	while (get_block_volume() > MAXBLOCKSIZE) {
+		for (i = k = 0; i < dimension; i++) {
+			for (j = 2; j < datasize[i] / 8; j++) {
+				if (blocksize[i] % j == 0) {
+					blocksize[i] /= j;
+
+					break;
+
+				}
+			}
+
+			if (j == datasize[i] / 8)
+				k++;
+
+			else if (get_block_volume() <= MAXBLOCKSIZE)
+				break;
+		}
+
+		if (i < dimension || (k > 0 && get_block_volume() <= pow(MAXBLOCKSIZE, (float) dimension / (dimension - k))))
+			break;
+	}
+
+	for (i = 0; i < dimension; i++)
+		unitsize[i] = datasize[i] / blocksize[i];
+
+	return get_block_volume();
+}

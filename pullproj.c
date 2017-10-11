@@ -20,9 +20,6 @@ limitations under the License.
 
 #include "xyza2pipe.h"
 
-static char clean_string[MAXCHAR] =
-{ "\r                                                                               \r" };
-
 int pullproj2d(char filename[], const int abs_mode)
 {
 	FILE *fp = (filename[0] == 0 ? stdout : NULL);

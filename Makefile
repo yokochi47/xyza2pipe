@@ -56,11 +56,19 @@ OBJECTS_DBP	= checkxwnmr.o vendorpar.o openxwnmr.o pushaddxwnmr.o
 
 OBJECTS_DFL	= checkdefl.o openxyza.o pushxyza.o
 
+BIN		= ./bin
+
+ADD2PIPE_ALIAS	= addxyza2pipe
+
 all: $(TARGETS)
+	mkdir -p $(BIN)
+	cp -f $(TARGETS) $(BIN) 
+	@if [ ! -f $(BIN)/$(ADD2PIPE_ALIAS) ]; then (cd $(BIN); ln -s add2pipe $(ADD2PIPE_ALIAS)); fi	
 
 clean:
 	rm -f *.o
-	rm -f $(TARGETS) addxyza2pipe
+	rm -f $(TARGETS) $(ADD2PIPE_ALIAS)
+	rm -rf $(BIN)
 
 $(OBJECTS_MATH):
 	$(CC) $*.c -c -o $@ $(CFLAGS)
@@ -123,8 +131,7 @@ pipe2proj: $(OBJECTS_C) $(OBJECTS_PJ)
 add2pipe: $(OBJECTS_C) $(OBJECTS_DXP)
 	$(CC) $@.c $^ -o $@ \
 	$(CFLAGS) $(MFLAGS)
-	rm -f addxyza2pipe
-	ln -s add2pipe addxyza2pipe
+	test ! -f $(ADD2PIPE_ALIAS) && ln -s $@ $(ADD2PIPE_ALIAS)
 
 adducsf2pipe: $(OBJECTS_C) $(OBJECTS_DUP)
 	$(CC) $@.c $^ -o $@ \

@@ -132,7 +132,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Nov 16, 2015**: pipe2xyza allows inline transposing if filename is not specified.<br />
 **Feb 07, 2017**: Released v1.0.0 @ GitHub, Inc. under Apache License V2.<br />
 **Jun 30, 2017**: Released v1.0.1, Fixed invalid header of UCSF spectra file.<br />
-**Jun 30, 2017**: Released v1.0.2, Set big endian as default for UCSF spectra.
+**Jun 30, 2017**: Released v1.0.2, Set big endian as default for UCSF spectra.<br />
 **Oct 11, 2017**: Released v1.0.3, Fixed problem with block size when data size is odd.
 
 ## Executable files

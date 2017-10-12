@@ -61,14 +61,16 @@ BIN		= ./bin/
 ADD2PIPE_ALIAS	= addxyza2pipe
 
 all: $(TARGETS)
-	mkdir -p $(BIN)
-	cp -f $(TARGETS) $(BIN)
-	@if [ ! -f $(BIN)$(ADD2PIPE_ALIAS) ]; then (cd $(BIN); ln -s add2pipe $(ADD2PIPE_ALIAS)); fi
 
 clean:
 	rm -f *.o
 	rm -f $(TARGETS) $(ADD2PIPE_ALIAS)
 	rm -f $(addprefix $(BIN), $(TARGETS) addxyza2pipe)
+
+install: $(TARGETS)
+	mkdir -p $(BIN)
+	cp -f $(TARGETS) $(BIN)
+	@if [ ! -f $(BIN)$(ADD2PIPE_ALIAS) ]; then (cd $(BIN); ln -s add2pipe $(ADD2PIPE_ALIAS)); fi
 
 $(OBJECTS_MATH):
 	$(CC) $*.c -c -o $@ $(CFLAGS)

@@ -106,7 +106,7 @@ int pullxyza2d(char spectra2d[], const char axis_option)
 
 		fwrite(header, sizeof(char), PIPE_HEADERSIZE, fp);
 
-		fpwrite2bin_swap(fp, &(matrix2d[0][0]), datasize[1] * datasize[0], swapdata);
+		fpwrite2bin_swap(fp, &(matrix2d[0][0]), get_data_plane(), swapdata);
 
 		if (fp != stdout)
 			fclose(fp);
@@ -163,6 +163,7 @@ int pullxyza3d(char spectra3d[], const char axis_option)
 	FILE *fp = (spectra3d[0] == 0 ? stdout : NULL);
 	char filename[MAXLONGNAME];
 	int i, j, k, count = 0, axisorder[4] = { 0 }, orderaxis[4];
+	int data_plane = get_data_plane(), rcv_planes, dataw_plane;
 	float *vp, **matrix2d, ***matrix3d_;
 
 	if (fp != stdout)
@@ -228,12 +229,14 @@ int pullxyza3d(char spectra3d[], const char axis_option)
 
 	matrix2d = fmalloc2d(datasize[1], datasize[0]);
 
+	rcv_planes = datasize[2];
+
 	switch (axis_option) {
 	case 'x':
 	case 'a':
 		for (k = 0; k < datasize[2]; k++) {
 			fprintf(stderr, "%s", clean_string);
-			fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, datasize[2]);
+			fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, rcv_planes);
 
 			if (openpipe2d(matrix2d) != 0)
 				goto escape;
@@ -254,7 +257,7 @@ int pullxyza3d(char spectra3d[], const char axis_option)
 			if (k == 0 || fp != stdout)
 				fwrite(header, sizeof(char), PIPE_HEADERSIZE, fp);
 
-			fpwrite2bin_swap(fp, &(matrix2d[0][0]), datasize[1] * datasize[0], swapdata);
+			fpwrite2bin_swap(fp, &(matrix2d[0][0]), data_plane, swapdata);
 
 			if (fp != stdout)
 				fclose(fp);
@@ -267,7 +270,7 @@ int pullxyza3d(char spectra3d[], const char axis_option)
 	case 'y':
 		for (k = 0; k < datasize[2]; k++) {
 			fprintf(stderr, "%s", clean_string);
-			fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, datasize[2]);
+			fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, rcv_planes);
 
 			if (openpipe2d(matrix2d) != 0)
 				goto escape;
@@ -307,7 +310,7 @@ int pullxyza3d(char spectra3d[], const char axis_option)
 
 		for (k = 0; k < datasize[2]; k++) {
 			fprintf(stderr, "%s", clean_string);
-			fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, datasize[2]);
+			fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, rcv_planes);
 
 			if (openpipe2d(matrix2d) != 0)
 				goto escape2;
@@ -318,6 +321,8 @@ int pullxyza3d(char spectra3d[], const char axis_option)
 				}
 			}
 		}
+
+		dataw_plane = datasize[2] * datasize[1];
 
 		for (i = 0; i < datasize[0]; i++) {
 
@@ -337,7 +342,7 @@ int pullxyza3d(char spectra3d[], const char axis_option)
 			if (i == 0 || fp != stdout)
 				fwrite(header, sizeof(char), PIPE_HEADERSIZE, fp);
 
-			fpwrite2bin_swap(fp, &(matrix3d_[i][0][0]), datasize[2] * datasize[1], swapdata);
+			fpwrite2bin_swap(fp, &(matrix3d_[i][0][0]), dataw_plane, swapdata);
 
 			if (fp != stdout)
 				fclose(fp);
@@ -368,6 +373,7 @@ int pullxyza4d(char spectra4d[], const char axis_option)
 	FILE *fp = (spectra4d[0] == 0 ? stdout : NULL);
 	char filename[MAXLONGNAME];
 	int i, j, k, l, count = 0, axisorder[4] = { 0 }, orderaxis[4];
+	int data_plane = get_data_plane(), rcv_planes, dataw_plane;
 	float *vp, **matrix2d, ***matrix3d_;
 
 	if (fp != stdout)
@@ -435,12 +441,15 @@ int pullxyza4d(char spectra4d[], const char axis_option)
 
 	matrix2d = fmalloc2d(datasize[1], datasize[0]);
 
+	rcv_planes = datasize[2] * datasize[3];
+	dataw_plane = datasize[2] * datasize[1];
+
 	switch (axis_option) {
 	case 'x':
 		for (l = 0; l < datasize[3]; l++) {
 			for (k = 0; k < datasize[2]; k++) {
 				fprintf(stderr, "%s", clean_string);
-				fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, datasize[2] * datasize[3]);
+				fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, rcv_planes);
 
 				if (openpipe2d(matrix2d) != 0)
 					goto escape;
@@ -461,7 +470,7 @@ int pullxyza4d(char spectra4d[], const char axis_option)
 				if (l + k == 0 || fp != stdout)
 					fwrite(header, sizeof(char), PIPE_HEADERSIZE, fp);
 
-				fpwrite2bin_swap(fp, &(matrix2d[0][0]), datasize[1] * datasize[0], swapdata);
+				fpwrite2bin_swap(fp, &(matrix2d[0][0]), data_plane, swapdata);
 
 				if (fp != stdout)
 					fclose(fp);
@@ -476,7 +485,7 @@ int pullxyza4d(char spectra4d[], const char axis_option)
 		for (l = 0; l < datasize[3]; l++) {
 			for (k = 0; k < datasize[2]; k++) {
 				fprintf(stderr, "%s", clean_string);
-				fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, datasize[2] * datasize[3]);
+				fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, rcv_planes);
 
 				if (openpipe2d(matrix2d) != 0)
 					goto escape;
@@ -519,7 +528,7 @@ int pullxyza4d(char spectra4d[], const char axis_option)
 
 			for (k = 0; k < datasize[2]; k++) {
 				fprintf(stderr, "%s", clean_string);
-				fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, datasize[2] * datasize[3]);
+				fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, rcv_planes);
 
 				if (openpipe2d(matrix2d) != 0)
 					goto escape2;
@@ -549,7 +558,7 @@ int pullxyza4d(char spectra4d[], const char axis_option)
 				if (l + k == 0 || fp != stdout)
 					fwrite(header, sizeof(char), PIPE_HEADERSIZE, fp);
 
-				fpwrite2bin_swap(fp, &(matrix3d_[i][0][0]), datasize[2] * datasize[1], swapdata);
+				fpwrite2bin_swap(fp, &(matrix3d_[i][0][0]), dataw_plane, swapdata);
 
 				if (fp != stdout)
 					fclose(fp);
@@ -569,7 +578,7 @@ int pullxyza4d(char spectra4d[], const char axis_option)
 
 			for (k = 0; k < datasize[2]; k++) {
 				fprintf(stderr, "%s", clean_string);
-				fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, datasize[2] * datasize[3]);
+				fprintf(stderr, "Receiving %d of %d ( -> pipe2xyza) ...\r", ++count, rcv_planes);
 
 				if (openpipe2d(matrix2d) != 0)
 					goto escape2;
@@ -599,7 +608,7 @@ int pullxyza4d(char spectra4d[], const char axis_option)
 				if (l + k == 0 || fp != stdout)
 					fwrite(header, sizeof(char), PIPE_HEADERSIZE, fp);
 
-				fpwrite2bin_swap(fp, &(matrix3d_[i][0][0]), datasize[2] * datasize[1], swapdata);
+				fpwrite2bin_swap(fp, &(matrix3d_[i][0][0]), dataw_plane, swapdata);
 
 				if (fp != stdout)
 					fclose(fp);

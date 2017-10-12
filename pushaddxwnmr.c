@@ -74,7 +74,7 @@ int pushaddxwnmr2d(char spectra2d1[], char spectra2d2[], const float c1, const f
 		break;
 	}
 
-	fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+	fpwrite2bin(stdout, &(matrix2d_[0][0]), get_data_plane());
 
 	fflush(stdout);
 
@@ -108,6 +108,8 @@ int pushaddxwnmr3d(char spectra3d1[], char spectra3d2[], const float c1, const f
 
 	if (openxwnmr3d(spectra3d2, matrix3d_) != 0)
 		goto escape;
+
+	int data_plane = get_data_plane();
 
 	for (k = 0; k < datasize[2]; k++) {
 
@@ -146,7 +148,7 @@ int pushaddxwnmr3d(char spectra3d1[], char spectra3d2[], const float c1, const f
 			break;
 		}
 
-		fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+		fpwrite2bin(stdout, &(matrix2d_[0][0]), data_plane);
 
 		fflush(stdout);
 	}
@@ -183,6 +185,8 @@ int pushaddxwnmr4d(char spectra4d1[], char spectra4d2[], const float c1, const f
 
 	if (openxwnmr4d(spectra4d2, matrix4d_) != 0)
 		goto escape;
+
+	int data_plane = get_data_plane();
 
 	for (l = 0; l < datasize[3]; l++) {
 
@@ -223,7 +227,7 @@ int pushaddxwnmr4d(char spectra4d1[], char spectra4d2[], const float c1, const f
 				break;
 			}
 
-			fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+			fpwrite2bin(stdout, &(matrix2d_[0][0]), data_plane);
 
 			fflush(stdout);
 		}

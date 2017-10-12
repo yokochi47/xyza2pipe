@@ -28,6 +28,7 @@ int checknv(char filename[])
 	int fidsize[4] = { 0 };
 	short apod_code[4] = { SINE_BELL };
 	int j, k, _dimension = dimension, shift[4] = { 0 };
+	int data_volume;
 	long size = 0;
 	float apod_par[4][3] = { {0.0} };
 	float *vp;
@@ -134,7 +135,7 @@ int checknv(char filename[])
 		if (byteswap != 0)
 			swapbyte(sizeof(float), headersize, buffer);
 
-		if (datasize[0] * datasize[1] == 0) {
+		if ((data_volume = get_data_volume()) == 0) {
 
 			/* READ BLOCK SIZE */
 			j = 1028;
@@ -151,6 +152,8 @@ int checknv(char filename[])
 
 				fidsize[k] = datasize[k] / 2;
 			}
+
+			data_volume = get_data_volume();
 		}
 
 		memcpy(&(datasize_orig[0]), &(datasize[0]), dimension * sizeof(int));
@@ -259,9 +262,9 @@ int checknv(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] + headersize) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] + headersize);
+					(int) (sizeof(float)) * data_volume + headersize);
 
 			fprintf(stderr, "Try to fix data points from file size...\n");
 
@@ -272,8 +275,12 @@ int checknv(char filename[])
 
 				datasize[j] = (size - headersize) / sizeof(float) / datasize[(j + 1) % dimension];
 
-				if (datasize[j] % blocksize[j] != 0)
-					return 1;
+				if (datasize[j] % blocksize[j] == 0)
+					continue;
+
+				fprintf(stderr, "Failed.\n");
+
+				return 1;
 			}
 
 			fprintf(stderr, "Data Size  | %8d  %8d (fixed)\n", datasize[0], datasize[1]);
@@ -302,7 +309,7 @@ int checknv(char filename[])
 		if (byteswap != 0)
 			swapbyte(sizeof(float), headersize, buffer);
 
-		if (datasize[0] * datasize[1] * datasize[2] == 0) {
+		if ((data_volume = get_data_volume()) == 0) {
 
 			/* READ BLOCK SIZE */
 			j = 1028;
@@ -319,6 +326,8 @@ int checknv(char filename[])
 
 				fidsize[k] = datasize[k] / 2;
 			}
+
+			data_volume = get_data_volume();
 		}
 
 		memcpy(&(datasize_orig[0]), &(datasize[0]), dimension * sizeof(int));
@@ -430,9 +439,9 @@ int checknv(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] * datasize[2] + headersize) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] * datasize[2] + headersize);
+					(int) (sizeof(float)) * data_volume + headersize);
 
 			fprintf(stderr, "Try to fix data points from file size...\n");
 
@@ -448,6 +457,8 @@ int checknv(char filename[])
 
 				if (datasize[j] % blocksize[j] == 0)
 					continue;
+
+				fprintf(stderr, "Failed.\n");
 
 				return 1;
 			}
@@ -478,7 +489,7 @@ int checknv(char filename[])
 		if (byteswap != 0)
 			swapbyte(sizeof(float), headersize, buffer);
 
-		if (datasize[0] * datasize[1] * datasize[2] * datasize[3] == 0) {
+		if ((data_volume = get_data_volume()) == 0) {
 
 			/* READ BLOCK SIZE */
 			j = 1028;
@@ -495,6 +506,8 @@ int checknv(char filename[])
 
 				fidsize[k] = datasize[k] / 2;
 			}
+
+			data_volume = get_data_volume();
 		}
 
 		memcpy(&(datasize_orig[0]), &(datasize[0]), dimension * sizeof(int));
@@ -610,9 +623,9 @@ int checknv(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] * datasize[2] * datasize[3] + headersize) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] * datasize[2] * datasize[3] + headersize);
+					(int) (sizeof(float)) * data_volume + headersize);
 
 			fprintf(stderr, "Try to fix data points from file size...\n");
 
@@ -630,6 +643,8 @@ int checknv(char filename[])
 
 				if (datasize[j] % blocksize[j] == 0)
 					continue;
+
+				fprintf(stderr, "Failed.\n");
 
 				return 1;
 			}
@@ -771,17 +786,8 @@ int checknv(char filename[])
 		break;
 	}
 
-	switch (dimension) {
-	case 2:
-		fwrite2mem(header + 1768, 1.0);
-		break;
-	case 3:
-		fwrite2mem(header + 1768, (float) (datasize[2]));
-		break;
-	case 4:
-		fwrite2mem(header + 1768, (float) (datasize[2] * datasize[3]));
-		break;
-	}
+	/* INDIRECT PLANES */
+	fwrite2mem(header + 1768, get_indirect_planes());
 
 	/* QUADFLAG */
 	fwrite2mem(header + 424, 1.0);

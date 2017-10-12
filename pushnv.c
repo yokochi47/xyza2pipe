@@ -40,7 +40,7 @@ int pushnv2d(char spectra2d[], const char axis_option)
 
 	switch (axis_option) {
 	case 'x':
-		fpwrite2bin(stdout, &(matrix2d[0][0]), datasize[1] * datasize[0]);
+		fpwrite2bin(stdout, &(matrix2d[0][0]), get_data_plane());
 
 		fflush(stdout);
 
@@ -115,6 +115,7 @@ int pushnv2d(char spectra2d[], const char axis_option)
 int pushnv3d(char spectra3d[], const char axis_option)
 {
 	int i, j, k;
+	int data_plane = get_data_plane();
 	float ***matrix3d;
 
 	if (datasize[0] > datasize_orig[0] || datasize[1] > datasize_orig[1] || datasize[2] > datasize_orig[2])
@@ -133,7 +134,7 @@ int pushnv3d(char spectra3d[], const char axis_option)
 	switch (axis_option) {
 	case 'x':
 		for (k = 0; k < datasize[2]; k++) {
-			fpwrite2bin(stdout, &(matrix3d[k][0][0]), datasize[1] * datasize[0]);
+			fpwrite2bin(stdout, &(matrix3d[k][0][0]), data_plane);
 
 			fflush(stdout);
 		}
@@ -181,7 +182,7 @@ int pushnv3d(char spectra3d[], const char axis_option)
 	fwrite2mem(header + 876, (float) (datasize_orig[1]));
 	fwrite2mem(header + 60, (float) (datasize_orig[2]));
 
-	fwrite2mem(header + 1768, (float) (datasize_orig[2]));
+	fwrite2mem(header + 1768, get_orig_indirect_planes());
 
 	cnvhdr(axis_option, 'f');
 
@@ -244,10 +245,10 @@ int pushnv3d(char spectra3d[], const char axis_option)
 int pushnv4d(char spectra4d[], const char axis_option)
 {
 	int i, j, k, l;
+	int data_plane = get_data_plane();
 	float ****matrix4d;
 
-	if (datasize[0] > datasize_orig[0] || datasize[1] > datasize_orig[1] || datasize[2] > datasize_orig[2]
-																										|| datasize[3] > datasize_orig[3])
+	if (datasize[0] > datasize_orig[0] || datasize[1] > datasize_orig[1] || datasize[2] > datasize_orig[2] || datasize[3] > datasize_orig[3])
 		goto resize;
 
 	/* HEADER */
@@ -264,7 +265,7 @@ int pushnv4d(char spectra4d[], const char axis_option)
 	case 'x':
 		for (l = 0; l < datasize[3]; l++) {
 			for (k = 0; k < datasize[2]; k++) {
-				fpwrite2bin(stdout, &(matrix4d[l][k][0][0]), datasize[1] * datasize[0]);
+				fpwrite2bin(stdout, &(matrix4d[l][k][0][0]), data_plane);
 
 				fflush(stdout);
 			}
@@ -333,7 +334,7 @@ int pushnv4d(char spectra4d[], const char axis_option)
 	fwrite2mem(header + 60, (float) (datasize_orig[2]));
 	fwrite2mem(header + 128, (float) (datasize_orig[3]));
 
-	fwrite2mem(header + 1768, (float) (datasize_orig[2] * datasize_orig[3]));
+	fwrite2mem(header + 1768, get_orig_indirect_planes());
 
 	cnvhdr(axis_option, 'f');
 

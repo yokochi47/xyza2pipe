@@ -28,7 +28,7 @@ int openucsf2d(char spectra2d[], float **mat2d)
 	int i, j;
 	int block_volume = get_block_volume(), block_i, block_j, block_id;
 	int offset_i, offset_j, offset;
-	int datasize_2d = datasize[0] * datasize[1];
+	int data_volume = get_data_volume();
 	long size = 0;
 
 	if ((fp = fopen(spectra2d, "r")) == NULL) {
@@ -47,9 +47,9 @@ int openucsf2d(char spectra2d[], float **mat2d)
 	}
 
 	/* CHECK FILE SIZE */
-	if (size != sizeof(float) * datasize_2d + headersize) {
+	if (size != sizeof(float) * data_volume + headersize) {
 		fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", spectra2d, (int) (size),
-				(int) (sizeof(float)) * datasize_2d + headersize);
+				(int) (sizeof(float)) * data_volume + headersize);
 		goto escape;
 	}
 
@@ -72,7 +72,7 @@ int openucsf2d(char spectra2d[], float **mat2d)
 	}
 
 	if (byteswap != 0)
-		swapbyte(sizeof(float), datasize_2d * sizeof(float), (char *) (&(mat2d[0][0])));
+		swapbyte(sizeof(float), data_volume * sizeof(float), (char *) (&(mat2d[0][0])));
 
 	fclose(fp);
 
@@ -91,7 +91,7 @@ int openucsf3d(char spectra3d[], float ***mat3d)
 	int i, j, k;
 	int block_volume = get_block_volume(), block_i, block_j, block_k, block_id;
 	int offset_i, offset_j, offset_k, offset;
-	int datasize_3d = datasize[0] * datasize[1] * datasize[2];
+	int data_volume = get_data_volume();
 	long size = 0;
 
 	if ((fp = fopen(spectra3d, "r")) == NULL) {
@@ -110,9 +110,9 @@ int openucsf3d(char spectra3d[], float ***mat3d)
 	}
 
 	/* CHECK FILE SIZE */
-	if (size != sizeof(float) * datasize_3d + headersize) {
+	if (size != sizeof(float) * data_volume + headersize) {
 		fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", spectra3d, (int) (size),
-				(int) (sizeof(float)) * datasize_3d + headersize);
+				(int) (sizeof(float)) * data_volume + headersize);
 		goto escape;
 	}
 
@@ -140,7 +140,7 @@ int openucsf3d(char spectra3d[], float ***mat3d)
 	}
 
 	if (byteswap != 0)
-		swapbyte(sizeof(float), datasize_3d * sizeof(float), (char *) (&(mat3d[0][0][0])));
+		swapbyte(sizeof(float), data_volume * sizeof(float), (char *) (&(mat3d[0][0][0])));
 
 	fclose(fp);
 
@@ -159,7 +159,7 @@ int openucsf4d(char spectra4d[], float ****mat4d)
 	int i, j, k, l;
 	int block_volume = get_block_volume(), block_i, block_j, block_k, block_l, block_id;
 	int offset_i, offset_j, offset_k, offset_l, offset;
-	int datasize_4d = datasize[0] * datasize[1] * datasize[2] * datasize[3];
+	int data_volume = get_data_volume();
 	long size = 0;
 
 	if ((fp = fopen(spectra4d, "r")) == NULL) {
@@ -178,9 +178,9 @@ int openucsf4d(char spectra4d[], float ****mat4d)
 	}
 
 	/* CHECK FILE SIZE */
-	if (size != sizeof(float) * datasize_4d + headersize) {
+	if (size != sizeof(float) * data_volume + headersize) {
 		fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", spectra4d, (int) (size),
-				(int) (sizeof(float)) * datasize_4d + headersize);
+				(int) (sizeof(float)) * data_volume + headersize);
 		goto escape;
 	}
 
@@ -213,7 +213,7 @@ int openucsf4d(char spectra4d[], float ****mat4d)
 	}
 
 	if (byteswap != 0)
-		swapbyte(sizeof(float), datasize_4d * sizeof(float), (char *) (&(mat4d[0][0][0][0])));
+		swapbyte(sizeof(float), data_volume * sizeof(float), (char *) (&(mat4d[0][0][0][0])));
 
 	fclose(fp);
 

@@ -103,6 +103,14 @@ void make_dir(char filename[]);
 
 extern char clean_string[MAXCHAR];
 void set_clean_string(char clean_string[]);
+
+float get_indirect_planes();
+float get_orig_indirect_planes();
+
+int get_data_plane();
+int get_data_volume();
+
+int get_block_plane();
 int get_block_volume();
 int set_block_volume();
 

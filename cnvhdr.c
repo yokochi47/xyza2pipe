@@ -21,7 +21,7 @@ limitations under the License.
 #include "xyza2pipe.h"
 
 static char _header_[PIPE_HEADERSIZE];
-static float filesize;
+static float indirect_planes;
 
 static void cnvhdr2d(const char axis_option, const char fb, const int size, const int x, const int y);
 static void cnvhdr3d(const char axis_option, const char fb, const int size, const int x, const int y, const int z);
@@ -47,12 +47,12 @@ void cnvhdr(const char axis_option, const char fb)
 		break;
 	}
 
-	fwrite2mem(header + 1768, filesize);
+	fwrite2mem(header + 1768, indirect_planes);
 }
 
 static void cnvhdr2d(const char axis_option, const char fb, const int size, const int x, const int y)
 {
-	filesize = 1.0;
+	indirect_planes = 1.0;
 
 	switch (axis_option) {
 
@@ -76,7 +76,7 @@ static void cnvhdr3d(const char axis_option, const char fb, const int size, cons
 	switch (axis_option) {
 
 	case 'x':
-		filesize = datasize[2];
+		indirect_planes = datasize[2];
 		break;
 
 	case 'y':
@@ -86,7 +86,7 @@ static void cnvhdr3d(const char axis_option, const char fb, const int size, cons
 			memcpy(header + x, _header_ + y, size);
 			memcpy(header + y, _header_ + x, size);
 
-			filesize = datasize[2];
+			indirect_planes = datasize[2];
 		}
 
 		break;
@@ -99,7 +99,7 @@ static void cnvhdr3d(const char axis_option, const char fb, const int size, cons
 			memcpy(header + y, _header_ + x, size);
 			memcpy(header + z, _header_ + y, size);
 
-			filesize = datasize[1];
+			indirect_planes = datasize[1];
 		}
 
 		if (fb == 'b') {
@@ -107,7 +107,7 @@ static void cnvhdr3d(const char axis_option, const char fb, const int size, cons
 			memcpy(header + y, _header_ + z, size);
 			memcpy(header + z, _header_ + x, size);
 
-			filesize = datasize[0];
+			indirect_planes = datasize[0];
 		}
 
 		break;
@@ -120,7 +120,7 @@ static void cnvhdr4d(const char axis_option, const char fb, const int size, cons
 	switch (axis_option) {
 
 	case 'x':
-		filesize = datasize[2] * datasize[3];
+		indirect_planes = datasize[2] * datasize[3];
 		break;
 
 	case 'y':
@@ -130,7 +130,7 @@ static void cnvhdr4d(const char axis_option, const char fb, const int size, cons
 			memcpy(header + x, _header_ + y, size);
 			memcpy(header + y, _header_ + x, size);
 
-			filesize = datasize[2] * datasize[3];
+			indirect_planes = datasize[2] * datasize[3];
 		}
 
 		break;
@@ -143,7 +143,7 @@ static void cnvhdr4d(const char axis_option, const char fb, const int size, cons
 			memcpy(header + y, _header_ + x, size);
 			memcpy(header + z, _header_ + y, size);
 
-			filesize = datasize[1] * datasize[3];
+			indirect_planes = datasize[1] * datasize[3];
 		}
 
 		if (fb == 'b') {
@@ -151,7 +151,7 @@ static void cnvhdr4d(const char axis_option, const char fb, const int size, cons
 			memcpy(header + y, _header_ + z, size);
 			memcpy(header + z, _header_ + x, size);
 
-			filesize = datasize[0] * datasize[3];
+			indirect_planes = datasize[0] * datasize[3];
 		}
 
 		break;
@@ -165,7 +165,7 @@ static void cnvhdr4d(const char axis_option, const char fb, const int size, cons
 			memcpy(header + z, _header_ + y, size);
 			memcpy(header + a, _header_ + z, size);
 
-			filesize = datasize[1] * datasize[2];
+			indirect_planes = datasize[1] * datasize[2];
 		}
 
 		if (fb == 'b') {
@@ -174,7 +174,7 @@ static void cnvhdr4d(const char axis_option, const char fb, const int size, cons
 			memcpy(header + z, _header_ + a, size);
 			memcpy(header + a, _header_ + x, size);
 
-			filesize = datasize[0] * datasize[3];
+			indirect_planes = datasize[0] * datasize[3];
 		}
 
 		break;

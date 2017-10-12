@@ -82,7 +82,7 @@ int pushaddvnmr2d(char monofile1[], char monofile2[], char pardir1[], char pardi
 		break;
 	}
 
-	fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+	fpwrite2bin(stdout, &(matrix2d_[0][0]), get_data_plane());
 
 	fflush(stdout);
 
@@ -125,6 +125,8 @@ int pushaddvnmr3d(char monofile1[], char monofile2[], char pardir1[], char pardi
 	sprintf(string, "rm -f %s", monofile1);
 	system(string);
 
+	int data_plane = get_data_plane();
+
 	for (k = 0; k < datasize[2]; k++) {
 
 		for (j = 0; j < datasize[1]; j++) {
@@ -162,7 +164,7 @@ int pushaddvnmr3d(char monofile1[], char monofile2[], char pardir1[], char pardi
 			break;
 		}
 
-		fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+		fpwrite2bin(stdout, &(matrix2d_[0][0]), data_plane);
 
 		fflush(stdout);
 	}
@@ -208,6 +210,8 @@ int pushaddvnmr4d(char monofile1[], char monofile2[], char pardir1[], char pardi
 	sprintf(string, "rm -f %s", monofile1);
 	system(string);
 
+	int data_plane = get_data_plane();
+
 	for (l = 0; l < datasize[3]; l++) {
 
 		for (k = 0; k < datasize[2]; k++) {
@@ -247,7 +251,7 @@ int pushaddvnmr4d(char monofile1[], char monofile2[], char pardir1[], char pardi
 				break;
 			}
 
-			fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+			fpwrite2bin(stdout, &(matrix2d_[0][0]), data_plane);
 
 			fflush(stdout);
 		}

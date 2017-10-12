@@ -144,6 +144,8 @@ int checkxwnmr(char filename[])
 		spcenter[j] = (origfreq[j] + spwidth[j] / 2.0) / obsfreq[j];
 	}
 
+	int data_volume = get_data_volume();
+
 	switch (dimension) {
 	case 2:
 		fprintf(stderr, "Axis Label | %8s  %8s\n", axisname[0], axisname[1]);
@@ -178,9 +180,9 @@ int checkxwnmr(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] + headersize) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] + headersize);
+					(int) (sizeof(float)) * data_volume + headersize);
 			return 1;
 		}
 		break;
@@ -218,9 +220,9 @@ int checkxwnmr(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] * datasize[2] + headersize) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] * datasize[2] + headersize);
+					(int) (sizeof(float)) * data_volume + headersize);
 			return 1;
 		}
 		break;
@@ -261,9 +263,9 @@ int checkxwnmr(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] * datasize[2] * datasize[3] + headersize) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] * datasize[2] * datasize[3] + headersize);
+					(int) (sizeof(float)) * data_volume + headersize);
 			return 1;
 		}
 		break;
@@ -401,17 +403,8 @@ int checkxwnmr(char filename[])
 		break;
 	}
 
-	switch (dimension) {
-	case 2:
-		fwrite2mem(header + 1768, 1.0);
-		break;
-	case 3:
-		fwrite2mem(header + 1768, (float) (datasize[2]));
-		break;
-	case 4:
-		fwrite2mem(header + 1768, (float) (datasize[2] * datasize[3]));
-		break;
-	}
+	/* INDIRECT PLANES */
+	fwrite2mem(header + 1768, get_indirect_planes());
 
 	/* QUADFLAG */
 	fwrite2mem(header + 424, 1.0);

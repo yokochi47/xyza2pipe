@@ -50,9 +50,69 @@ const float PIPE_HEADER[3] = { PIPE_HEADER_0, PIPE_HEADER_1, PIPE_HEADER_2 };
 char clean_string[MAXCHAR] =
 { "\r                                                                               \r" };
 
+float get_indirect_planes()
+{
+
+	switch (dimension) {
+	case 2:
+		return 1.0;
+	case 3:
+		return (float) datasize[2];
+	case 4:
+		return (float) datasize[2] * datasize[3];
+	default:
+		return 0.0;
+	}
+
+}
+
+float get_orig_indirect_planes()
+{
+
+	switch (dimension) {
+	case 2:
+		return 1.0;
+	case 3:
+		return (float) datasize_orig[2];
+	case 4:
+		return (float) datasize_orig[2] * datasize_orig[3];
+	default:
+		return 0.0;
+	}
+
+}
+
+int get_data_plane()
+{
+	return datasize[1] * datasize[0];
+}
+
+int get_data_volume()
+{
+	int data_volume = get_data_plane();
+
+	switch (dimension) {
+	case 4:
+		data_volume *= datasize[3];
+		/* no break */
+
+	case 3:
+		data_volume *= datasize[2];
+		/* no break */
+
+	}
+
+	return data_volume;
+}
+
+int get_block_plane()
+{
+	return blocksize[1] * blocksize[0];
+}
+
 int get_block_volume()
 {
-	int block_volume = 1;
+	int block_volume = get_block_plane();
 
 	switch (dimension) {
 	case 4:
@@ -63,8 +123,6 @@ int get_block_volume()
 		block_volume *= blocksize[2];
 		/* no break */
 
-	case 2:
-		block_volume *= blocksize[1] * blocksize[0];
 	}
 
 	return block_volume;

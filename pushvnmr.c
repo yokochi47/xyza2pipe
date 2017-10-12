@@ -69,7 +69,7 @@ int pushvnmr2d(char monofile[], char pardir[], const char axis_option)
 		}
 
 		else
-			fpwrite2bin(stdout, &(matrix2d[0][0]), datasize[1] * datasize[0]);
+			fpwrite2bin(stdout, &(matrix2d[0][0]), get_data_plane());
 
 		fflush(stdout);
 
@@ -150,8 +150,10 @@ int pushvnmr3d(char monofile[], char pardir[], const char axis_option)
 		}
 
 		else {
+			int data_plane = get_data_plane();
+
 			for (k = 0; k < datasize[2]; k++) {
-				fpwrite2bin(stdout, &(matrix3d[k][0][0]), datasize[1] * datasize[0]);
+				fpwrite2bin(stdout, &(matrix3d[k][0][0]), data_plane);
 
 				fflush(stdout);
 			}
@@ -252,9 +254,11 @@ int pushvnmr4d(char monofile[], char pardir[], const char axis_option)
 		}
 
 		else {
+			int data_plane = get_data_plane();
+
 			for (l = 0; l < datasize[3]; l++) {
 				for (k = 0; k < datasize[2]; k++) {
-					fpwrite2bin(stdout, &(matrix4d[l][k][0][0]), datasize[1] * datasize[0]);
+					fpwrite2bin(stdout, &(matrix4d[l][k][0][0]), data_plane);
 
 					fflush(stdout);
 				}

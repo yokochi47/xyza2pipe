@@ -37,7 +37,7 @@ int pushazara2d(char spectra2d[], const char axis_option)
 
 	switch (axis_option) {
 	case 'x':
-		fpwrite2bin(stdout, &(matrix2d[0][0]), datasize[1] * datasize[0]);
+		fpwrite2bin(stdout, &(matrix2d[0][0]), get_data_plane());
 
 		fflush(stdout);
 
@@ -67,6 +67,7 @@ int pushazara2d(char spectra2d[], const char axis_option)
 int pushazara3d(char spectra3d[], const char axis_option)
 {
 	int i, j, k;
+	int data_plane = get_data_plane();
 	float ***matrix3d;
 
 	/* HEADER */
@@ -82,7 +83,7 @@ int pushazara3d(char spectra3d[], const char axis_option)
 	switch (axis_option) {
 	case 'x':
 		for (k = 0; k < datasize[2]; k++) {
-			fpwrite2bin(stdout, &(matrix3d[k][0][0]), datasize[1] * datasize[0]);
+			fpwrite2bin(stdout, &(matrix3d[k][0][0]), data_plane);
 
 			fflush(stdout);
 		}
@@ -128,6 +129,7 @@ int pushazara3d(char spectra3d[], const char axis_option)
 int pushazara4d(char spectra4d[], const char axis_option)
 {
 	int i, j, k, l;
+	int data_plane = get_data_plane();
 	float ****matrix4d;
 
 	/* HEADER */
@@ -144,7 +146,7 @@ int pushazara4d(char spectra4d[], const char axis_option)
 	case 'x':
 		for (l = 0; l < datasize[3]; l++) {
 			for (k = 0; k < datasize[2]; k++) {
-				fpwrite2bin(stdout, &(matrix4d[l][k][0][0]), datasize[1] * datasize[0]);
+				fpwrite2bin(stdout, &(matrix4d[l][k][0][0]), data_plane);
 
 				fflush(stdout);
 			}

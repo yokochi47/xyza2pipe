@@ -74,7 +74,7 @@ int pushadd2d(char spectra2d1[], char spectra2d2[], const float c1, const float 
 		break;
 	}
 
-	fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+	fpwrite2bin(stdout, &(matrix2d_[0][0]), get_data_plane());
 
 	fflush(stdout);
 
@@ -145,7 +145,7 @@ int pushadd3d(char spectra3d1[], char spectra3d2[], const float c1, const float 
 			break;
 		}
 
-		fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+		fpwrite2bin(stdout, &(matrix2d_[0][0]), get_data_plane());
 
 		fflush(stdout);
 	}
@@ -219,7 +219,7 @@ int pushadd4d(char spectra4d1[], char spectra4d2[], const float c1, const float 
 				break;
 			}
 
-			fpwrite2bin(stdout, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+			fpwrite2bin(stdout, &(matrix2d_[0][0]), get_data_plane());
 
 			fflush(stdout);
 		}

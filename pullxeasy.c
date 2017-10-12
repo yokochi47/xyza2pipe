@@ -133,6 +133,7 @@ int pullxeasy3d(char spectra3d[])
 	int i, j, k, count = 0;
 	int block_volume, block_i, block_j, block_k, block_id;
 	int offset_i, offset_j, offset_k, offset;
+	int rcv_planes;
 	float **matrix2d;
 
 	make_dir(spectra3d);
@@ -187,9 +188,11 @@ int pullxeasy3d(char spectra3d[])
 
 	matrix2d = fmalloc2d(datasize[1], datasize[0]);
 
+	rcv_planes = datasize[2];
+
 	for (k = 0; k < datasize[2]; k++) {
 		fprintf(stderr, "%s", clean_string);
-		fprintf(stderr, "Receiving %d of %d ( -> pipe2xeasy) ...\r", ++count, datasize[2]);
+		fprintf(stderr, "Receiving %d of %d ( -> pipe2xeasy) ...\r", ++count, rcv_planes);
 
 		if (openpipe2d(matrix2d) != 0)
 			goto escape;
@@ -241,6 +244,7 @@ int pullxeasy4d(char spectra4d[])
 	int i, j, k, l, count = 0;
 	int block_volume, block_i, block_j, block_k, block_l, block_id;
 	int offset_i, offset_j, offset_k, offset_l, offset;
+	int rcv_planes;
 	float **matrix2d;
 
 	make_dir(spectra4d);
@@ -295,13 +299,15 @@ int pullxeasy4d(char spectra4d[])
 
 	matrix2d = fmalloc2d(datasize[1], datasize[0]);
 
+	rcv_planes = datasize[2] * datasize[3];
+
 	for (l = 0; l < datasize[3]; l++) {
 		block_l = (int) (l / blocksize[3]);
 		offset_l = l - block_l * blocksize[3];
 
 		for (k = 0; k < datasize[2]; k++) {
 			fprintf(stderr, "%s", clean_string);
-			fprintf(stderr, "Receiving %d of %d ( -> pipe2xeasy) ...\r", ++count, datasize[2] * datasize[3]);
+			fprintf(stderr, "Receiving %d of %d ( -> pipe2xeasy) ...\r", ++count, rcv_planes);
 
 			if (openpipe2d(matrix2d) != 0)
 				goto escape;

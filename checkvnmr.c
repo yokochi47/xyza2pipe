@@ -1034,17 +1034,8 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		break;
 	}
 
-	switch (dimension) {
-	case 2:
-		fwrite2mem(header + 1768, 1.0);
-		break;
-	case 3:
-		fwrite2mem(header + 1768, (float) (datasize[2]));
-		break;
-	case 4:
-		fwrite2mem(header + 1768, (float) (datasize[2] * datasize[3]));
-		break;
-	}
+	/* INDIRECT PLANES */
+	fwrite2mem(header + 1768, get_indirect_planes());
 
 	/* QUADFLAG */
 	fwrite2mem(header + 424, 1.0);

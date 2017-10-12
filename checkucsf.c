@@ -28,6 +28,7 @@ int checkucsf(char filename[])
 	int fidsize[4] = { 0 };
 	short apod_code[4] = { SINE_BELL };
 	int j, k, _dimension = dimension, shift[4] = { 0 };
+	int data_volume;
 	long size = 0;
 	float apod_par[4][3] = { {0.0} };
 	float *vp;
@@ -202,6 +203,8 @@ int checkucsf(char filename[])
 			fprintf(stderr, "Block Size | %8d  %8d (fixed)\n", blocksize[0], blocksize[1]);
 		}
 
+		data_volume = get_data_volume();
+
 		if (byteswap != 0)
 			swapbyte(sizeof(float), headersize, buffer);
 
@@ -302,9 +305,9 @@ int checkucsf(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] + headersize) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] + headersize);
+					(int) (sizeof(float)) * data_volume + headersize);
 
 			fprintf(stderr, "Try to fix data points from file size...\n");
 
@@ -314,9 +317,16 @@ int checkucsf(char filename[])
 					continue;
 
 				datasize[j] = (size - headersize) / sizeof(float) / datasize[(j + 1) % dimension];
+			}
 
-				if (datasize[j] % blocksize[j] != 0)
-					return 1;
+			for (j = 0; j < dimension; j++) {
+
+				if (datasize[j] % blocksize[j] == 0)
+					continue;
+
+				fprintf(stderr, "Failed.\n");
+
+				return 1;
 			}
 
 			fprintf(stderr, "Data Size  | %8d  %8d (fixed)\n", datasize[0], datasize[1]);
@@ -392,6 +402,8 @@ int checkucsf(char filename[])
 
 			fprintf(stderr, "Block Size | %8d  %8d  %8d (fixed)\n", blocksize[0], blocksize[1], blocksize[2]);
 		}
+
+		data_volume = get_data_volume();
 
 		if (byteswap != 0)
 			swapbyte(sizeof(float), headersize, buffer);
@@ -496,9 +508,9 @@ int checkucsf(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] * datasize[2] + headersize) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] * datasize[2] + headersize);
+					(int) (sizeof(float)) * data_volume + headersize);
 
 			fprintf(stderr, "Try to fix data points from file size...\n");
 
@@ -514,6 +526,8 @@ int checkucsf(char filename[])
 
 				if (datasize[j] % blocksize[j] == 0)
 					continue;
+
+				fprintf(stderr, "Failed.\n");
 
 				return 1;
 			}
@@ -593,6 +607,8 @@ int checkucsf(char filename[])
 
 			fprintf(stderr, "Block Size | %8d  %8d  %8d  %8d (fixed)\n", blocksize[0], blocksize[1], blocksize[2], blocksize[3]);
 		}
+
+		data_volume = get_data_volume();
 
 		if (byteswap != 0)
 			swapbyte(sizeof(float), headersize, buffer);
@@ -701,9 +717,9 @@ int checkucsf(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] * datasize[2] * datasize[3] + headersize) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] * datasize[2] * datasize[3] + headersize);
+					(int) (sizeof(float)) * data_volume + headersize);
 
 			fprintf(stderr, "Try to fix data points from file size...\n");
 
@@ -721,6 +737,8 @@ int checkucsf(char filename[])
 
 				if (datasize[j] % blocksize[j] == 0)
 					continue;
+
+				fprintf(stderr, "Failed.\n");
 
 				return 1;
 			}
@@ -862,17 +880,8 @@ int checkucsf(char filename[])
 		break;
 	}
 
-	switch (dimension) {
-	case 2:
-		fwrite2mem(header + 1768, 1.0);
-		break;
-	case 3:
-		fwrite2mem(header + 1768, (float) (datasize[2]));
-		break;
-	case 4:
-		fwrite2mem(header + 1768, (float) (datasize[2] * datasize[3]));
-		break;
-	}
+	/* INDIRECT PLANES */
+	fwrite2mem(header + 1768, get_indirect_planes());
 
 	/* QUADFLAG */
 	fwrite2mem(header + 424, 1.0);

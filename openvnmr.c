@@ -139,7 +139,7 @@ int openvnmr2d(char monofile[], char pardir[], float **mat2d)
 	}
 
 	else if (data_type == COMPLEX_DATA) {
-		blk_inc = fheader.nblocks * fheader.tbytes * fheader.ntraces / (datasize[0] * datasize[1] * sizeof(complex));
+		blk_inc = fheader.nblocks * fheader.tbytes * fheader.ntraces / (get_data_volume() * sizeof(complex));
 
 		for (j = 0; j < datasize[1]; j++) {
 			block_j = (int) (j / blocksize[1]);
@@ -273,8 +273,7 @@ int openvnmr3d(char monofile[], char pardir[], float ***mat3d)
 	block_volume = fheader.ntraces * fheader.np;
 
 	if (data_type == COMPLEX_DATA) {
-		blk_inc =
-				fheader.nblocks * fheader.tbytes * fheader.ntraces / (datasize[0] * datasize[1] * datasize[2] * sizeof(complex));
+		blk_inc = fheader.nblocks * fheader.tbytes * fheader.ntraces / (get_data_volume() * sizeof(complex));
 
 		for (k = 0; k < datasize[2]; k++) {
 			block_k = (int) (k / blocksize[2]);
@@ -426,9 +425,7 @@ int openvnmr4d(char monofile[], char pardir[], float ****mat4d)
 	block_volume = fheader.ntraces * fheader.np;
 
 	if (data_type == COMPLEX_DATA) {
-		blk_inc =
-				fheader.nblocks * fheader.tbytes * fheader.ntraces / (datasize[0] * datasize[1] * datasize[2] * datasize[3] *
-						sizeof(complex));
+		blk_inc = fheader.nblocks * fheader.tbytes * fheader.ntraces / (get_data_volume() * sizeof(complex));
 
 		for (l = 0; l < datasize[3]; l++) {
 			block_l = (int) (l / blocksize[3]);

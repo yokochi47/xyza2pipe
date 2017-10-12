@@ -24,6 +24,7 @@ int pullproj2d(char filename[], const int abs_mode)
 {
 	FILE *fp = (filename[0] == 0 ? stdout : NULL);
 	int i, j, k, count = 0, axisorder[4] = { 0 }, orderaxis[4];
+	int data_plane = get_data_plane();
 	float *vp;
 	float **matrix2d;
 
@@ -99,7 +100,7 @@ int pullproj2d(char filename[], const int abs_mode)
 		fprintf(stderr, "Writing %s <- pipe2proj ...\r", filename);
 
 	if (swapdata != 0)
-		swapbyte(sizeof(float), datasize[0] * datasize[1] * sizeof(float), (char *) (&(matrix2d[0][0])));
+		swapbyte(sizeof(float), data_plane * sizeof(float), (char *) (&(matrix2d[0][0])));
 
 	if (abs_mode) {
 		for (j = 0; j < datasize[1]; j++) {
@@ -118,7 +119,7 @@ int pullproj2d(char filename[], const int abs_mode)
 
 	fwrite(header, sizeof(char), PIPE_HEADERSIZE, fp);
 
-	fpwrite2bin(fp, &(matrix2d[0][0]), datasize[1] * datasize[0]);
+	fpwrite2bin(fp, &(matrix2d[0][0]), data_plane);
 
 	if (fp != stdout)
 		fclose(fp);
@@ -140,6 +141,7 @@ int pullproj3d(char filename[], const int abs_mode)
 {
 	FILE *fp = (filename[0] == 0 ? stdout : NULL);
 	int i, j, k, count = 0, axisorder[4] = { 0 }, orderaxis[4];
+	int data_plane = get_data_plane(), rcv_planes;
 	float *vp, **matrix2d, **matrix2d_;
 
 	if (fp != stdout)
@@ -212,9 +214,11 @@ int pullproj3d(char filename[], const int abs_mode)
 		}
 	}
 
+	rcv_planes = datasize[2];
+
 	for (k = 0; k < datasize[2]; k++) {
 		fprintf(stderr, "%s", clean_string);
-		fprintf(stderr, "Receiving %d of %d ( -> pipe2proj) ...\r", ++count, datasize[2]);
+		fprintf(stderr, "Receiving %d of %d ( -> pipe2proj) ...\r", ++count, rcv_planes);
 
 		if (openpipe2d(matrix2d) != 0)
 			goto escape;
@@ -224,7 +228,7 @@ int pullproj3d(char filename[], const int abs_mode)
 			fprintf(stderr, "Writing %s <- pipe2proj ...\r", filename);
 
 		if (swapdata != 0)
-			swapbyte(sizeof(float), datasize[0] * datasize[1] * sizeof(float), (char *) (&(matrix2d[0][0])));
+			swapbyte(sizeof(float), data_plane * sizeof(float), (char *) (&(matrix2d[0][0])));
 
 		if (abs_mode) {
 			for (j = 0; j < datasize[1]; j++) {
@@ -252,7 +256,7 @@ int pullproj3d(char filename[], const int abs_mode)
 
 	fwrite(header, sizeof(char), PIPE_HEADERSIZE, fp);
 
-	fpwrite2bin(fp, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+	fpwrite2bin(fp, &(matrix2d_[0][0]), data_plane);
 
 	if (fp != stdout)
 		fclose(fp);
@@ -276,6 +280,7 @@ int pullproj4d(char filename[], const int abs_mode)
 {
 	FILE *fp = (filename[0] == 0 ? stdout : NULL);
 	int i, j, k, l, count = 0, axisorder[4] = { 0 }, orderaxis[4];
+	int data_plane = get_data_plane(), rcv_planes;
 	float *vp, **matrix2d, **matrix2d_;
 
 	if (fp != stdout)
@@ -350,10 +355,12 @@ int pullproj4d(char filename[], const int abs_mode)
 		}
 	}
 
+	rcv_planes = datasize[2] * datasize[3];
+
 	for (l = 0; l < datasize[3]; l++) {
 		for (k = 0; k < datasize[2]; k++) {
 			fprintf(stderr, "%s", clean_string);
-			fprintf(stderr, "Receiving %d of %d ( -> pipe2proj) ...\r", ++count, datasize[2] * datasize[3]);
+			fprintf(stderr, "Receiving %d of %d ( -> pipe2proj) ...\r", ++count, rcv_planes);
 
 			if (openpipe2d(matrix2d) != 0)
 				goto escape;
@@ -363,7 +370,7 @@ int pullproj4d(char filename[], const int abs_mode)
 				fprintf(stderr, "Writing %s <- pipe2proj ...\r", filename);
 
 			if (swapdata != 0)
-				swapbyte(sizeof(float), datasize[0] * datasize[1] * sizeof(float), (char *) (&(matrix2d[0][0])));
+				swapbyte(sizeof(float), data_plane * sizeof(float), (char *) (&(matrix2d[0][0])));
 
 			if (abs_mode) {
 				for (j = 0; j < datasize[1]; j++) {
@@ -392,7 +399,7 @@ int pullproj4d(char filename[], const int abs_mode)
 
 	fwrite(header, sizeof(char), PIPE_HEADERSIZE, fp);
 
-	fpwrite2bin(fp, &(matrix2d_[0][0]), datasize[1] * datasize[0]);
+	fpwrite2bin(fp, &(matrix2d_[0][0]), data_plane);
 
 	if (fp != stdout)
 		fclose(fp);

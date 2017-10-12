@@ -118,7 +118,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Pascal Mercier**, University of Alberta, for alternative spectral regulation method relying on the origin frequency.<br />
 **Naohiro Kobayashi**, Osaka University, for reporting NMRView spectra conversion issue.<br />
 **Nicholas Fitzkee**, Mississippi State University, for reporting invalid Sparky spectra issue.<br />
-**Maxim Mayzel**, for reporting invalid block size when data size is odd.
+**Maxim Mayzel**, Swedish NMR Centrum, for reporting invalid block size when data size is odd.
 
 ## Release notes
 
@@ -133,7 +133,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Feb 07, 2017**: Released v1.0.0 @ GitHub, Inc. under Apache License V2.<br />
 **Jun 30, 2017**: Released v1.0.1, Fixed invalid header of UCSF spectra file.<br />
 **Jun 30, 2017**: Released v1.0.2, Set big endian as default for UCSF spectra.<br />
-**Oct 11, 2017**: Released v1.0.3, Fixed problem with block size when data size is odd.
+**Oct 12, 2017**: Released v1.0.3, Fixed problem with block size when data size is odd.
 
 ## Executable files
 

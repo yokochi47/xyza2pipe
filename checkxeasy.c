@@ -205,6 +205,8 @@ int checkxeasy(char filename[])
 		}
 	}
 
+	int data_volume = get_data_volume();
+
 	switch (dimension) {
 	case 2:
 		fprintf(stderr, "Axis Label | %8s  %8s\n", axisname[0], axisname[1]);
@@ -251,9 +253,9 @@ int checkxeasy(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(short) * datasize[0] * datasize[1]) {
+		if (size != sizeof(short) * data_volume) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(short)) * datasize[0] * datasize[1]);
+					(int) (sizeof(short)) * data_volume);
 			return 1;
 		}
 		break;
@@ -304,9 +306,9 @@ int checkxeasy(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(short) * datasize[0] * datasize[1] * datasize[2]) {
+		if (size != sizeof(short) * data_volume) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(short)) * datasize[0] * datasize[1] * datasize[2]);
+					(int) (sizeof(short)) * data_volume);
 			return 1;
 		}
 		break;
@@ -360,9 +362,9 @@ int checkxeasy(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(short) * datasize[0] * datasize[1] * datasize[2] * datasize[3]) {
+		if (size != sizeof(short) * data_volume) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(short)) * datasize[0] * datasize[1] * datasize[2] * datasize[3]);
+					(int) (sizeof(short)) * data_volume);
 			return 1;
 		}
 		break;
@@ -500,17 +502,8 @@ int checkxeasy(char filename[])
 		break;
 	}
 
-	switch (dimension) {
-	case 2:
-		fwrite2mem(header + 1768, 1.0);
-		break;
-	case 3:
-		fwrite2mem(header + 1768, (float) (datasize[2]));
-		break;
-	case 4:
-		fwrite2mem(header + 1768, (float) (datasize[2] * datasize[3]));
-		break;
-	}
+	/* INDIRECT PLANES */
+	fwrite2mem(header + 1768, get_indirect_planes());
 
 	/* QUADFLAG */
 	fwrite2mem(header + 424, 1.0);

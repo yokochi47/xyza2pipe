@@ -25,7 +25,7 @@ int openxyza2d(char spectra2d[], float **mat2d)
 	struct stat _stat;
 	FILE *fp;
 	char buffer[PIPE_HEADERSIZE];
-	int datasize_2d = datasize[0] * datasize[1];
+	int data_plane = get_data_plane();
 	long size = 0;
 	float *vp;
 
@@ -54,17 +54,17 @@ int openxyza2d(char spectra2d[], float **mat2d)
 		}
 	}
 
-	if (size != sizeof(float) * datasize_2d + PIPE_HEADERSIZE) {
+	if (size != sizeof(float) * data_plane + PIPE_HEADERSIZE) {
 		fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", spectra2d, (int) (size),
-				(int) (sizeof(float)) * datasize_2d + PIPE_HEADERSIZE);
+				(int) (sizeof(float)) * data_plane + PIPE_HEADERSIZE);
 		goto escape;
 	}
 
 	fseek(fp, PIPE_HEADERSIZE, SEEK_SET);
-	fread(&(mat2d[0][0]), sizeof(float), datasize_2d, fp);
+	fread(&(mat2d[0][0]), sizeof(float), data_plane, fp);
 
 	if (byteswap != 0)
-		swapbyte(sizeof(float), datasize_2d * sizeof(float), (char *) (&(mat2d[0][0])));
+		swapbyte(sizeof(float), data_plane * sizeof(float), (char *) (&(mat2d[0][0])));
 
 	fclose(fp);
 

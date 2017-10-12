@@ -38,7 +38,7 @@ int pushxyza2d(char spectra2d[], const char axis_option)
 		if (openxyza2d(spectra2d, matrix2d) != 0)
 			goto escape;
 
-		fpwrite2bin(stdout, &(matrix2d[0][0]), datasize[1] * datasize[0]);
+		fpwrite2bin(stdout, &(matrix2d[0][0]), get_data_plane());
 
 		fflush(stdout);
 
@@ -71,6 +71,7 @@ int pushxyza2d(char spectra2d[], const char axis_option)
 int pushxyza3d(char spectra3d[], const char axis_option)
 {
 	int i, j, k;
+	int data_plane = get_data_plane(), dataw_plane;
 	float **matrix2d, ***matrix3d_;
 
 	/* HEADER */
@@ -88,7 +89,7 @@ int pushxyza3d(char spectra3d[], const char axis_option)
 			if (openxyza3d(spectra3d, k, matrix2d) != 0)
 				goto escape;
 
-			fpwrite2bin(stdout, &(matrix2d[0][0]), datasize[1] * datasize[0]);
+			fpwrite2bin(stdout, &(matrix2d[0][0]), data_plane);
 
 			fflush(stdout);
 		}
@@ -115,6 +116,8 @@ int pushxyza3d(char spectra3d[], const char axis_option)
 	case 'z':
 		matrix3d_ = fmalloc3d(datasize[1], datasize[0], datasize[2]);
 
+		dataw_plane = datasize[0] * datasize[2];
+
 		for (k = 0; k < datasize[2]; k++) {
 
 			if (openxyza3d(spectra3d, k, matrix2d) != 0)
@@ -128,7 +131,7 @@ int pushxyza3d(char spectra3d[], const char axis_option)
 		}
 
 		for (j = 0; j < datasize[1]; j++) {
-			fpwrite2bin(stdout, &(matrix3d_[j][0][0]), datasize[0] * datasize[2]);
+			fpwrite2bin(stdout, &(matrix3d_[j][0][0]), dataw_plane);
 
 			fflush(stdout);
 		}
@@ -151,6 +154,7 @@ int pushxyza3d(char spectra3d[], const char axis_option)
 int pushxyza4d(char spectra4d[], const char axis_option)
 {
 	int i, j, k, l;
+	int data_plane = get_data_plane(), dataw_plane;
 	float **matrix2d, ***matrix3d_;
 
 	/* HEADER */
@@ -170,7 +174,7 @@ int pushxyza4d(char spectra4d[], const char axis_option)
 				if (openxyza4d(spectra4d, k, l, matrix2d) != 0)
 					goto escape;
 
-				fpwrite2bin(stdout, &(matrix2d[0][0]), datasize[1] * datasize[0]);
+				fpwrite2bin(stdout, &(matrix2d[0][0]), data_plane);
 
 				fflush(stdout);
 			}
@@ -201,6 +205,8 @@ int pushxyza4d(char spectra4d[], const char axis_option)
 	case 'z':
 		matrix3d_ = fmalloc3d(datasize[1], datasize[0], datasize[2]);
 
+		dataw_plane = datasize[0] * datasize[2];
+
 		for (l = 0; l < datasize[3]; l++) {
 
 			for (k = 0; k < datasize[2]; k++) {
@@ -216,7 +222,7 @@ int pushxyza4d(char spectra4d[], const char axis_option)
 			}
 
 			for (j = 0; j < datasize[1]; j++) {
-				fpwrite2bin(stdout, &(matrix3d_[j][0][0]), datasize[0] * datasize[2]);
+				fpwrite2bin(stdout, &(matrix3d_[j][0][0]), dataw_plane);
 
 				fflush(stdout);
 			}
@@ -228,6 +234,8 @@ int pushxyza4d(char spectra4d[], const char axis_option)
 
 	case 'a':
 		matrix3d_ = fmalloc3d(datasize[1], datasize[0], datasize[3]);
+
+		dataw_plane = datasize[0] * datasize[3];
 
 		for (k = 0; k < datasize[2]; k++) {
 
@@ -244,7 +252,7 @@ int pushxyza4d(char spectra4d[], const char axis_option)
 			}
 
 			for (j = 0; j < datasize[1]; j++) {
-				fpwrite2bin(stdout, &(matrix3d_[j][0][0]), datasize[0] * datasize[3]);
+				fpwrite2bin(stdout, &(matrix3d_[j][0][0]), dataw_plane);
 
 				fflush(stdout);
 			}

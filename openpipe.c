@@ -22,7 +22,7 @@ limitations under the License.
 
 int openpipe2d(float **mat2d)
 {
-	fread(&(mat2d[0][0]), sizeof(float), datasize[0] * datasize[1], stdin);
+	fread(&(mat2d[0][0]), sizeof(float), get_data_plane(), stdin);
 
 	return 0;
 }

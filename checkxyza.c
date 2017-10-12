@@ -27,6 +27,7 @@ int checkxyza(char filename[])
 	char _filename[MAXLONGNAME], buffer[PIPE_HEADERSIZE];
 	int fidsize[4] = { 0 };
 	int j, k, axisorder[4] = { 0 }, orderaxis[4];
+	int data_plane = get_data_plane();
 	long size = 0;
 	float *vp;
 
@@ -306,9 +307,9 @@ int checkxyza(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] + PIPE_HEADERSIZE) {
+		if (size != sizeof(float) * data_plane + PIPE_HEADERSIZE) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] + PIPE_HEADERSIZE);
+					(int) (sizeof(float)) * data_plane + PIPE_HEADERSIZE);
 			return 1;
 		}
 		break;
@@ -406,9 +407,9 @@ int checkxyza(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] + PIPE_HEADERSIZE) {
+		if (size != sizeof(float) * data_plane + PIPE_HEADERSIZE) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] + PIPE_HEADERSIZE);
+					(int) (sizeof(float)) * data_plane + PIPE_HEADERSIZE);
 			return 1;
 		}
 		break;
@@ -527,9 +528,9 @@ int checkxyza(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * datasize[0] * datasize[1] + PIPE_HEADERSIZE) {
+		if (size != sizeof(float) * data_plane + PIPE_HEADERSIZE) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
-					(int) (sizeof(float)) * datasize[0] * datasize[1] + PIPE_HEADERSIZE);
+					(int) (sizeof(float)) * data_plane + PIPE_HEADERSIZE);
 			return 1;
 		}
 		break;

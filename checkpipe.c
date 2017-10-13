@@ -48,7 +48,7 @@ int checkpipe()
 
 		if (*vp != PIPE_HEADER[0] || *(vp + 2) != PIPE_HEADER[2]) {
 			fprintf(stderr, "Spectra file: Not NMRPipe file.\n");
-			return 1;
+			return EXIT_FAILURE;
 		}
 	}
 
@@ -56,7 +56,7 @@ int checkpipe()
 
 	if (*vp < 2.0 || *vp > 4.0) {
 		fprintf(stderr, "Spectra file: Not 2D/3D/4D experiment.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	dimension = 0;
@@ -71,28 +71,28 @@ int checkpipe()
 
 	if (*vp == 0.0) {
 		fprintf(stderr, "Spectra file: Time domain dataset.\nExecute Fourier Transform.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	vp = (float *) ((void *) (&buffer[888]));
 
 	if (*vp == 0.0) {
 		fprintf(stderr, "Spectra file: Time domain dataset.\nExecute Fourier Transform.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	vp = (float *) ((void *) (&buffer[220]));
 
 	if (*vp != 1.0) {
 		fprintf(stderr, "Spectra file: Complex dataset.\nRemove imaginary part.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	vp = (float *) ((void *) (&buffer[224]));
 
 	if (*vp != 1.0) {
 		fprintf(stderr, "Spectra file: Complex dataset.\nRemove imaginary part.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	vp = (float *) ((void *) (&buffer[884]));
@@ -181,8 +181,8 @@ int checkpipe()
 	case 4:
 		if (axisorder[0] + axisorder[1] + axisorder[2] + axisorder[3] != 6
 				|| axisorder[0] * axisorder[1] * axisorder[2] * axisorder[3] != 0 || axisorder[0] == axisorder[1]
-																											   || axisorder[0] == axisorder[2] || axisorder[0] == axisorder[3] || axisorder[1] == axisorder[2]
-																																																			|| axisorder[1] == axisorder[3] || axisorder[2] == axisorder[3]) {
+				|| axisorder[0] == axisorder[2] || axisorder[0] == axisorder[3] || axisorder[1] == axisorder[2]
+				|| axisorder[1] == axisorder[3] || axisorder[2] == axisorder[3]) {
 			fprintf(stderr, "Spectra file: Warning! Irregularly transposed dataset.\n");
 
 			for (j = 0; j < 4; j++)
@@ -203,9 +203,9 @@ int checkpipe()
 		swapbyte(sizeof(float), 32, buffer + j);
 
 	for (k = 0; k < dimension; k++) {
-		memcpy(axisname[k], buffer + j + MAXASSNAME * axisorder[k], MAXASSNAME);
+		memcpy(axisname[k], buffer + j + MAXAXISNAME * axisorder[k], MAXAXISNAME);
 		if (*axislabel[k] != 0)
-			memcpy(axisname[k], axislabel[k], MAXASSNAME);
+			memcpy(axisname[k], axislabel[k], MAXAXISNAME);
 
 		if (usrlabel == 0)
 			checklabel(axisname[k]);

@@ -33,8 +33,7 @@ static const char *usage[] = {
 int main(int argc, char *argv[])
 {
 	char axis_option = 'x';
-	char filename1[MAXLONGNAME] = { "" }, filename2[MAXLONGNAME] = {
-			""};
+	char filename1[MAXLONGNAME] = { "" }, filename2[MAXLONGNAME] = { "" };
 	int l, opt_idx = 0;
 	float c1 = 1.0, c2 = 1.0;
 	enum_combine_opr opr_code = COMBINE_ADD;
@@ -99,25 +98,25 @@ int main(int argc, char *argv[])
 		case 6:
 			if (optarg) {
 				usrlabel = 1;
-				strncpy(axislabel[0], optarg, MAXASSNAME);
+				strncpy(axislabel[0], optarg, MAXAXISNAME);
 			}
 			break;
 		case 7:
 			if (optarg) {
 				usrlabel = 1;
-				strncpy(axislabel[1], optarg, MAXASSNAME);
+				strncpy(axislabel[1], optarg, MAXAXISNAME);
 			}
 			break;
 		case 8:
 			if (optarg) {
 				usrlabel = 1;
-				strncpy(axislabel[2], optarg, MAXASSNAME);
+				strncpy(axislabel[2], optarg, MAXAXISNAME);
 			}
 			break;
 		case 9:
 			if (optarg) {
 				usrlabel = 1;
-				strncpy(axislabel[3], optarg, MAXASSNAME);
+				strncpy(axislabel[3], optarg, MAXAXISNAME);
 			}
 			break;
 		case 10:
@@ -152,7 +151,7 @@ int main(int argc, char *argv[])
 			fprintf(stderr, "%s ", argv[optind++]);
 		fputc('\n', stderr);
 
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	if (filename1[0] == 0 || filename2[0] == 0) {
@@ -160,28 +159,28 @@ int main(int argc, char *argv[])
 		while (strcmp(usage[l], "") != 0)
 			fprintf(stderr, "%s", usage[l++]);
 
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	if (checknv(filename1) != 0)
-		return 1;
+		return EXIT_FAILURE;
 
 	_dimension = dimension;
 
 	memcpy(&(datasize_orig[0]), &(datasize[0]), dimension * sizeof(int));
 
 	if (checknv(filename2) != 0)
-		return 1;
+		return EXIT_FAILURE;
 
 	if (dimension != _dimension) {
 		fprintf(stderr, "addnv2pipe error: unmatch dimension number.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	for (l = 0; l < dimension; l++) {
 		if (datasize[l] != datasize_orig[l]) {
 			fprintf(stderr, "addnv2pipe error: unmatch data size.\n");
-			return 1;
+			return EXIT_FAILURE;
 		}
 	}
 
@@ -189,22 +188,19 @@ int main(int argc, char *argv[])
 
 	if (isatty(STDOUT_FILENO)) {
 		fprintf(stderr, "addnv2pipe error: output to terminal.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	switch (dimension) {
 	case 2:
 		return pushaddnv2d(filename1, filename2, c1, c2, opr_code);
-		break;
-
 	case 3:
 		return pushaddnv3d(filename1, filename2, c1, c2, opr_code);
-		break;
-
 	case 4:
 		return pushaddnv4d(filename1, filename2, c1, c2, opr_code);
-		break;
+	default:
+		fprintf(stderr, "addnv2pipe error: unsupported dimension number.\n");
+		return EXIT_FAILURE;
 	}
 
-	return 0;
 }

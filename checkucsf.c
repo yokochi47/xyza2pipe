@@ -37,7 +37,7 @@ int checkucsf(char filename[])
 
 	if ((fp = fopen(filename, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", filename);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(filename, &_stat);
@@ -92,7 +92,7 @@ int checkucsf(char filename[])
 	/* FILE SEARCH */
 	if (strncmp(buffer, "UCSF", 4) != 0) {
 		fprintf(stderr, "Spectra file: Not UCSF file.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	if (dimension < 2 || dimension > 4) {
@@ -123,10 +123,10 @@ int checkucsf(char filename[])
 	j = 180;
 
 	for (k = 0; k < dimension; k++) {
-		memcpy(axisname[k], buffer + j + 128 * k, MAXASSNAME);
+		memcpy(axisname[k], buffer + j + 128 * k, MAXAXISNAME);
 
 		if (*axislabel[k] != 0)
-			memcpy(axisname[k], axislabel[k], MAXASSNAME);
+			memcpy(axisname[k], axislabel[k], MAXAXISNAME);
 
 		if (usrlabel == 0)
 			checklabel(axisname[k]);
@@ -266,7 +266,7 @@ int checkucsf(char filename[])
 		for (j = 0; j < dimension; j++) {
 			origfreq[j] = spcenter[j] * obsfreq[j] - spwidth[j] / 2.0 + spwidth[j] / (float) (datasize[j]);
 
-			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXASSNAME) != 0 && *axisname[(j + 1) % dimension] == 'N'
+			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXAXISNAME) != 0 && *axisname[(j + 1) % dimension] == 'N'
 					&& spcenter[j] >= 4.5 && spcenter[j] <= 5.0 && spwidth[j] / obsfreq[j] < 8.5)
 				origfreq[j] += spwidth[j] / 2.0;
 		}
@@ -326,7 +326,7 @@ int checkucsf(char filename[])
 
 				fprintf(stderr, "Failed.\n");
 
-				return 1;
+				return EXIT_FAILURE;
 			}
 
 			fprintf(stderr, "Data Size  | %8d  %8d (fixed)\n", datasize[0], datasize[1]);
@@ -468,7 +468,7 @@ int checkucsf(char filename[])
 		for (j = 0; j < dimension; j++) {
 			origfreq[j] = spcenter[j] * obsfreq[j] - spwidth[j] / 2.0 + spwidth[j] / (float) (datasize[j]);
 
-			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXASSNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
+			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXAXISNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
 					|| *axisname[(j + 2) % dimension] == 'N') && spcenter[j] >= 4.5 && spcenter[j] <= 5.0
 					&& spwidth[j] / obsfreq[j] < 8.5)
 				origfreq[j] += spwidth[j] / 2.0;
@@ -529,7 +529,7 @@ int checkucsf(char filename[])
 
 				fprintf(stderr, "Failed.\n");
 
-				return 1;
+				return EXIT_FAILURE;
 			}
 
 			fprintf(stderr, "Data Size  | %8d  %8d  %8d (fixed)\n", datasize[0], datasize[1], datasize[2]);
@@ -674,7 +674,7 @@ int checkucsf(char filename[])
 		for (j = 0; j < dimension; j++) {
 			origfreq[j] = spcenter[j] * obsfreq[j] - spwidth[j] / 2.0 + spwidth[j] / (float) (datasize[j]);
 
-			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXASSNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
+			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXAXISNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
 					|| *axisname[(j + 2) % dimension] == 'N' || *axisname[(j + 3) % dimension] == 'N') && spcenter[j] >= 4.5
 					&& spcenter[j] <= 5.0 && spwidth[j] / obsfreq[j] < 8.5)
 				origfreq[j] += spwidth[j] / 2.0;
@@ -740,7 +740,7 @@ int checkucsf(char filename[])
 
 				fprintf(stderr, "Failed.\n");
 
-				return 1;
+				return EXIT_FAILURE;
 			}
 
 			fprintf(stderr, "Data Size  | %8d  %8d  %8d  %8d (fixed)\n", datasize[0], datasize[1], datasize[2], datasize[3]);
@@ -790,7 +790,7 @@ int checkucsf(char filename[])
 
 	j = 64;
 	for (k = 0; k < dimension; k++) {
-		memcpy(header + j + k * MAXASSNAME, axisname[k], MAXASSNAME);
+		memcpy(header + j + k * MAXAXISNAME, axisname[k], MAXAXISNAME);
 		unitsize[k] = datasize[k] / blocksize[k];
 	}
 
@@ -881,7 +881,7 @@ int checkucsf(char filename[])
 	}
 
 	/* INDIRECT PLANES */
-	fwrite2mem(header + 1768, get_indirect_planes());
+	fwrite2mem(header + 1768, (float) get_indirect_planes());
 
 	/* QUADFLAG */
 	fwrite2mem(header + 424, 1.0);

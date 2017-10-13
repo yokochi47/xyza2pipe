@@ -36,7 +36,7 @@ limitations under the License.
 #include "libMath.h"
 #include "libMatrix.h"
 
-#define MAXASSNAME		8
+#define MAXAXISNAME		8
 #define MAXFILENAME		64
 #define MAXCHAR			1024
 #define MAXLONGNAME		8192
@@ -61,7 +61,7 @@ typedef enum { NO_APODIZATION /* NA */ ,
 	TRAPEZOID /* TM */ ,
 	ZERO_RANGE /* ZE */ ,
 	TRIANGLE /* TRI */ ,
-	EXPONENTIAL_GAUSS		/* GMB */
+	EXPONENTIAL_GAUSS /* GMB */
 } enum_apod_code;
 
 /* COMBINE OPERATOR */
@@ -70,8 +70,8 @@ typedef enum { COMBINE_ADD, COMBINE_SUB, COMBINE_MUL } enum_combine_opr;
 
 extern char header[PIPE_HEADERSIZE];
 
-extern char axislabel[4][MAXASSNAME + 1];
-extern char axisname[4][MAXASSNAME + 1];
+extern char axislabel[4][MAXAXISNAME + 1];
+extern char axisname[4][MAXAXISNAME + 1];
 
 extern char dimension, _dimension, byteswap;
 
@@ -104,8 +104,8 @@ void make_dir(char filename[]);
 extern char clean_string[MAXCHAR];
 void set_clean_string(char clean_string[]);
 
-float get_indirect_planes();
-float get_orig_indirect_planes();
+int get_indirect_planes();
+int get_orig_indirect_planes();
 
 int get_data_plane();
 int get_data_volume();

@@ -35,7 +35,7 @@ int openxeasy2d(char spectra2d[], float **mat2d)
 
 	if ((fp = fopen(spectra2d, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", spectra2d);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(spectra2d, &_stat);
@@ -74,7 +74,7 @@ int openxeasy2d(char spectra2d[], float **mat2d)
 
 	escape:fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int openxeasy3d(char spectra3d[], float ***mat3d)
@@ -90,7 +90,7 @@ int openxeasy3d(char spectra3d[], float ***mat3d)
 
 	if ((fp = fopen(spectra3d, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", spectra3d);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(spectra3d, &_stat);
@@ -134,7 +134,7 @@ int openxeasy3d(char spectra3d[], float ***mat3d)
 
 	escape:fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int openxeasy4d(char spectra4d[], float ****mat4d)
@@ -150,7 +150,7 @@ int openxeasy4d(char spectra4d[], float ****mat4d)
 
 	if ((fp = fopen(spectra4d, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", spectra4d);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(spectra4d, &_stat);
@@ -199,5 +199,5 @@ int openxeasy4d(char spectra4d[], float ****mat4d)
 
 	escape:fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }

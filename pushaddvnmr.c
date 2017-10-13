@@ -94,7 +94,7 @@ int pushaddvnmr2d(char monofile1[], char monofile2[], char pardir1[], char pardi
 	escape:free_fmatrix2d(matrix2d);
 	free_fmatrix2d(matrix2d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushaddvnmr3d(char monofile1[], char monofile2[], char pardir1[], char pardir2[], const float c1, const float c2,
@@ -179,7 +179,7 @@ int pushaddvnmr3d(char monofile1[], char monofile2[], char pardir1[], char pardi
 	free_fmatrix3d(matrix3d);
 	free_fmatrix3d(matrix3d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushaddvnmr4d(char monofile1[], char monofile2[], char pardir1[], char pardir2[], const float c1, const float c2,
@@ -267,5 +267,5 @@ int pushaddvnmr4d(char monofile1[], char monofile2[], char pardir1[], char pardi
 	free_fmatrix4d(matrix4d);
 	free_fmatrix4d(matrix4d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }

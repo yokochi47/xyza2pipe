@@ -31,7 +31,7 @@ int openxyza2d(char spectra2d[], float **mat2d)
 
 	if ((fp = fopen(spectra2d, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", spectra2d);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(spectra2d, &_stat);
@@ -72,7 +72,7 @@ int openxyza2d(char spectra2d[], float **mat2d)
 
 	escape:fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int openxyza3d(char spectra3d[], const int z, float **mat2d)

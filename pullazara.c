@@ -114,7 +114,7 @@ int pullazara2d(char spectra2d[])
 
 	fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullazara3d(char spectra3d[])
@@ -219,7 +219,7 @@ int pullazara3d(char spectra3d[])
 
 	fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullazara4d(char spectra4d[])
@@ -329,5 +329,5 @@ int pullazara4d(char spectra4d[])
 
 	fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }

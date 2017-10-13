@@ -89,7 +89,7 @@ int pushxwnmr2d(char spectra2d[], const char axis_option)
 
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushxwnmr3d(char spectra3d[], const char axis_option)
@@ -186,7 +186,7 @@ int pushxwnmr3d(char spectra3d[], const char axis_option)
 
 	escape:free_fmatrix3d(matrix3d);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushxwnmr4d(char spectra4d[], const char axis_option)
@@ -307,5 +307,5 @@ int pushxwnmr4d(char spectra4d[], const char axis_option)
 
 	escape:free_fmatrix4d(matrix4d);
 
-	return 1;
+	return EXIT_FAILURE;
 }

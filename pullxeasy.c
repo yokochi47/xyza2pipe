@@ -122,7 +122,7 @@ int pullxeasy2d(char spectra2d[])
 
 	fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullxeasy3d(char spectra3d[])
@@ -233,7 +233,7 @@ int pullxeasy3d(char spectra3d[])
 
 	fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullxeasy4d(char spectra4d[])
@@ -349,5 +349,5 @@ int pullxeasy4d(char spectra4d[])
 
 	fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }

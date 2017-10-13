@@ -27,9 +27,9 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 {
 	struct stat _stat;
 	FILE *fp, *par, *mono, *fp3d[32];
-	char _filename[MAXLONGNAME], parfile[MAXLONGNAME], axisorder[MAXASSNAME];
+	char _filename[MAXLONGNAME], parfile[MAXLONGNAME], axisorder[MAXAXISNAME];
 	char *buffer;
-	char nucleus[MAXASSNAME], _obsfreq[MAXCHAR], _spwidth[MAXCHAR], _datasize[MAXCHAR], _fidsize[MAXCHAR];
+	char nucleus[MAXAXISNAME], _obsfreq[MAXCHAR], _spwidth[MAXCHAR], _datasize[MAXCHAR], _fidsize[MAXCHAR];
 	char _rfl[MAXCHAR], _rfp[MAXCHAR], temparature[MAXCHAR];
 	int fidsize[4] = { 0 };
 	short apod_code[4] = { SINE_BELL };
@@ -58,7 +58,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 
 			if ((par = fopen(parfile, "r")) == NULL) {
 				fprintf(stderr, "Parameter file %s/procpar: Couldn't open.\n", pardir);
-				return 1;
+				return EXIT_FAILURE;
 			}
 		}
 	}
@@ -70,7 +70,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 
 		if (dimension < 2 || dimension > 4) {
 			fprintf(stderr, "Spectra file: Not 2D/3D/4D experiment.\n");
-			return 1;
+			return EXIT_FAILURE;
 		}
 	}
 
@@ -86,7 +86,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 
 	if ((fp = fopen(_filename, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", _filename);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(_filename, &_stat);
@@ -328,9 +328,9 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 	get_varian_parameter(dimension, pardir, "rfp", 0, _rfp);
 
 	if (*axislabel[j] != 0)
-		strncpy(axisname[j], axislabel[j], MAXASSNAME);
+		strncpy(axisname[j], axislabel[j], MAXAXISNAME);
 	else
-		strncpy(axisname[j], nucleus, MAXASSNAME);
+		strncpy(axisname[j], nucleus, MAXAXISNAME);
 
 	if (usrlabel == 0)
 		checklabel(axisname[j]);
@@ -351,7 +351,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 
 			if (axisorder[j] == axisorder[l]) {
 
-				strncpy(axisname[j], axisname[l], MAXASSNAME);
+				strncpy(axisname[j], axisname[l], MAXAXISNAME);
 				obsfreq[j] = obsfreq[l];
 				spwidth[j] = spwidth[l];
 
@@ -374,7 +374,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 
 			get_varian_parameter(dimension, pardir, "sw1", 0, _spwidth);
 
-			strncpy(axisname[j], nucleus, MAXASSNAME);
+			strncpy(axisname[j], nucleus, MAXAXISNAME);
 			if (usrlabel == 0)
 				checklabel(axisname[j]);
 
@@ -392,7 +392,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 			case 2:
 				get_varian_parameter(dimension, pardir, "sw1", 0, _spwidth);
 
-				strncpy(axisname[j], nucleus, MAXASSNAME);
+				strncpy(axisname[j], nucleus, MAXAXISNAME);
 				if (usrlabel == 0)
 					checklabel(axisname[j]);
 
@@ -403,7 +403,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 			case 3:
 				get_varian_parameter(dimension, pardir, "sw2", 0, _spwidth);
 
-				strncpy(axisname[j], nucleus, MAXASSNAME);
+				strncpy(axisname[j], nucleus, MAXAXISNAME);
 				if (usrlabel == 0)
 					checklabel(axisname[j]);
 
@@ -414,7 +414,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 			case 4:
 				get_varian_parameter(dimension, pardir, "sw3", 0, _spwidth);
 
-				strncpy(axisname[j], nucleus, MAXASSNAME);
+				strncpy(axisname[j], nucleus, MAXAXISNAME);
 				if (usrlabel == 0)
 					checklabel(axisname[j]);
 
@@ -434,7 +434,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 				case 2:
 					get_varian_parameter(dimension, pardir, "sw1", 0, _spwidth);
 
-					strncpy(axisname[j], nucleus, MAXASSNAME);
+					strncpy(axisname[j], nucleus, MAXAXISNAME);
 					if (usrlabel == 0)
 						checklabel(axisname[j]);
 
@@ -445,7 +445,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 				case 3:
 					get_varian_parameter(dimension, pardir, "sw2", 0, _spwidth);
 
-					strncpy(axisname[j], nucleus, MAXASSNAME);
+					strncpy(axisname[j], nucleus, MAXAXISNAME);
 					if (usrlabel == 0)
 						checklabel(axisname[j]);
 
@@ -456,7 +456,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 				case 4:
 					get_varian_parameter(dimension, pardir, "sw3", 0, _spwidth);
 
-					strncpy(axisname[j], nucleus, MAXASSNAME);
+					strncpy(axisname[j], nucleus, MAXAXISNAME);
 					if (usrlabel == 0)
 						checklabel(axisname[j]);
 
@@ -520,7 +520,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		}
 
 		for (j = 1; j < dimension; j++) {
-			strncpy(nucleus, axisname[j], MAXASSNAME);
+			strncpy(nucleus, axisname[j], MAXAXISNAME);
 			checklabel(nucleus);
 			switch (nucleus[0]) {
 			case 'H':
@@ -537,7 +537,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 				break;
 			default:
 				fprintf(stderr, "Spectra file %s: Unsupported nucleus '%c'\n", _filename, nucleus[0]);
-				return 1;
+				return EXIT_FAILURE;
 			}
 			spcenter[j] = (spwidth[j] / 2.0 - rfl[j]) / obsfreq[j];
 		}
@@ -563,7 +563,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		for (j = 0; j < dimension; j++) {
 			origfreq[j] = spcenter[j] * obsfreq[j] - spwidth[j] / 2.0 + spwidth[j] / (float) (datasize[j]);
 
-			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXASSNAME) != 0 && *axisname[(j + 1) % dimension] == 'N'
+			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXAXISNAME) != 0 && *axisname[(j + 1) % dimension] == 'N'
 					&& spcenter[j] >= 4.5 && spcenter[j] <= 5.0 && spwidth[j] / obsfreq[j] < 8.5)
 				origfreq[j] += spwidth[j] / 2.0;
 		}
@@ -591,7 +591,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		if (size != fheader.nblocks * fheader.bbytes + sizeof(datafilehead)) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", _filename, (int) (size),
 					(int) (fheader.nblocks * fheader.bbytes + sizeof(datafilehead)));
-			return 1;
+			return EXIT_FAILURE;
 		}
 
 		/* monofile: skip internal headers (endian resolved) */
@@ -647,7 +647,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		if (size != fheader.nblocks * fheader.tbytes * fheader.ntraces + sizeof(datafilehead)) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", monofile, (int) (size),
 					(int) (fheader.nblocks * fheader.tbytes * fheader.ntraces + sizeof(datafilehead)));
-			return 1;
+			return EXIT_FAILURE;
 		}
 		break;
 
@@ -665,7 +665,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		for (j = 0; j < dimension; j++) {
 			origfreq[j] = spcenter[j] * obsfreq[j] - spwidth[j] / 2.0 + spwidth[j] / (float) (datasize[j]);
 
-			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXASSNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
+			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXAXISNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
 					|| *axisname[(j + 2) % dimension] == 'N') && spcenter[j] >= 4.5 && spcenter[j] <= 5.0
 					&& spwidth[j] / obsfreq[j] < 8.5)
 				origfreq[j] += spwidth[j] / 2.0;
@@ -696,7 +696,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		if (nfiles < 1 || nfiles > 32) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", _filename, (int) (size),
 					(int) (fheader.nblocks * fheader.bbytes + sizeof(datafilehead)));
-			return 1;
+			return EXIT_FAILURE;
 		}
 
 		/* monofile: merge data files & skip internal headers (endian resolved) */
@@ -762,7 +762,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		if (size != fheader.nblocks * fheader.tbytes * fheader.ntraces + sizeof(datafilehead)) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", monofile, (int) (size),
 					(int) (fheader.nblocks * fheader.tbytes * fheader.ntraces + sizeof(datafilehead)));
-			return 1;
+			return EXIT_FAILURE;
 		}
 		break;
 
@@ -781,7 +781,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		for (j = 0; j < dimension; j++) {
 			origfreq[j] = spcenter[j] * obsfreq[j] - spwidth[j] / 2.0 + spwidth[j] / (float) (datasize[j]);
 
-			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXASSNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
+			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXAXISNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
 					|| *axisname[(j + 2) % dimension] == 'N') && spcenter[j] >= 4.5 && spcenter[j] <= 5.0
 					&& spwidth[j] / obsfreq[j] < 8.5)
 				origfreq[j] += spwidth[j] / 2.0;
@@ -814,7 +814,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		if (nfiles < 1 || nfiles > 32) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", _filename, (int) (size),
 					(int) (fheader.nblocks * fheader.bbytes + sizeof(datafilehead)));
-			return 1;
+			return EXIT_FAILURE;
 		}
 
 		/* monofile: merge data files & skip internal headers (endian resolved) */
@@ -880,7 +880,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 		if (size != fheader.nblocks * fheader.tbytes * fheader.ntraces + sizeof(datafilehead)) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", monofile, (int) (size),
 					(int) (fheader.nblocks * fheader.tbytes * fheader.ntraces + sizeof(datafilehead)));
-			return 1;
+			return EXIT_FAILURE;
 		}
 		break;
 	}
@@ -942,7 +942,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 
 	j = 64;
 	for (k = 0; k < dimension; k++) {
-		memcpy(header + j + k * MAXASSNAME, axisname[k], MAXASSNAME);
+		memcpy(header + j + k * MAXAXISNAME, axisname[k], MAXAXISNAME);
 		unitsize[k] = datasize[k] / blocksize[k];
 		if (unitsize[k] == 0)
 			unitsize[k] = 1;
@@ -1035,7 +1035,7 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 	}
 
 	/* INDIRECT PLANES */
-	fwrite2mem(header + 1768, get_indirect_planes());
+	fwrite2mem(header + 1768, (float) get_indirect_planes());
 
 	/* QUADFLAG */
 	fwrite2mem(header + 424, 1.0);
@@ -1052,5 +1052,5 @@ int checkvnmr(char filename[], char pardir[], char monofile[])
 
 	escape:fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }

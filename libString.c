@@ -834,7 +834,7 @@ void swapbyte(unsigned int unit_size, unsigned int mem_size, char *mem)
 		/*
   if (unit_size <= 0 || unit_size > 1)
    fprintf(stderr, "Invalid parameters in swapbyte().\n");
-		 */
+		*/
 		return;
 	}
 

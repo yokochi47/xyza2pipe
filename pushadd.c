@@ -86,7 +86,7 @@ int pushadd2d(char spectra2d1[], char spectra2d2[], const float c1, const float 
 	escape:free_fmatrix2d(matrix2d);
 	free_fmatrix2d(matrix2d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushadd3d(char spectra3d1[], char spectra3d2[], const float c1, const float c2, enum_combine_opr opr_code)
@@ -158,7 +158,7 @@ int pushadd3d(char spectra3d1[], char spectra3d2[], const float c1, const float 
 	escape:free_fmatrix2d(matrix2d);
 	free_fmatrix2d(matrix2d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushadd4d(char spectra4d1[], char spectra4d2[], const float c1, const float c2, enum_combine_opr opr_code)
@@ -233,5 +233,5 @@ int pushadd4d(char spectra4d1[], char spectra4d2[], const float c1, const float 
 	escape:free_fmatrix2d(matrix2d);
 	free_fmatrix2d(matrix2d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }

@@ -36,7 +36,7 @@ int checkazara(char filename[])
 
 	if ((fp = fopen(filename, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", filename);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(filename, &_stat);
@@ -62,7 +62,7 @@ int checkazara(char filename[])
 
 	if ((par = fopen(parfile, "r")) == NULL) {
 		fprintf(stderr, "Parameter file %s: Couldn't open.\n", parfile);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	/* READ PARAMETERS */
@@ -158,9 +158,9 @@ int checkazara(char filename[])
 				/* READ AXIS NAME */
 
 				if (*axislabel[j] != 0)
-					strncpy(axisname[j], axislabel[j], MAXASSNAME);
+					strncpy(axisname[j], axislabel[j], MAXAXISNAME);
 				else
-					strncpy(axisname[j], argv[1], MAXASSNAME);
+					strncpy(axisname[j], argv[1], MAXAXISNAME);
 
 				if (usrlabel == 0)
 					checklabel(axisname[j]);
@@ -276,7 +276,7 @@ int checkazara(char filename[])
 		for (j = 0; j < dimension; j++) {
 			origfreq[j] = spcenter[j] * obsfreq[j] - spwidth[j] / 2.0 + spwidth[j] / (float) (datasize[j]);
 
-			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXASSNAME) != 0 && *axisname[(j + 1) % dimension] == 'N'
+			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXAXISNAME) != 0 && *axisname[(j + 1) % dimension] == 'N'
 					&& spcenter[j] >= 4.5 && spcenter[j] <= 5.0 && spwidth[j] / obsfreq[j] < 8.5)
 				origfreq[j] += spwidth[j] / 2.0;
 		}
@@ -286,7 +286,7 @@ int checkazara(char filename[])
 		for (j = 0; j < dimension; j++) {
 			origfreq[j] = spcenter[j] * obsfreq[j] - spwidth[j] / 2.0 + spwidth[j] / (float) (datasize[j]);
 
-			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXASSNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
+			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXAXISNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
 					|| *axisname[(j + 2) % dimension] == 'N') && spcenter[j] >= 4.5 && spcenter[j] <= 5.0
 					&& spwidth[j] / obsfreq[j] < 8.5)
 				origfreq[j] += spwidth[j] / 2.0;
@@ -297,7 +297,7 @@ int checkazara(char filename[])
 		for (j = 0; j < dimension; j++) {
 			origfreq[j] = spcenter[j] * obsfreq[j] - spwidth[j] / 2.0 + spwidth[j] / (float) (datasize[j]);
 
-			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXASSNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
+			if (*axisname[j] == 'H' && strncmp(axisname[j], "HA", MAXAXISNAME) != 0 && (*axisname[(j + 1) % dimension] == 'N'
 					|| *axisname[(j + 2) % dimension] == 'N' || *axisname[(j + 3) % dimension] == 'N') && spcenter[j] >= 4.5
 					&& spcenter[j] <= 5.0 && spwidth[j] / obsfreq[j] < 8.5)
 				origfreq[j] += spwidth[j] / 2.0;
@@ -474,7 +474,7 @@ int checkazara(char filename[])
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume);
 
-			return 1;
+			return EXIT_FAILURE;
 		}
 		break;
 
@@ -512,7 +512,7 @@ int checkazara(char filename[])
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume);
 
-			return 1;
+			return EXIT_FAILURE;
 		}
 		break;
 
@@ -553,7 +553,7 @@ int checkazara(char filename[])
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume);
 
-			return 1;
+			return EXIT_FAILURE;
 		}
 		break;
 	}
@@ -591,7 +591,7 @@ int checkazara(char filename[])
 
 	j = 64;
 	for (k = 0; k < dimension; k++) {
-		memcpy(header + j + k * MAXASSNAME, axisname[k], MAXASSNAME);
+		memcpy(header + j + k * MAXAXISNAME, axisname[k], MAXAXISNAME);
 		unitsize[k] = datasize[k] / blocksize[k];
 	}
 
@@ -682,7 +682,7 @@ int checkazara(char filename[])
 	}
 
 	/* INDIRECT PLANES */
-	fwrite2mem(header + 1768, get_indirect_planes());
+	fwrite2mem(header + 1768, (float) get_indirect_planes());
 
 	/* QUADFLAG */
 	fwrite2mem(header + 424, 1.0);
@@ -699,5 +699,5 @@ int checkazara(char filename[])
 
 	escape:fclose(par);
 
-	return 1;
+	return EXIT_FAILURE;
 }

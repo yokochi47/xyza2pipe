@@ -54,7 +54,7 @@ int checkxwnmr(char filename[])
 
 	if ((par = fopen(parfile, "r")) == NULL) {
 		fprintf(stderr, "Parameter file %s: Couldn't open.\n", parfile);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	fclose(par);
@@ -63,14 +63,14 @@ int checkxwnmr(char filename[])
 
 	if ((par = fopen(parfile, "r")) == NULL) {
 		fprintf(stderr, "Parameter file %s: Couldn't open.\n", parfile);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	fclose(par);
 
 	if ((fp = fopen(filename, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", filename);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(filename, &_stat);
@@ -87,7 +87,7 @@ int checkxwnmr(char filename[])
 
 		if (dimension < 2 || dimension > 4) {
 			fprintf(stderr, "Spectra file: Not 2D/3D/4D experiment.\n");
-			return 1;
+			return EXIT_FAILURE;
 		}
 	}
 
@@ -100,7 +100,7 @@ int checkxwnmr(char filename[])
 		get_bruker_acq_parameter(dimension, acqdir, j, "NUC1", 0, axisname[j]);
 
 		if (*axislabel[j] != 0)
-			memcpy(axisname[j], axislabel[j], MAXASSNAME);
+			memcpy(axisname[j], axislabel[j], MAXAXISNAME);
 
 		if (usrlabel == 0)
 			checklabel(axisname[j]);
@@ -183,7 +183,7 @@ int checkxwnmr(char filename[])
 		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume + headersize);
-			return 1;
+			return EXIT_FAILURE;
 		}
 		break;
 
@@ -223,7 +223,7 @@ int checkxwnmr(char filename[])
 		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume + headersize);
-			return 1;
+			return EXIT_FAILURE;
 		}
 		break;
 
@@ -266,7 +266,7 @@ int checkxwnmr(char filename[])
 		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume + headersize);
-			return 1;
+			return EXIT_FAILURE;
 		}
 		break;
 	}
@@ -313,7 +313,7 @@ int checkxwnmr(char filename[])
 
 	j = 64;
 	for (k = 0; k < dimension; k++) {
-		memcpy(header + j + k * MAXASSNAME, axisname[k], MAXASSNAME);
+		memcpy(header + j + k * MAXAXISNAME, axisname[k], MAXAXISNAME);
 		unitsize[k] = datasize[k] / blocksize[k];
 	}
 
@@ -404,7 +404,7 @@ int checkxwnmr(char filename[])
 	}
 
 	/* INDIRECT PLANES */
-	fwrite2mem(header + 1768, get_indirect_planes());
+	fwrite2mem(header + 1768, (float) get_indirect_planes());
 
 	/* QUADFLAG */
 	fwrite2mem(header + 424, 1.0);

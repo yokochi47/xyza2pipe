@@ -134,7 +134,7 @@ int pullproj2d(char filename[], const int abs_mode)
 
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullproj3d(char filename[], const int abs_mode)
@@ -273,7 +273,7 @@ int pullproj3d(char filename[], const int abs_mode)
 	escape:free_fmatrix2d(matrix2d);
 	free_fmatrix2d(matrix2d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullproj4d(char filename[], const int abs_mode)
@@ -416,5 +416,5 @@ int pullproj4d(char filename[], const int abs_mode)
 	escape:free_fmatrix2d(matrix2d);
 	free_fmatrix2d(matrix2d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }

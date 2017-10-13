@@ -21,9 +21,9 @@ limitations under the License.
 #include "xyza2pipe.h"
 
 char header[PIPE_HEADERSIZE];
-char axislabel[4][MAXASSNAME + 1] = { {""} };
+char axislabel[4][MAXAXISNAME + 1] = { {""} };
 
-char axisname[4][MAXASSNAME + 1];
+char axisname[4][MAXAXISNAME + 1];
 
 char dimension, _dimension, byteswap;
 
@@ -50,34 +50,34 @@ const float PIPE_HEADER[3] = { PIPE_HEADER_0, PIPE_HEADER_1, PIPE_HEADER_2 };
 char clean_string[MAXCHAR] =
 { "\r                                                                               \r" };
 
-float get_indirect_planes()
+int get_indirect_planes()
 {
 
 	switch (dimension) {
 	case 2:
-		return 1.0;
+		return 1;
 	case 3:
-		return (float) datasize[2];
+		return datasize[2];
 	case 4:
-		return (float) datasize[2] * datasize[3];
+		return datasize[2] * datasize[3];
 	default:
-		return 0.0;
+		return 0;
 	}
 
 }
 
-float get_orig_indirect_planes()
+int get_orig_indirect_planes()
 {
 
 	switch (dimension) {
 	case 2:
-		return 1.0;
+		return 1;
 	case 3:
-		return (float) datasize_orig[2];
+		return datasize_orig[2];
 	case 4:
-		return (float) datasize_orig[2] * datasize_orig[3];
+		return datasize_orig[2] * datasize_orig[3];
 	default:
-		return 0.0;
+		return 0;
 	}
 
 }

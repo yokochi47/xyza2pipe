@@ -22,7 +22,7 @@ limitations under the License.
 
 void checklabel(char string[])
 {
-	char _string[MAXASSNAME + 1];
+	char _string[MAXAXISNAME + 1];
 	int l;
 
 	char *cnvtbl[][2] = {
@@ -45,7 +45,7 @@ void checklabel(char string[])
 			{"", ""}
 	};
 
-	strncpy(_string, string, MAXASSNAME);
+	strncpy(_string, string, MAXAXISNAME);
 
 	strreplace(_string, " ", "");
 
@@ -55,7 +55,7 @@ void checklabel(char string[])
 	while (strcmp(cnvtbl[l][0], "") != 0) {
 
 		if (strcmp(string, cnvtbl[l][0]) == 0) {
-			strncpy(string, cnvtbl[l][1], MAXASSNAME);
+			strncpy(string, cnvtbl[l][1], MAXAXISNAME);
 			break;
 		}
 
@@ -64,5 +64,5 @@ void checklabel(char string[])
 
 	l = strlen(string) + 1;
 
-	memset(&(string[l]), 0, (MAXASSNAME - l) * sizeof(char));
+	memset(&(string[l]), 0, (MAXAXISNAME - l) * sizeof(char));
 }

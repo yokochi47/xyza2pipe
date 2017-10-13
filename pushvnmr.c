@@ -93,7 +93,7 @@ int pushvnmr2d(char monofile[], char pardir[], const char axis_option)
 
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushvnmr3d(char monofile[], char pardir[], const char axis_option)
@@ -194,7 +194,7 @@ int pushvnmr3d(char monofile[], char pardir[], const char axis_option)
 
 	escape:free_fmatrix3d(matrix3d);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushvnmr4d(char monofile[], char pardir[], const char axis_option)
@@ -319,5 +319,5 @@ int pushvnmr4d(char monofile[], char pardir[], const char axis_option)
 
 	escape:free_fmatrix4d(matrix4d);
 
-	return 1;
+	return EXIT_FAILURE;
 }

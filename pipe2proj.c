@@ -81,25 +81,25 @@ int main(int argc, char *argv[])
 		case 6:
 			if (optarg) {
 				usrlabel = 1;
-				strncpy(axislabel[0], optarg, MAXASSNAME);
+				strncpy(axislabel[0], optarg, MAXAXISNAME);
 			}
 			break;
 		case 7:
 			if (optarg) {
 				usrlabel = 1;
-				strncpy(axislabel[1], optarg, MAXASSNAME);
+				strncpy(axislabel[1], optarg, MAXAXISNAME);
 			}
 			break;
 		case 8:
 			if (optarg) {
 				usrlabel = 1;
-				strncpy(axislabel[2], optarg, MAXASSNAME);
+				strncpy(axislabel[2], optarg, MAXAXISNAME);
 			}
 			break;
 		case 9:
 			if (optarg) {
 				usrlabel = 1;
-				strncpy(axislabel[3], optarg, MAXASSNAME);
+				strncpy(axislabel[3], optarg, MAXAXISNAME);
 			}
 			break;
 		case 10:
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 			fprintf(stderr, "%s ", argv[optind++]);
 		fputc('\n', stderr);
 
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	if (filename[0] == 0 && isatty(STDOUT_FILENO)) {
@@ -141,33 +141,33 @@ int main(int argc, char *argv[])
 			fprintf(stderr, "%s", usage[l++]);
 
 		fprintf(stderr, "pipe2proj error: output to terminal.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	if (checkpipe() != 0)
-		return 1;
+		return EXIT_FAILURE;
 
 	cnvhdr(axis_option, 'b');
 
 	switch (dimension) {
 	case 2:
 		if (pullproj2d(filename, abs_mode) != 0)
-			return 1;
+			return EXIT_FAILURE;
 		break;
 
 	case 3:
 		if (pullproj3d(filename, abs_mode) != 0)
-			return 1;
+			return EXIT_FAILURE;
 		break;
 
 	case 4:
 		if (pullproj4d(filename, abs_mode) != 0)
-			return 1;
+			return EXIT_FAILURE;
 		break;
 	}
 
 	if (filename[0] != 0)
-		checkxyza(filename);
+		return checkxyza(filename);
 
 	return 0;
 }

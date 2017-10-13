@@ -59,7 +59,7 @@ int pullnv2d(char spectra2d[])
 
 	j = 1076;
 	for (i = 0; i < dimension; i++)
-		memcpy(header + j + 128 * i, axisname[i], MAXASSNAME);
+		memcpy(header + j + 128 * i, axisname[i], MAXAXISNAME);
 
 	block_volume = set_block_volume();
 
@@ -161,7 +161,7 @@ int pullnv2d(char spectra2d[])
 
 	fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullnv3d(char spectra3d[])
@@ -204,7 +204,7 @@ int pullnv3d(char spectra3d[])
 
 	j = 1076;
 	for (i = 0; i < dimension; i++)
-		memcpy(header + j + 128 * i, axisname[i], MAXASSNAME);
+		memcpy(header + j + 128 * i, axisname[i], MAXAXISNAME);
 
 	block_volume = set_block_volume();
 
@@ -313,7 +313,7 @@ int pullnv3d(char spectra3d[])
 
 	fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullnv4d(char spectra4d[])
@@ -356,7 +356,7 @@ int pullnv4d(char spectra4d[])
 
 	j = 1076;
 	for (i = 0; i < dimension; i++)
-		memcpy(header + j + 128 * i, axisname[i], MAXASSNAME);
+		memcpy(header + j + 128 * i, axisname[i], MAXAXISNAME);
 
 	block_volume = set_block_volume();
 
@@ -470,5 +470,5 @@ int pullnv4d(char spectra4d[])
 
 	fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }

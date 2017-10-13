@@ -64,7 +64,7 @@ int pushnv2d(char spectra2d[], const char axis_option)
 
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 
 	resize:cnvhdr(axis_option, 'b');
 
@@ -174,7 +174,7 @@ int pushnv3d(char spectra3d[], const char axis_option)
 
 	escape:free_fmatrix3d(matrix3d);
 
-	return 1;
+	return EXIT_FAILURE;
 
 	resize:cnvhdr(axis_option, 'b');
 
@@ -182,7 +182,7 @@ int pushnv3d(char spectra3d[], const char axis_option)
 	fwrite2mem(header + 876, (float) (datasize_orig[1]));
 	fwrite2mem(header + 60, (float) (datasize_orig[2]));
 
-	fwrite2mem(header + 1768, get_orig_indirect_planes());
+	fwrite2mem(header + 1768, (float) get_orig_indirect_planes());
 
 	cnvhdr(axis_option, 'f');
 
@@ -325,7 +325,7 @@ int pushnv4d(char spectra4d[], const char axis_option)
 
 	escape:free_fmatrix4d(matrix4d);
 
-	return 1;
+	return EXIT_FAILURE;
 
 	resize:cnvhdr(axis_option, 'b');
 
@@ -334,7 +334,7 @@ int pushnv4d(char spectra4d[], const char axis_option)
 	fwrite2mem(header + 60, (float) (datasize_orig[2]));
 	fwrite2mem(header + 128, (float) (datasize_orig[3]));
 
-	fwrite2mem(header + 1768, get_orig_indirect_planes());
+	fwrite2mem(header + 1768, (float) get_orig_indirect_planes());
 
 	cnvhdr(axis_option, 'f');
 

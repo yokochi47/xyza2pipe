@@ -155,7 +155,7 @@ int pullxyza2d(char spectra2d[], const char axis_option)
 
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullxyza3d(char spectra3d[], const char axis_option)
@@ -365,7 +365,7 @@ int pullxyza3d(char spectra3d[], const char axis_option)
 
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pullxyza4d(char spectra4d[], const char axis_option)
@@ -632,5 +632,5 @@ int pullxyza4d(char spectra4d[], const char axis_option)
 
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 }

@@ -42,7 +42,7 @@ int openvnmr2d(char monofile[], char pardir[], float **mat2d)
 
 	if ((fp = fopen(monofile, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", monofile);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(monofile, &_stat);
@@ -192,7 +192,7 @@ int openvnmr2d(char monofile[], char pardir[], float **mat2d)
 
 	escape:fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int openvnmr3d(char monofile[], char pardir[], float ***mat3d)
@@ -215,7 +215,7 @@ int openvnmr3d(char monofile[], char pardir[], float ***mat3d)
 
 	if ((fp = fopen(monofile, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", monofile);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(monofile, &_stat);
@@ -336,7 +336,7 @@ int openvnmr3d(char monofile[], char pardir[], float ***mat3d)
 
 	escape:fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int openvnmr4d(char monofile[], char pardir[], float ****mat4d)
@@ -359,7 +359,7 @@ int openvnmr4d(char monofile[], char pardir[], float ****mat4d)
 
 	if ((fp = fopen(monofile, "r")) == NULL) {
 		fprintf(stderr, "Spectra file %s: Couldn't open.\n", monofile);
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	stat(monofile, &_stat);
@@ -498,5 +498,5 @@ int openvnmr4d(char monofile[], char pardir[], float ****mat4d)
 
 	escape:fclose(fp);
 
-	return 1;
+	return EXIT_FAILURE;
 }

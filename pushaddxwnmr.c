@@ -86,7 +86,7 @@ int pushaddxwnmr2d(char spectra2d1[], char spectra2d2[], const float c1, const f
 	escape:free_fmatrix2d(matrix2d);
 	free_fmatrix2d(matrix2d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushaddxwnmr3d(char spectra3d1[], char spectra3d2[], const float c1, const float c2, enum_combine_opr opr_code)
@@ -163,7 +163,7 @@ int pushaddxwnmr3d(char spectra3d1[], char spectra3d2[], const float c1, const f
 	free_fmatrix3d(matrix3d);
 	free_fmatrix3d(matrix3d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushaddxwnmr4d(char spectra4d1[], char spectra4d2[], const float c1, const float c2, enum_combine_opr opr_code)
@@ -243,5 +243,5 @@ int pushaddxwnmr4d(char spectra4d1[], char spectra4d2[], const float c1, const f
 	free_fmatrix4d(matrix4d);
 	free_fmatrix4d(matrix4d_);
 
-	return 1;
+	return EXIT_FAILURE;
 }

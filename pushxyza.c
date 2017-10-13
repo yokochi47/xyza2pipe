@@ -65,7 +65,7 @@ int pushxyza2d(char spectra2d[], const char axis_option)
 
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushxyza3d(char spectra3d[], const char axis_option)
@@ -148,7 +148,7 @@ int pushxyza3d(char spectra3d[], const char axis_option)
 	escape2:free_fmatrix3d(matrix3d_);
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 }
 
 int pushxyza4d(char spectra4d[], const char axis_option)
@@ -270,5 +270,5 @@ int pushxyza4d(char spectra4d[], const char axis_option)
 	escape2:free_fmatrix3d(matrix3d_);
 	escape:free_fmatrix2d(matrix2d);
 
-	return 1;
+	return EXIT_FAILURE;
 }

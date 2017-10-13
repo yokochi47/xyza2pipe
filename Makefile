@@ -10,9 +10,7 @@ TARGETS		= xyza2pipe ucsf2pipe nv2pipe xeasy2pipe azara2pipe vnmr2pipe xwnmr2pip
 		pipe2proj add2pipe adducsf2pipe addnv2pipe addxeasy2pipe addazara2pipe addvnmr2pipe addxwnmr2pipe\
 		defl2pipe
 
-OBJECTS_MATH	= libMath.o libMatrix.o
-
-OBJECTS_C	= initpars.o checklabel.o cnvhdr.o libString.o $(OBJECTS_MATH)
+OBJECTS_C	= initpars.o checklabel.o cnvhdr.o libString.o libMatrix.o
 
 OBJECTS_XP	= checkxyza.o openxyza.o pushxyza.o
 
@@ -34,7 +32,7 @@ OBJECTS_AP	= checkazara.o openazara.o pushazara.o
 
 OBJECTS_PA	= checkpipe.o checkazara.o openpipe.o pullazara.o
 
-OBJECTS_VP	= checkvnmr.o vendorpar.o openvnmr.o pushvnmr.o
+OBJECTS_VP	= checkvnmr.o vendorpar.o openvnmr.o pushvnmr.o libMath.o
 
 OBJECTS_BP	= checkxwnmr.o vendorpar.o openxwnmr.o pushxwnmr.o
 
@@ -50,7 +48,7 @@ OBJECTS_DEP	= checkxeasy.o openxeasy.o pushaddxeasy.o xeasy2float.o
 
 OBJECTS_DAP	= checkazara.o openazara.o pushaddazara.o
 
-OBJECTS_DVP	= checkvnmr.o vendorpar.o openvnmr.o pushaddvnmr.o
+OBJECTS_DVP	= checkvnmr.o vendorpar.o openvnmr.o pushaddvnmr.o libMath.o
 
 OBJECTS_DBP	= checkxwnmr.o vendorpar.o openxwnmr.o pushaddxwnmr.o
 
@@ -71,9 +69,6 @@ install: $(TARGETS)
 	mkdir -p $(BIN)
 	cp -f $(TARGETS) $(BIN)
 	@if [ ! -f $(BIN)$(ADD2PIPE_ALIAS) ]; then (cd $(BIN); ln -s add2pipe $(ADD2PIPE_ALIAS)); fi
-
-$(OBJECTS_MATH):
-	$(CC) $*.c -c -o $@ $(CFLAGS)
 
 .o:
 	$(CC) $< -c -o $@ $(CFLAGS)

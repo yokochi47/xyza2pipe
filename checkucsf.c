@@ -1,6 +1,6 @@
 /*
     xyza2pipe - a cross conversion environment of NMR spectra
-    Copyright 2017 Masashi Yokochi
+    Copyright 2017-2019 Masashi Yokochi
 
     https://github.com/yokochi47/xyza2pipe
      forked from http://fermi.pharm.hokudai.ac.jp/olivia/
@@ -581,8 +581,7 @@ int checkucsf(char filename[])
 			for (k = 0; k < dimension; k++) {
 				j = 190 + 128 * k;
 
-				if (byteswap != 0)
-					swapbyte(sizeof(short), sizeof(short), buffer + j);
+				swapbyte(sizeof(short), sizeof(short), buffer + j);
 
 				uvs = (unsigned short *) ((void *) (&buffer[j]));
 				datasize[k] = (int) *uvs;
@@ -598,8 +597,7 @@ int checkucsf(char filename[])
 			for (k = 0; k < dimension; k++) {
 				j = 198 + 128 * k;
 
-				if (byteswap != 0)
-					swapbyte(sizeof(short), sizeof(short), buffer + j);
+				swapbyte(sizeof(short), sizeof(short), buffer + j);
 
 				vs = (short *) ((void *) (&buffer[j]));
 				blocksize[k] = *vs;

@@ -167,7 +167,7 @@ int checkucsf(char filename[])
 		fprintf(stderr, "Block Size | %8d  %8d\n", blocksize[0], blocksize[1]);
 
 		for (k = 0; k < dimension; k++) {
-			if (blocksize[k] > datasize[k])
+			if (blocksize[k] > datasize[k] || blocksize[k] > 1024)
 				break;
 		}
 
@@ -367,7 +367,7 @@ int checkucsf(char filename[])
 		fprintf(stderr, "Block Size | %8d  %8d  %8d\n", blocksize[0], blocksize[1], blocksize[2]);
 
 		for (k = 0; k < dimension; k++) {
-			if (blocksize[k] > datasize[k])
+			if (blocksize[k] > datasize[k] || blocksize[k] > 512)
 				break;
 		}
 
@@ -570,7 +570,7 @@ int checkucsf(char filename[])
 		fprintf(stderr, "Block Size | %8d  %8d  %8d  %8d\n", blocksize[0], blocksize[1], blocksize[2], blocksize[3]);
 
 		for (k = 0; k < dimension; k++) {
-			if (blocksize[k] > datasize[k])
+			if (blocksize[k] > datasize[k] || blocksize[k] > 256)
 				break;
 		}
 

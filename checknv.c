@@ -180,7 +180,7 @@ int checknv(char filename[])
 		}
 
 		for (k = 0; k < dimension; k++) {
-			if (blocksize[k] > datasize[k])
+			if (blocksize[k] > datasize[k] || blocksize[k] > 1024)
 				break;
 		}
 
@@ -354,7 +354,7 @@ int checknv(char filename[])
 		}
 
 		for (k = 0; k < dimension; k++) {
-			if (blocksize[k] > datasize[k])
+			if (blocksize[k] > datasize[k] || blocksize[k] > 512)
 				break;
 		}
 
@@ -534,7 +534,7 @@ int checknv(char filename[])
 		}
 
 		for (k = 0; k < dimension; k++) {
-			if (blocksize[k] > datasize[k])
+			if (blocksize[k] > datasize[k] || blocksize[k] > 256)
 				break;
 		}
 

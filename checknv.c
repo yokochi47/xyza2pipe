@@ -262,7 +262,7 @@ int checknv(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * data_volume + headersize) {
+		if (size != sizeof(float) * data_volume + headersize && noresc == 0) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume + headersize);
 
@@ -439,7 +439,7 @@ int checknv(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * data_volume + headersize) {
+		if (size != sizeof(float) * data_volume + headersize && noresc == 0) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume + headersize);
 
@@ -623,7 +623,7 @@ int checknv(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * data_volume + headersize) {
+		if (size != sizeof(float) * data_volume + headersize && noresc == 0) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume + headersize);
 

@@ -1,6 +1,6 @@
 /*
     xyza2pipe - a cross conversion environment of NMR spectra
-    Copyright 2017 Masashi Yokochi
+    Copyright 2017-2021 Masashi Yokochi
 
     https://github.com/yokochi47/xyza2pipe
      forked from http://fermi.pharm.hokudai.ac.jp/olivia/
@@ -28,7 +28,7 @@ char axisname[4][MAXAXISNAME + 1];
 char dimension, _dimension, byteswap;
 
 char swapdata = 0, swappar = 0, usrlabel = 0, usrshift = 0;
-char leftcar = 0, extleft = 0, adjcar = 0, adjh2o = 0, relyof = 0;
+char leftcar = 0, extleft = 0, adjcar = 0, adjh2o = 0, relyof = 0, noresc = 0;
 char usrphase[4] = { 0 };
 
 short headersize;

@@ -76,7 +76,7 @@ extern char axisname[4][MAXAXISNAME + 1];
 extern char dimension, _dimension, byteswap;
 
 extern char swapdata, swappar, usrlabel, usrshift;
-extern char leftcar, extleft, adjcar, adjh2o, relyof;
+extern char leftcar, extleft, adjcar, adjh2o, relyof, noresc;
 extern char usrphase[4];
 
 extern short headersize;

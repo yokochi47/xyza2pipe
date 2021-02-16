@@ -136,7 +136,8 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Jun 30, 2017**: Released v1.0.1, Fixed invalid header of UCSF spectra file.<br />
 **Jun 30, 2017**: Released v1.0.2, Set big endian as default for UCSF spectra.<br />
 **Oct 12, 2017**: Released v1.0.3, Fixed problem with block size when data size is odd.<br />
-**Feb 28, 2019**: Released v1.0.4, Fixed problem in reading UCSF 4D spectra header.
+**Feb 28, 2019**: Released v1.0.4, Fixed problem in reading UCSF 4D spectra header.<br />
+**Feb 16, 2021**: Released v1.0.5, Add '--no-rescue' option to turn off diagnostic function [Issue #3].
 
 ## Executable files
 
@@ -318,6 +319,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   --zCAR  Z-Axis Center [ppm]
   --aCAR  A-Axis Center [ppm]
   --ndim  dimCount
+  --no-rescue
 ~~~
 
 ### pipe2azara: stdin stream &rarr; Azara spectra
@@ -436,6 +438,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
   --zCAR  Z-Axis Center [ppm]
   --aCAR  A-Axis Center [ppm]
   --ndim  dimCount
+  --no-rescue
 ~~~
 
 ### vnmr2pipe: VNMR (Agilent, formerly Varian) binary spectra &rarr; stdout stream

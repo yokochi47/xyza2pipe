@@ -137,7 +137,7 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Jun 30, 2017**: Released v1.0.2, Set big endian as default for UCSF spectra.<br />
 **Oct 12, 2017**: Released v1.0.3, Fixed problem with block size when data size is odd.<br />
 **Feb 28, 2019**: Released v1.0.4, Fixed problem in reading UCSF 4D spectra header.<br />
-**Feb 24, 2021**: Released v1.0.5, Resolve inconsistency between data point and block size [Issue #3].
+**Feb 24, 2021**: Released v1.0.5, Resolve inconsistency between data point and block size [Issue #3]. v1.0.3 and v1.0.4 users should update to v1.0.5 or later.
 
 ## Executable files
 

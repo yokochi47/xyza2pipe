@@ -28,7 +28,7 @@ char axisname[4][MAXAXISNAME + 1];
 char dimension, _dimension, byteswap;
 
 char swapdata = 0, swappar = 0, usrlabel = 0, usrshift = 0;
-char leftcar = 0, extleft = 0, adjcar = 0, adjh2o = 0, relyof = 0, noresc = 0;
+char leftcar = 0, extleft = 0, adjcar = 0, adjh2o = 0, relyof = 0;
 char usrphase[4] = { 0 };
 
 short headersize;
@@ -161,4 +161,19 @@ int set_block_volume()
 		unitsize[i] = datasize[i] / blocksize[i];
 
 	return get_block_volume();
+}
+
+int reset_datasize_by_blocksize()
+{
+	int i;
+
+	for (i = 0; i < dimension; i++) {
+
+		if (datasize[i] % blocksize[i] == 0)
+			continue;
+
+		datasize[i] = ((datasize[i] / blocksize[i]) + 1) * blocksize[i];
+	}
+
+	return get_data_volume();
 }

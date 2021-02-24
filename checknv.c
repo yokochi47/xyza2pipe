@@ -1,6 +1,6 @@
 /*
     xyza2pipe - a cross conversion environment of NMR spectra
-    Copyright 2017 Masashi Yokochi
+    Copyright 2017-2021 Masashi Yokochi
 
     https://github.com/yokochi47/xyza2pipe
      forked from http://fermi.pharm.hokudai.ac.jp/olivia/
@@ -262,7 +262,7 @@ int checknv(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * data_volume + headersize && noresc == 0) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume + headersize);
 
@@ -278,9 +278,20 @@ int checknv(char filename[])
 				if (datasize[j] % blocksize[j] == 0)
 					continue;
 
-				fprintf(stderr, "Failed.\n");
+				memcpy(&(datasize[0]), &(datasize_orig[0]), dimension * sizeof(int));
 
-				return EXIT_FAILURE;
+				data_volume = reset_datasize_by_blocksize();
+
+				if (size != sizeof(float) * data_volume + headersize) {
+
+					fprintf(stderr, "Failed.\n");
+
+					return EXIT_FAILURE;
+				}
+
+				memcpy(&(datasize_orig[0]), &(datasize[0]), dimension * sizeof(int));
+
+				break;
 			}
 
 			fprintf(stderr, "Data Size  | %8d  %8d (fixed)\n", datasize[0], datasize[1]);
@@ -439,7 +450,7 @@ int checknv(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * data_volume + headersize && noresc == 0) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume + headersize);
 
@@ -458,9 +469,20 @@ int checknv(char filename[])
 				if (datasize[j] % blocksize[j] == 0)
 					continue;
 
-				fprintf(stderr, "Failed.\n");
+				memcpy(&(datasize[0]), &(datasize_orig[0]), dimension * sizeof(int));
 
-				return EXIT_FAILURE;
+				data_volume = reset_datasize_by_blocksize();
+
+				if (size != sizeof(float) * data_volume + headersize) {
+
+					fprintf(stderr, "Failed.\n");
+
+					return EXIT_FAILURE;
+				}
+
+				memcpy(&(datasize_orig[0]), &(datasize[0]), dimension * sizeof(int));
+
+				break;
 			}
 
 			fprintf(stderr, "Data Size  | %8d  %8d  %8d (fixed)\n", datasize[0], datasize[1], datasize[2]);
@@ -623,7 +645,7 @@ int checknv(char filename[])
 		fputc('\n', stderr);
 
 		/* CHECK FILE SIZE */
-		if (size != sizeof(float) * data_volume + headersize && noresc == 0) {
+		if (size != sizeof(float) * data_volume + headersize) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
 					(int) (sizeof(float)) * data_volume + headersize);
 
@@ -644,9 +666,20 @@ int checknv(char filename[])
 				if (datasize[j] % blocksize[j] == 0)
 					continue;
 
-				fprintf(stderr, "Failed.\n");
+				memcpy(&(datasize[0]), &(datasize_orig[0]), dimension * sizeof(int));
 
-				return EXIT_FAILURE;
+				data_volume = reset_datasize_by_blocksize();
+
+				if (size != sizeof(float) * data_volume + headersize) {
+
+					fprintf(stderr, "Failed.\n");
+
+					return EXIT_FAILURE;
+				}
+
+				memcpy(&(datasize_orig[0]), &(datasize[0]), dimension * sizeof(int));
+
+				break;
 			}
 
 			fprintf(stderr, "Data Size  | %8d  %8d  %8d  %8d (fixed)\n", datasize[0], datasize[1], datasize[2], datasize[3]);

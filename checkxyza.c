@@ -1,6 +1,6 @@
 /*
     xyza2pipe - a cross conversion environment of NMR spectra
-    Copyright 2017 Masashi Yokochi
+    Copyright 2017-2021 Masashi Yokochi
 
     https://github.com/yokochi47/xyza2pipe
      forked from http://fermi.pharm.hokudai.ac.jp/olivia/
@@ -27,7 +27,7 @@ int checkxyza(char filename[])
 	char _filename[MAXLONGNAME], buffer[PIPE_HEADERSIZE];
 	int fidsize[4] = { 0 };
 	int j, k, axisorder[4] = { 0 }, orderaxis[4];
-	int data_plane = get_data_plane();
+	int data_plane;
 	long size = 0;
 	float *vp;
 
@@ -306,6 +306,8 @@ int checkxyza(char filename[])
 
 		fputc('\n', stderr);
 
+		data_plane = get_data_plane();
+
 		/* CHECK FILE SIZE */
 		if (size != sizeof(float) * data_plane + PIPE_HEADERSIZE) {
 			fprintf(stderr, "Spectra file %s: Partially broken. (Actual=%d Expected=%d)\n", filename, (int) (size),
@@ -405,6 +407,8 @@ int checkxyza(char filename[])
 		}
 
 		fputc('\n', stderr);
+
+		data_plane = get_data_plane();
 
 		/* CHECK FILE SIZE */
 		if (size != sizeof(float) * data_plane + PIPE_HEADERSIZE) {
@@ -526,6 +530,8 @@ int checkxyza(char filename[])
 		}
 
 		fputc('\n', stderr);
+
+		data_plane = get_data_plane();
 
 		/* CHECK FILE SIZE */
 		if (size != sizeof(float) * data_plane + PIPE_HEADERSIZE) {

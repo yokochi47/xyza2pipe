@@ -25,7 +25,7 @@ static const char *usage[] = {
 		" -y  Output Y-Vector first\n", " -z  Output Z-Vector first\n", " -a  Output A-Vector first\n",
 		" --xLAB X-Axis Label\n", " --yLAB Y-Axis Label\n", " --zLAB Z-Axis Label\n", " --aLAB A-Axis Label\n",
 		" --xCAR X-Axis Center [ppm]\n", " --yCAR Y-Axis Center [ppm]\n", " --zCAR Z-Axis Center [ppm]\n",
-		" --aCAR A-Axis Center [ppm]\n", " --ndim dimCount\n", " --no-rescue\n\n", ""
+		" --aCAR A-Axis Center [ppm]\n", " --ndim dimCount\n\n", ""
 };
 
 int main(int argc, char *argv[])
@@ -48,7 +48,6 @@ int main(int argc, char *argv[])
 			{"yCAR", required_argument, 0, 11},
 			{"zCAR", required_argument, 0, 12},
 			{"aCAR", required_argument, 0, 13},
-			{"no-rescue", no_argument, 0, 14},
 			{"ndim", required_argument, 0, 'd'},
 			{0}
 	};
@@ -123,9 +122,6 @@ int main(int argc, char *argv[])
 		case 13:
 			usrshift = 1;
 			usrcenter[3] = atof(optarg);
-			break;
-		case 14:
-			noresc = 1;
 			break;
 		case 'd':
 			dimension = atoi(optarg);

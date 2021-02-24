@@ -1,6 +1,6 @@
 /*
     xyza2pipe - a cross conversion environment of NMR spectra
-    Copyright 2017 Masashi Yokochi
+    Copyright 2017-2021 Masashi Yokochi
 
     https://github.com/yokochi47/xyza2pipe
      forked from http://fermi.pharm.hokudai.ac.jp/olivia/
@@ -113,6 +113,7 @@ int get_data_volume();
 int get_block_plane();
 int get_block_volume();
 int set_block_volume();
+int reset_datasize_by_blocksize();
 
 int openpipe2d(float **mat2d);
 

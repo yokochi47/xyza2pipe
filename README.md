@@ -119,7 +119,8 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Naohiro Kobayashi**, Osaka University, for reporting NMRView spectra conversion issue.<br />
 **Nicholas Fitzkee**, Mississippi State University, for reporting invalid Sparky spectra issue.<br />
 **Maxim Mayzel**, Swedish NMR Centrum, for reporting invalid block size when data size is odd.<br />
-**Ekaterina Burakova**, Ludwig-Maximilians-Universität München, for reporting issue in reading UCSF 4D spectra header.
+**Ekaterina Burakova**, Ludwig-Maximilians-Universität München, for reporting issue in reading UCSF 4D spectra header.<br />
+**Douglas J. Kojetin**, Scripps Research, for reporting issue of inconsistency between data point and block size in NMRView/NMRFx format.
 
 
 ## Release notes

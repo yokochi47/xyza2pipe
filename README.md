@@ -120,7 +120,8 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Nicholas Fitzkee**, Mississippi State University, for reporting invalid Sparky spectra issue.<br />
 **Maxim Mayzel**, Swedish NMR Centrum, for reporting invalid block size when data size is odd.<br />
 **Ekaterina Burakova**, Ludwig-Maximilians-Universität München, for reporting issue in reading UCSF 4D spectra header.<br />
-**Douglas J. Kojetin**, Scripps Research, for reporting issue of inconsistency between data point and block size in NMRView/NMRFx format.
+**Douglas J. Kojetin**, Scripps Research, for reporting issue of inconsistency between data point and block size in NMRView/NMRFx format.<br />
+**Henry Wetton**, ETH Zurich, for reporting inconsistency of XEASY parameter filename.
 
 
 ## Release notes
@@ -138,7 +139,8 @@ In relation to the [endianness](http://en.wikipedia.org/wiki/Endianness endianne
 **Jun 30, 2017**: Released v1.0.2, Set big endian as default for UCSF spectra.<br />
 **Oct 12, 2017**: Released v1.0.3, Fixed problem with block size when data size is odd.<br />
 **Feb 28, 2019**: Released v1.0.4, Fixed problem in reading UCSF 4D spectra header.<br />
-**Feb 24, 2021**: Released v1.0.5, Resolve inconsistency between data point and block size [Issue #3]. v1.0.3 and v1.0.4 users should update to v1.0.5 or later.
+**Feb 24, 2021**: Released v1.0.5, Resolved inconsistency between data point and block size [Issue #3]. v1.0.3 and v1.0.4 users should update to v1.0.5 or later.<br />
+**Feb 20, 2024**: Released v1.0.6, Fixed inconsistency of XEASY parameter filename [Issue #4].
 
 ## Executable files
 

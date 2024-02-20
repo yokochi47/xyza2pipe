@@ -1,6 +1,6 @@
 /*
     xyza2pipe - a cross conversion environment of NMR spectra
-    Copyright 2017 Masashi Yokochi
+    Copyright 2017-2024 Masashi Yokochi
 
     https://github.com/yokochi47/xyza2pipe
      forked from http://fermi.pharm.hokudai.ac.jp/olivia/
@@ -49,7 +49,10 @@ int checkxeasy(char filename[])
 
 	fclose(fp);
 
-	strreplacecpy(parfile, filename, ".16", ".param");
+	if (strstr(filename, ".16"))
+		strreplacecpy(parfile, filename, ".16", ".param");
+	else
+		sprintf(parfile, "%s.param", filename);
 
 	if ((par = fopen(parfile, "r")) == NULL) {
 		fprintf(stderr, "Parameter file %s: Couldn't open.\n", parfile);
